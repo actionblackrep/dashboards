@@ -3,84 +3,118 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Facturacion EVO</title>
+<title>Comportamiento Facturacion</title>
 <script src="https://cdn.jsdelivr.net/npm/papaparse@5/papaparse.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
 <style>
-  :root { color-scheme: light dark; }
+  :root { color-scheme: dark; --bg:#0e1116; --panel:#161b22; --panel2:#0b0f14; --border:#243041; --text:#e6edf3; --muted:#8a93a0; --accent:#1f6feb; --good:#3fb950; --warn:#d29922; --bad:#f85149; }
   * { box-sizing: border-box; }
-  body { font-family: -apple-system, system-ui, sans-serif; margin: 0; padding: 20px; background: #0b0d10; color: #e7e9ec; }
-  h1 { margin: 0 0 4px; font-size: 22px; }
-  .sub { color: #8a93a0; font-size: 13px; margin-bottom: 20px; }
-  .controls { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 20px; }
-  .controls label { font-size: 12px; color: #8a93a0; display: flex; flex-direction: column; gap: 4px; }
-  select, input { background: #161a20; color: #e7e9ec; border: 1px solid #2a313b; border-radius: 8px; padding: 8px 10px; font-size: 14px; }
-  .kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-bottom: 20px; }
-  .kpi { background: #161a20; border: 1px solid #2a313b; border-radius: 12px; padding: 14px; }
-  .kpi .l { font-size: 12px; color: #8a93a0; }
-  .kpi .v { font-size: 22px; font-weight: 600; margin-top: 4px; }
-  .charts { display: grid; grid-template-columns: 1fr; gap: 16px; }
-  @media (min-width: 900px) { .charts { grid-template-columns: 1fr 1fr; } }
-  .card { background: #161a20; border: 1px solid #2a313b; border-radius: 12px; padding: 14px; }
-  .card h3 { margin: 0 0 8px; font-size: 14px; color: #c9ced6; }
-  canvas { width: 100% !important; height: 300px !important; }
-  .err { color: #ff6b6b; }
+  body { font-family: -apple-system, system-ui, "Segoe UI", sans-serif; margin: 0; padding: 0; background: var(--bg); color: var(--text); }
+  .wrap { max-width: 1400px; margin: 0 auto; padding: 16px 18px 60px; }
+  .top { display: flex; align-items: center; justify-content: space-between; gap: 16px; background: #0a0d12; border:1px solid var(--border); padding: 14px 18px; border-radius: 10px; }
+  .title { font-size: 22px; font-weight: 700; letter-spacing: 0.5px; }
+  .stamp { font-size: 12px; color: var(--muted); text-align: right; }
+  .stamp strong { color: var(--text); display: block; font-size: 18px; }
+  .tabs { display: flex; gap: 4px; margin: 14px 0 8px; }
+  .tab { background: var(--panel2); color: var(--muted); border:1px solid var(--border); border-radius: 8px 8px 0 0; padding: 8px 14px; cursor: pointer; font-size: 13px; }
+  .tab.active { background: var(--panel); color: var(--text); border-bottom-color: var(--panel); }
+  .page { background: var(--panel); border:1px solid var(--border); border-radius: 0 10px 10px 10px; padding: 14px; }
+  .country { margin-bottom: 22px; }
+  .ch { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .ch img { width: 36px; height: 24px; object-fit: cover; border-radius: 3px; border:1px solid #222; }
+  .ch h2 { font-size: 14px; margin: 0; letter-spacing: 0.5px; color: #cfd6dd; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  thead th { background: #1f2733; color: #cfd6dd; font-weight: 600; text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--border); position: sticky; top: 0; }
+  tbody td { padding: 7px 10px; border-bottom: 1px solid #1c2330; }
+  tbody tr:hover { background: #1a212c; }
+  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+  .pill { display: inline-block; padding: 2px 8px; border-radius: 999px; font-weight: 600; font-size: 12px; }
+  .pill.good { background: rgba(63,185,80,0.15); color: var(--good); }
+  .pill.warn { background: rgba(210,153,34,0.18); color: var(--warn); }
+  .pill.bad  { background: rgba(248,81,73,0.15);  color: var(--bad); }
+  .pill.na   { background: #1f2733; color: var(--muted); }
+  .controls { display: flex; flex-wrap: wrap; gap: 10px; align-items: end; margin-bottom: 12px; }
+  .controls label { font-size: 11px; color: var(--muted); display: flex; flex-direction: column; gap: 4px; }
+  select { background: var(--panel2); color: var(--text); border:1px solid var(--border); border-radius: 6px; padding: 6px 8px; font-size: 13px; }
+  .totalrow td { font-weight: 700; background: #131922; }
+  .err { color: var(--bad); padding: 14px; }
+  .help { font-size: 12px; color: var(--muted); line-height: 1.55; margin-top: 12px; }
+  .help b { color: var(--text); }
+  .empty { color: var(--muted); padding: 12px; font-size: 13px; }
+  details summary { cursor: pointer; }
 </style>
 </head>
 <body>
-  <h1>Facturacion EVO</h1>
-  <div class="sub" id="sub">Cargando...</div>
+  <div class="wrap">
+    <div class="top">
+      <div class="title">COMPORTAMIENTO FACTURACION</div>
+      <div class="stamp"><strong id="maxdate">-</strong>Ultima fecha registrada</div>
+    </div>
 
-  <div class="controls">
-    <label>Pais
-      <select id="country">
-        <option value="ALL">Todos</option>
-        <option value="CO">Colombia</option>
-        <option value="MX">Mexico</option>
-        <option value="BR">Brasil</option>
-      </select>
-    </label>
-    <label>Desde <input type="date" id="from"></label>
-    <label>Hasta <input type="date" id="to"></label>
-  </div>
+    <div class="tabs">
+      <div class="tab active" data-tab="p1">Resumen por pais</div>
+      <div class="tab" data-tab="p2">Detalle</div>
+    </div>
 
-  <div class="kpis">
-    <div class="kpi"><div class="l">Total ValorBaixa</div><div class="v" id="kTotal">-</div></div>
-    <div class="kpi"><div class="l">Filiales</div><div class="v" id="kFiliales">-</div></div>
-    <div class="kpi"><div class="l">Transacciones</div><div class="v" id="kRows">-</div></div>
-    <div class="kpi"><div class="l">Promedio diario</div><div class="v" id="kAvg">-</div></div>
-  </div>
+    <div class="page" id="p1">
+      <div id="status" class="empty">Cargando...</div>
+      <div class="country">
+        <div class="ch"><img src="img/co.png" alt=""><h2>COLOMBIA</h2></div>
+        <div id="t-co"></div>
+      </div>
+      <div class="country">
+        <div class="ch"><img src="img/mx.png" alt=""><h2>MEXICO</h2></div>
+        <div id="t-mx"></div>
+      </div>
+      <div class="country">
+        <div class="ch"><img src="img/br.png" alt=""><h2>BRASIL</h2></div>
+        <div id="t-br"></div>
+      </div>
+    </div>
 
-  <div class="charts">
-    <div class="card"><h3>Evolucion mensual</h3><canvas id="cMonth"></canvas></div>
-    <div class="card"><h3>Top 10 filiales</h3><canvas id="cFiliales"></canvas></div>
+    <div class="page" id="p2" style="display:none">
+      <div class="controls">
+        <label>Pais
+          <select id="p2country">
+            <option value="CO" selected>Colombia</option>
+            <option value="MX">Mexico</option>
+            <option value="BR">Brasil</option>
+          </select>
+        </label>
+      </div>
+      <div id="t-detail"></div>
+      <div class="help">
+        <p><b>1. % Mes anterior al dia:</b> Comparacion acumulada del mes actual (desde el 1ero a la fecha) contra el mes anterior en el mismo rango (desde el 1ero del mes anterior al dia equivalente).</p>
+        <p><b>2. % Mes anterior:</b> Ventas acumuladas del mes actual hasta hoy / Ventas totales del mes anterior. Si supera 100%, ya se supero el mes anterior aunque no sea cierre de mes.</p>
+        <p><b>3. Acumulado mes anterior dia hoy:</b> Ventas del mes anterior desde el 1ero hasta el dia equivalente al actual. Sirve para comparar el avance al mismo punto del mes.</p>
+      </div>
+    </div>
   </div>
 
 <script>
 const SOURCES = [
-  { country: "CO", live: "data/filtered_data.csv",    backup: "data/backup/filtered_data.csv" },
-  { country: "MX", live: "data/filtered_data_mx.csv", backup: "data/backup/filtered_data_mx.csv" },
-  { country: "BR", live: "data/filtered_data_br.csv", backup: "data/backup/filtered_data_br.csv" },
+  { code:"CO", live:"data/filtered_data.csv",    backup:"data/backup/filtered_data.csv" },
+  { code:"MX", live:"data/filtered_data_mx.csv", backup:"data/backup/filtered_data_mx.csv" },
+  { code:"BR", live:"data/filtered_data_br.csv", backup:"data/backup/filtered_data_br.csv" },
 ];
 
-const fmtMoney = n => new Intl.NumberFormat("es-CO", { maximumFractionDigits: 0 }).format(n);
-let ALL = [];
-let chartMonth, chartFil;
+const fmtMoney = n => isFinite(n) ? new Intl.NumberFormat("es-CO", { maximumFractionDigits: 0 }).format(Math.round(n)) : "-";
+const fmtPct = n => isFinite(n) ? (n*100).toFixed(1) + "%" : "-";
 
-function loadCsv(country, file) {
+function loadCsv(code, file) {
   return new Promise(res => {
     Papa.parse(file, {
       download: true, header: true, skipEmptyLines: true,
       complete: r => {
-        if (r.errors && r.errors.length && (!r.data || !r.data.length)) return res([]);
+        if (!r.data) return res([]);
         res(r.data
           .filter(x => x.DtLancamento && x.ValorBaixa)
           .map(x => ({
-            country,
+            country: code,
             filial: (x.Filial || "").trim(),
             valor: parseFloat(String(x.ValorBaixa).replace(",", ".")) || 0,
             date: x.DtLancamento,
-          })));
+          }))
+          .filter(x => x.date && !/^action$/i.test(x.filial)));
       },
       error: () => res([]),
     });
@@ -90,87 +124,150 @@ function loadCsv(country, file) {
 async function loadAll() {
   const tasks = [];
   for (const s of SOURCES) {
-    tasks.push(loadCsv(s.country, s.backup));
-    tasks.push(loadCsv(s.country, s.live));
+    tasks.push(loadCsv(s.code, s.backup));
+    tasks.push(loadCsv(s.code, s.live));
   }
   const parts = await Promise.all(tasks);
   return parts.flat();
 }
 
-async function loadStamp() {
-  try {
-    const r = await fetch("data/last_update.txt");
-    if (!r.ok) return "";
-    return (await r.text()).trim();
-  } catch { return ""; }
+function maxDate(rows) {
+  let m = "";
+  for (const r of rows) if (r.date > m) m = r.date;
+  return m;
 }
 
-function applyFilters() {
-  const c = document.getElementById("country").value;
-  const f = document.getElementById("from").value;
-  const t = document.getElementById("to").value;
-  return ALL.filter(r =>
-    (c === "ALL" || r.country === c) &&
-    (!f || r.date >= f) &&
-    (!t || r.date <= t)
-  );
+function dateRanges(maxStr) {
+  const d = new Date(maxStr + "T00:00:00");
+  const y = d.getUTCFullYear(), m = d.getUTCMonth(), day = d.getUTCDate();
+  const pad = n => String(n).padStart(2,"0");
+  const iso = (yy,mm,dd) => `${yy}-${pad(mm+1)}-${pad(dd)}`;
+  const currStart = iso(y, m, 1);
+  const currEnd = maxStr;
+  const prevMonthDate = new Date(Date.UTC(y, m-1, 1));
+  const py = prevMonthDate.getUTCFullYear(), pm = prevMonthDate.getUTCMonth();
+  const prevStart = iso(py, pm, 1);
+  const prevLastDay = new Date(Date.UTC(y, m, 0)).getUTCDate();
+  const prevEnd = iso(py, pm, prevLastDay);
+  const sameDay = Math.min(day, prevLastDay);
+  const prevSame = iso(py, pm, sameDay);
+  return { currStart, currEnd, prevStart, prevEnd, prevSame };
 }
 
-function render() {
-  const data = applyFilters();
-  const total = data.reduce((s, r) => s + r.valor, 0);
-  const filiales = new Set(data.map(r => r.filial)).size;
-  const days = new Set(data.map(r => r.date)).size || 1;
-
-  document.getElementById("kTotal").textContent = fmtMoney(total);
-  document.getElementById("kFiliales").textContent = filiales;
-  document.getElementById("kRows").textContent = data.length.toLocaleString();
-  document.getElementById("kAvg").textContent = fmtMoney(total / days);
-
-  const byMonth = {};
-  for (const r of data) {
-    const k = r.date.slice(0, 7);
-    byMonth[k] = (byMonth[k] || 0) + r.valor;
+function aggByFilial(rows, country, ranges) {
+  const map = new Map();
+  for (const r of rows) {
+    if (r.country !== country) continue;
+    if (!map.has(r.filial)) map.set(r.filial, { vacm:0, vmaT:0, vmaD:0 });
+    const s = map.get(r.filial);
+    if (r.date >= ranges.currStart && r.date <= ranges.currEnd) s.vacm += r.valor;
+    if (r.date >= ranges.prevStart && r.date <= ranges.prevEnd) s.vmaT += r.valor;
+    if (r.date >= ranges.prevStart && r.date <= ranges.prevSame) s.vmaD += r.valor;
   }
-  const monthLabels = Object.keys(byMonth).sort();
-  const monthVals = monthLabels.map(k => byMonth[k]);
+  const out = [];
+  for (const [filial, v] of map) {
+    out.push({
+      filial,
+      ventas: v.vacm,
+      acum_prev: v.vmaD,
+      pct_mensual: v.vmaT > 0 ? v.vacm / v.vmaT : NaN,
+      pct_dia: v.vmaD > 0 ? v.vacm / v.vmaD : NaN,
+    });
+  }
+  out.sort((a,b)=> b.ventas - a.ventas);
+  return out;
+}
 
-  const byFil = {};
-  for (const r of data) byFil[r.filial] = (byFil[r.filial] || 0) + r.valor;
-  const top = Object.entries(byFil).sort((a, b) => b[1] - a[1]).slice(0, 10);
+function pctClass(p) {
+  if (!isFinite(p)) return "na";
+  if (p >= 1) return "good";
+  if (p >= 0.85) return "warn";
+  return "bad";
+}
 
-  if (chartMonth) chartMonth.destroy();
-  chartMonth = new Chart(document.getElementById("cMonth"), {
-    type: "line",
-    data: { labels: monthLabels, datasets: [{ label: "ValorBaixa", data: monthVals, borderColor: "#4cc9f0", backgroundColor: "rgba(76,201,240,0.15)", fill: true, tension: 0.25 }] },
-    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } },
-  });
+function renderSummary(target, rows) {
+  const el = document.getElementById(target);
+  if (!rows.length) { el.innerHTML = '<div class="empty">Sin datos</div>'; return; }
+  let total = { ventas:0, vmaT_w:0, vmaD_w:0 };
+  for (const r of rows) total.ventas += r.ventas;
+  const html = [
+    '<table><thead><tr>',
+    '<th>Sede</th>',
+    '<th class="num">% Mes anterior dia</th>',
+    '<th class="num">% Mensual</th>',
+    '<th class="num">Ventas mes acumuladas</th>',
+    '</tr></thead><tbody>',
+    ...rows.map(r => `<tr>
+      <td>${r.filial}</td>
+      <td class="num"><span class="pill ${pctClass(r.pct_dia)}">${fmtPct(r.pct_dia)}</span></td>
+      <td class="num"><span class="pill ${pctClass(r.pct_mensual)}">${fmtPct(r.pct_mensual)}</span></td>
+      <td class="num">${fmtMoney(r.ventas)}</td>
+    </tr>`),
+    `<tr class="totalrow"><td>Total</td><td class="num">-</td><td class="num">-</td><td class="num">${fmtMoney(total.ventas)}</td></tr>`,
+    '</tbody></table>'
+  ].join("");
+  el.innerHTML = html;
+}
 
-  if (chartFil) chartFil.destroy();
-  chartFil = new Chart(document.getElementById("cFiliales"), {
-    type: "bar",
-    data: { labels: top.map(x => x[0]), datasets: [{ label: "ValorBaixa", data: top.map(x => x[1]), backgroundColor: "#7c5cff" }] },
-    options: { indexAxis: "y", responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } },
-  });
+function renderDetail(target, rows) {
+  const el = document.getElementById(target);
+  if (!rows.length) { el.innerHTML = '<div class="empty">Sin datos</div>'; return; }
+  let total = { ventas:0, acum_prev:0 };
+  for (const r of rows) { total.ventas += r.ventas; total.acum_prev += r.acum_prev; }
+  el.innerHTML = [
+    '<table><thead><tr>',
+    '<th>Filial</th>',
+    '<th class="num">% Mensual</th>',
+    '<th class="num">% Mes anterior dia</th>',
+    '<th class="num">Acumulado mes anterior dia hoy</th>',
+    '<th class="num">Ventas mes acumuladas</th>',
+    '</tr></thead><tbody>',
+    ...rows.map(r => `<tr>
+      <td>${r.filial}</td>
+      <td class="num"><span class="pill ${pctClass(r.pct_mensual)}">${fmtPct(r.pct_mensual)}</span></td>
+      <td class="num"><span class="pill ${pctClass(r.pct_dia)}">${fmtPct(r.pct_dia)}</span></td>
+      <td class="num">${fmtMoney(r.acum_prev)}</td>
+      <td class="num">${fmtMoney(r.ventas)}</td>
+    </tr>`),
+    `<tr class="totalrow"><td>Total</td><td class="num">-</td><td class="num">-</td><td class="num">${fmtMoney(total.acum_prev)}</td><td class="num">${fmtMoney(total.ventas)}</td></tr>`,
+    '</tbody></table>'
+  ].join("");
+}
+
+let ALL = [], RANGES = null;
+
+function refreshDetail() {
+  const c = document.getElementById("p2country").value;
+  renderDetail("t-detail", aggByFilial(ALL, c, RANGES));
 }
 
 (async () => {
   try {
     ALL = await loadAll();
-    const stamp = await loadStamp();
-    const dates = ALL.map(r => r.date).sort();
-    if (dates.length) {
-      document.getElementById("from").value = dates[0];
-      document.getElementById("to").value = dates[dates.length - 1];
+    if (!ALL.length) {
+      document.getElementById("status").textContent = "Sin datos. Espera al primer refresh.";
+      return;
     }
-    document.getElementById("sub").textContent =
-      `${ALL.length.toLocaleString()} registros - ultima actualizacion ${stamp || "n/d"}`;
-    ["country", "from", "to"].forEach(id =>
-      document.getElementById(id).addEventListener("change", render)
-    );
-    render();
+    document.getElementById("status").style.display = "none";
+    const md = maxDate(ALL);
+    document.getElementById("maxdate").textContent = md;
+    RANGES = dateRanges(md);
+
+    renderSummary("t-co", aggByFilial(ALL, "CO", RANGES));
+    renderSummary("t-mx", aggByFilial(ALL, "MX", RANGES));
+    renderSummary("t-br", aggByFilial(ALL, "BR", RANGES));
+    refreshDetail();
+
+    document.querySelectorAll(".tab").forEach(t => t.addEventListener("click", () => {
+      document.querySelectorAll(".tab").forEach(x => x.classList.remove("active"));
+      t.classList.add("active");
+      const id = t.dataset.tab;
+      document.getElementById("p1").style.display = id==="p1" ? "" : "none";
+      document.getElementById("p2").style.display = id==="p2" ? "" : "none";
+    }));
+    document.getElementById("p2country").addEventListener("change", refreshDetail);
   } catch (e) {
-    document.getElementById("sub").innerHTML = `<span class="err">Error cargando datos: ${e.message}</span>`;
+    document.getElementById("status").innerHTML = `<span class="err">Error: ${e.message}</span>`;
   }
 })();
 </script>
