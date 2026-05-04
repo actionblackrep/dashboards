@@ -1,6 +1,5 @@
 """Re-filter existing data/backup/*.csv against the current branches API.
-No EVO calls, no historical re-fetch. Drops rows whose IdFilial is presale
-or whose brand is ACTION_SPORT_CLUB. Also refreshes display_name.
+Drops rows whose IdFilial is presale or whose brand is ACTION_SPORT_CLUB.
 """
 import os
 import requests
@@ -13,12 +12,11 @@ BACKUP_DIR = os.environ.get("BACKUP_DIR", "data/backup")
 FILES = ["filtered_data.csv", "filtered_data_mx.csv", "filtered_data_br.csv"]
 OUT_COLS = ["display_name", "ValorBaixa", "DtLancamento", "IdFilial"]
 
-
-def _is_presale(v):
+def _truthy(v):
     if v is None: return False
     if isinstance(v, bool): return v
     if isinstance(v, (int, float)): return int(v) == 1
-    return str(v).strip().lower() in ("1", "true", "yes", "y", "t")
+    return str(v).strip().lower() in ("1", "true")
 
 
 def fetch_branches():
@@ -27,28 +25,30 @@ def fetch_branches():
     js = r.json()
     items = js if isinstance(js, list) else js.get("data") or js.get("branches") or []
     mapping = {}
-    p = b_count = 0
+    p = d = bsp = 0
     for b in items:
-        if _is_presale(b.get("Presale", b.get("presale"))):
-            p += 1
-            continue
-        brand = str(b.get("brand", b.get("Brand", "")) or "").strip().upper()
-        if brand == "ACTION_SPORT_CLUB":
-            b_count += 1
-            continue
-        pid = b.get("partner_id") or b.get("partnerId") or b.get("id")
-        name = b.get("display_name") or b.get("displayName") or b.get("name")
+        if _truthy(b.get("is_presale")):
+            p += 1; continue
+        if _truthy(b.get("is_deleted")):
+            d += 1; continue
+        if str(b.get("brand", "")).strip().upper() == "ACTION_SPORT_CLUB":
+            bsp += 1; continue
+        pid = b.get("partner_id")
+        name = b.get("display_name")
         if pid is None or not name:
             continue
         try:
             mapping[int(pid)] = str(name).strip()
         except (TypeError, ValueError):
             continue
-    print(f"branches kept={len(mapping)} presale_skip={p} action_sport_skip={b_count}")
+    print(f"branches kept={len(mapping)} presale_skip={p} deleted_skip={d} action_sport_skip={bsp}")
     return mapping
 
 
 def main():
+    if not os.path.isdir(BACKUP_DIR):
+        print(f"No {BACKUP_DIR} folder, nothing to clean.")
+        return
     branches = fetch_branches()
     for fname in FILES:
         path = os.path.join(BACKUP_DIR, fname)
