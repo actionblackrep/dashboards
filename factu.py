@@ -1,28 +1,29 @@
 import os
+import time
 import requests
 import pandas as pd
 from io import BytesIO
 from datetime import datetime, timedelta
-from concurrent.futures import ThreadPoolExecutor
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
 BASE_URL = "https://evo-integracao.w12app.com.br/api/v1/receivables/summary-excel"
 DATA_DIR = os.environ.get("DATA_DIR", "data")
-HTTP_TIMEOUT = int(os.environ.get("HTTP_TIMEOUT", "600"))
+HTTP_TIMEOUT = int(os.environ.get("HTTP_TIMEOUT", "300"))
+MAX_WORKERS = int(os.environ.get("MAX_WORKERS", "3"))
+
+# fast Excel reader; fall back to openpyxl if not installed
+try:
+    import python_calamine  # noqa
+    READ_ENGINE = "calamine"
+except Exception:
+    READ_ENGINE = "openpyxl"
 
 CREDENTIALS = [
     {"username": os.environ["EVO_CO_USER"], "password": os.environ["EVO_CO_PASS"], "filename": "filtered_data.csv"},
     {"username": os.environ["EVO_MX_USER"], "password": os.environ["EVO_MX_PASS"], "filename": "filtered_data_mx.csv"},
     {"username": os.environ["EVO_BR_USER"], "password": os.environ["EVO_BR_PASS"], "filename": "filtered_data_br.csv"},
 ]
-
 COLS = ["Filial", "ValorBaixa", "DtLancamento", "IdFilial"]
-
-
-def download_one(username, password, start, end):
-    url = f"{BASE_URL}?dtLancamentoCaixaDe={start}&dtLancamentoCaixaAte={end}&exibirSaldoDevedor=false"
-    r = requests.get(url, auth=(username, password), timeout=HTTP_TIMEOUT)
-    r.raise_for_status()
-    return pd.read_excel(BytesIO(r.content))
 
 
 def monthly_ranges(start_date, end_date):
@@ -37,36 +38,23 @@ def monthly_ranges(start_date, end_date):
     return out
 
 
-def fetch_country(creds, start_date, end_date):
-    """Single shot first; fall back to monthly chunks on timeout/error."""
+def fetch_chunk(task):
+    creds, start, end = task
     user = creds["username"]
+    t0 = time.time()
     try:
-        print(f"[{user}] single shot {start_date} -> {end_date}")
-        df = download_one(user, creds["password"], start_date, end_date)
-        print(f"[{user}] OK ({len(df)} rows)")
-        return df
+        r = requests.get(
+            f"{BASE_URL}?dtLancamentoCaixaDe={start}&dtLancamentoCaixaAte={end}&exibirSaldoDevedor=false",
+            auth=(user, creds["password"]),
+            timeout=HTTP_TIMEOUT,
+        )
+        r.raise_for_status()
+        df = pd.read_excel(BytesIO(r.content), engine=READ_ENGINE)
+        print(f"OK [{user}] {start}->{end} {len(df)} rows {time.time()-t0:.1f}s")
+        return creds["filename"], df
     except Exception as ex:
-        print(f"[{user}] single shot failed: {ex}. Falling back to monthly.")
-    frames = []
-    for s, e in monthly_ranges(start_date, end_date):
-        try:
-            df = download_one(user, creds["password"], s, e)
-            frames.append(df)
-            print(f"[{user}] OK chunk {s}->{e} ({len(df)})")
-        except Exception as ex:
-            print(f"[{user}] FAIL chunk {s}->{e}: {ex}")
-    return pd.concat(frames, ignore_index=True) if frames else None
-
-
-def process(creds, start_date, end_date, end_dt):
-    df = fetch_country(creds, start_date, end_date)
-    if df is None:
-        return creds, None
-    df = df[COLS]
-    df["DtLancamento"] = pd.to_datetime(df["DtLancamento"], format="%d/%m/%Y", errors="coerce")
-    df = df[df["DtLancamento"] <= end_dt]
-    df["DtLancamento"] = df["DtLancamento"].dt.strftime("%Y-%m-%d")
-    return creds, df
+        print(f"FAIL [{user}] {start}->{end} {ex}")
+        return creds["filename"], None
 
 
 def main():
@@ -75,16 +63,28 @@ def main():
     end_date = (today - timedelta(days=1)).strftime("%Y-%m-%d")
     start_date = f"{today.year - 1}-12-01"
     end_dt = pd.to_datetime(end_date)
-    print(f"Window: {start_date} -> {end_date}")
+    ranges = monthly_ranges(start_date, end_date)
+    print(f"Window: {start_date} -> {end_date} ({len(ranges)} chunks/country, engine={READ_ENGINE}, workers={MAX_WORKERS})")
 
-    with ThreadPoolExecutor(max_workers=len(CREDENTIALS)) as ex:
-        results = list(ex.map(lambda c: process(c, start_date, end_date, end_dt), CREDENTIALS))
+    tasks = [(c, s, e) for c in CREDENTIALS for s, e in ranges]
+    by_file = {c["filename"]: [] for c in CREDENTIALS}
 
-    for creds, df in results:
-        if df is None:
-            print(f"NO DATA {creds['username']}")
+    t0 = time.time()
+    with ThreadPoolExecutor(max_workers=MAX_WORKERS) as ex:
+        for fname, df in ex.map(fetch_chunk, tasks):
+            if df is not None:
+                by_file[fname].append(df)
+    print(f"Total fetch time: {time.time()-t0:.1f}s")
+
+    for fname, frames in by_file.items():
+        if not frames:
+            print(f"NO DATA {fname}")
             continue
-        out = os.path.join(DATA_DIR, creds["filename"])
+        df = pd.concat(frames, ignore_index=True)[COLS]
+        df["DtLancamento"] = pd.to_datetime(df["DtLancamento"], format="%d/%m/%Y", errors="coerce")
+        df = df[df["DtLancamento"] <= end_dt]
+        df["DtLancamento"] = df["DtLancamento"].dt.strftime("%Y-%m-%d")
+        out = os.path.join(DATA_DIR, fname)
         df.to_csv(out, index=False)
         print(f"WROTE {out} ({len(df)} rows)")
 
