@@ -26,9 +26,9 @@ except Exception:
     READ_ENGINE = "openpyxl"
 
 CREDENTIALS = [
-    {"username": os.environ["EVO_CO_USER"], "password": os.environ["EVO_CO_PASS"], "filename": "filtered_data.csv"},
-    {"username": os.environ["EVO_MX_USER"], "password": os.environ["EVO_MX_PASS"], "filename": "filtered_data_mx.csv"},
-    {"username": os.environ["EVO_BR_USER"], "password": os.environ["EVO_BR_PASS"], "filename": "filtered_data_br.csv"},
+    {"username": os.environ["EVO_CO_USER"], "password": os.environ["EVO_CO_PASS"], "filename": "filtered_data.csv",    "country": "CO"},
+    {"username": os.environ["EVO_MX_USER"], "password": os.environ["EVO_MX_PASS"], "filename": "filtered_data_mx.csv", "country": "MX"},
+    {"username": os.environ["EVO_BR_USER"], "password": os.environ["EVO_BR_PASS"], "filename": "filtered_data_br.csv", "country": "BR"},
 ]
 RAW_COLS = ["Filial", "ValorBaixa", "DtLancamento", "IdFilial"]
 OUT_COLS = ["display_name", "ValorBaixa", "DtLancamento", "IdFilial"]
@@ -41,30 +41,30 @@ def _truthy(v):
     return str(v).strip().lower() in ("1", "true")
 
 
-def fetch_branches():
+def fetch_branches_by_country():
     r = requests.get(BRANCHES_URL, headers={"x-api-key": BRANCHES_API_KEY}, timeout=60)
     r.raise_for_status()
     js = r.json()
     items = js if isinstance(js, list) else js.get("data") or js.get("branches") or []
-    mapping = {}
+    by_country = {}
     p = d = bsp = 0
     for b in items:
-        if _truthy(b.get("is_presale")):
-            p += 1; continue
-        if _truthy(b.get("is_deleted")):
-            d += 1; continue
+        if _truthy(b.get("is_presale")): p += 1; continue
+        if _truthy(b.get("is_deleted")): d += 1; continue
         if str(b.get("brand", "")).strip().upper() == "ACTION_SPORT_CLUB":
             bsp += 1; continue
         pid = b.get("partner_id")
         name = b.get("display_name")
-        if pid is None or not name:
+        cc = (b.get("country_code") or "").strip().upper()
+        if pid is None or not name or not cc:
             continue
         try:
-            mapping[int(pid)] = str(name).strip()
+            by_country.setdefault(cc, {})[int(pid)] = str(name).strip()
         except (TypeError, ValueError):
             continue
-    print(f"branches kept={len(mapping)} presale_skip={p} deleted_skip={d} action_sport_skip={bsp}")
-    return mapping
+    summary = ", ".join(f"{c}={len(m)}" for c, m in sorted(by_country.items()))
+    print(f"branches by country: {summary}; presale={p} deleted={d} action_sport={bsp}")
+    return by_country
 
 
 def monthly_ranges(start_date, end_date):
@@ -109,7 +109,7 @@ def main():
     end_dt = pd.to_datetime(end_date)
     print(f"Backup window: {HISTORY_START} -> {end_date} ({len(ranges)} chunks/country)")
 
-    branches = fetch_branches()
+    branches_by_country = fetch_branches_by_country()
 
     tasks = [(c, s, e) for c in CREDENTIALS for s, e in ranges]
     by_file = {c["filename"]: [] for c in CREDENTIALS}
@@ -119,19 +119,23 @@ def main():
             if df is not None:
                 by_file[fname].append(df)
 
-    for fname, frames in by_file.items():
+    for creds in CREDENTIALS:
+        fname = creds["filename"]
+        cc = creds["country"]
+        frames = by_file.get(fname, [])
         if not frames:
             print(f"NO DATA {fname}")
             continue
+        mapping = branches_by_country.get(cc, {})
         df = pd.concat(frames, ignore_index=True)[RAW_COLS]
         df["DtLancamento"] = pd.to_datetime(df["DtLancamento"], format="%d/%m/%Y", errors="coerce")
         df = df[df["DtLancamento"] <= end_dt]
         df["DtLancamento"] = df["DtLancamento"].dt.strftime("%Y-%m-%d")
         df["IdFilial"] = pd.to_numeric(df["IdFilial"], errors="coerce").astype("Int64")
         before = len(df)
-        df["display_name"] = df["IdFilial"].map(branches)
+        df["display_name"] = df["IdFilial"].map(mapping)
         df = df.dropna(subset=["display_name"])
-        print(f"{fname}: {before} -> {len(df)} rows after branches join")
+        print(f"{fname} [{cc}]: {before} -> {len(df)} rows")
         out = os.path.join(BACKUP_DIR, fname)
         df[OUT_COLS].to_csv(out, index=False)
         print(f"WROTE {out} ({len(df)} rows)")
