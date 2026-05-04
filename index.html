@@ -20,7 +20,7 @@
   .page { background: var(--panel); border:1px solid var(--border); border-radius: 0 10px 10px 10px; padding: 14px; }
   .country { margin-bottom: 22px; }
   .ch { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
-  .ch img { width: 36px; height: 24px; object-fit: cover; border-radius: 3px; border:1px solid #222; }
+  .ch .flag { width: 36px; height: 24px; border-radius: 3px; border:1px solid #222; display:block; }
   .ch h2 { font-size: 14px; margin: 0; letter-spacing: 0.5px; color: #cfd6dd; }
   table { width: 100%; border-collapse: collapse; font-size: 13px; }
   thead th { background: #1f2733; color: #cfd6dd; font-weight: 600; text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--border); position: sticky; top: 0; }
@@ -58,15 +58,36 @@
     <div class="page" id="p1">
       <div id="status" class="empty">Cargando...</div>
       <div class="country">
-        <div class="ch"><img src="img/co.png" alt=""><h2>COLOMBIA</h2></div>
+        <div class="ch">
+          <svg class="flag" viewBox="0 0 6 4" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="6" height="2" fill="#FCD116"/>
+            <rect y="2" width="6" height="1" fill="#003893"/>
+            <rect y="3" width="6" height="1" fill="#CE1126"/>
+          </svg>
+          <h2>COLOMBIA</h2>
+        </div>
         <div id="t-co"></div>
       </div>
       <div class="country">
-        <div class="ch"><img src="img/mx.png" alt=""><h2>MEXICO</h2></div>
+        <div class="ch">
+          <svg class="flag" viewBox="0 0 6 4" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="2" height="4" fill="#006847"/>
+            <rect x="2" width="2" height="4" fill="#ffffff"/>
+            <rect x="4" width="2" height="4" fill="#CE1126"/>
+          </svg>
+          <h2>MEXICO</h2>
+        </div>
         <div id="t-mx"></div>
       </div>
       <div class="country">
-        <div class="ch"><img src="img/br.png" alt=""><h2>BRASIL</h2></div>
+        <div class="ch">
+          <svg class="flag" viewBox="0 0 14 10" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="14" height="10" fill="#009C3B"/>
+            <polygon points="7,1 13,5 7,9 1,5" fill="#FFDF00"/>
+            <circle cx="7" cy="5" r="2" fill="#002776"/>
+          </svg>
+          <h2>BRASIL</h2>
+        </div>
         <div id="t-br"></div>
       </div>
     </div>
@@ -110,7 +131,7 @@ function loadCsv(code, file) {
           .filter(x => x.DtLancamento && x.ValorBaixa)
           .map(x => ({
             country: code,
-            filial: (x.Filial || "").trim(),
+            filial: (x.display_name || x.Filial || "").trim(),
             valor: parseFloat(String(x.ValorBaixa).replace(",", ".")) || 0,
             date: x.DtLancamento,
           }))
