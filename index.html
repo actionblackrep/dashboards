@@ -6,110 +6,98 @@
 <title>Comportamiento Facturacion</title>
 <script src="https://cdn.jsdelivr.net/npm/papaparse@5/papaparse.min.js"></script>
 <style>
-  :root { color-scheme: dark; --bg:#0e1116; --panel:#161b22; --panel2:#0b0f14; --border:#243041; --text:#e6edf3; --muted:#8a93a0; --accent:#1f6feb; --good:#3fb950; --warn:#d29922; --bad:#f85149; }
-  * { box-sizing: border-box; }
-  body { font-family: -apple-system, system-ui, "Segoe UI", sans-serif; margin: 0; padding: 0; background: var(--bg); color: var(--text); }
-  .wrap { max-width: 1400px; margin: 0 auto; padding: 16px 18px 60px; }
-  .top { display: flex; align-items: center; justify-content: space-between; gap: 16px; background: #0a0d12; border:1px solid var(--border); padding: 14px 18px; border-radius: 10px; }
-  .title { font-size: 22px; font-weight: 700; letter-spacing: 0.5px; }
-  .stamp { font-size: 12px; color: var(--muted); text-align: right; }
-  .stamp strong { color: var(--text); display: block; font-size: 18px; }
-  .tabs { display: flex; gap: 4px; margin: 14px 0 8px; }
-  .tab { background: var(--panel2); color: var(--muted); border:1px solid var(--border); border-radius: 8px 8px 0 0; padding: 8px 14px; cursor: pointer; font-size: 13px; }
+  :root { color-scheme: dark; --bg:#0e1116; --panel:#161b22; --border:#243041; --text:#e6edf3; --muted:#8a93a0; --good:#3fb950; --warn:#d29922; --bad:#f85149; }
+  html, body { margin:0; padding:0; height:100%; background: var(--bg); color: var(--text); font-family: -apple-system, system-ui, "Segoe UI", sans-serif; overflow:hidden; }
+  .root { display:flex; flex-direction:column; height:100vh; padding: 0.8vh 1vw; box-sizing:border-box; gap: 0.8vh; }
+  .top { display:flex; align-items:center; justify-content:space-between; gap:1vw; background:#0a0d12; border:1px solid var(--border); padding:0.6vh 1vw; border-radius:8px; flex:0 0 auto; }
+  .title { font-size: 2.2vh; font-weight:700; letter-spacing:0.5px; }
+  .stamp { font-size:1.3vh; color: var(--muted); text-align:right; }
+  .stamp strong { color: var(--text); display:block; font-size:1.7vh; text-transform:uppercase; }
+  .tabs { display:flex; gap:4px; flex:0 0 auto; }
+  .tab { background:#0b0f14; color: var(--muted); border:1px solid var(--border); border-radius:6px 6px 0 0; padding: 0.4vh 0.9vw; cursor:pointer; font-size:1.3vh; }
   .tab.active { background: var(--panel); color: var(--text); border-bottom-color: var(--panel); }
-  .page { background: var(--panel); border:1px solid var(--border); border-radius: 0 10px 10px 10px; padding: 14px; }
-  .country { margin-bottom: 22px; }
-  .ch { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
-  .ch .flag { width: 36px; height: 24px; border-radius: 3px; border:1px solid #222; display:block; }
-  .ch h2 { font-size: 14px; margin: 0; letter-spacing: 0.5px; color: #cfd6dd; }
-  table { width: 100%; border-collapse: collapse; font-size: 13px; }
-  thead th { background: #1f2733; color: #cfd6dd; font-weight: 600; text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--border); position: sticky; top: 0; }
-  tbody td { padding: 7px 10px; border-bottom: 1px solid #1c2330; }
-  tbody tr:hover { background: #1a212c; }
-  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
-  .pill { display: inline-block; padding: 2px 8px; border-radius: 999px; font-weight: 600; font-size: 12px; }
-  .pill.good { background: rgba(63,185,80,0.15); color: var(--good); }
-  .pill.warn { background: rgba(210,153,34,0.18); color: var(--warn); }
-  .pill.bad  { background: rgba(248,81,73,0.15);  color: var(--bad); }
-  .pill.na   { background: #1f2733; color: var(--muted); }
-  .controls { display: flex; flex-wrap: wrap; gap: 10px; align-items: end; margin-bottom: 12px; }
-  .controls label { font-size: 11px; color: var(--muted); display: flex; flex-direction: column; gap: 4px; }
-  select { background: var(--panel2); color: var(--text); border:1px solid var(--border); border-radius: 6px; padding: 6px 8px; font-size: 13px; }
-  .totalrow td { font-weight: 700; background: #131922; }
-  .err { color: var(--bad); padding: 14px; }
-  .help { font-size: 12px; color: var(--muted); line-height: 1.55; margin-top: 12px; }
+  .grid { display:grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.8vw; flex:1 1 auto; min-height:0; }
+  .country { background: var(--panel); border:1px solid var(--border); border-radius:8px; padding:0.6vh 0.7vw; display:flex; flex-direction:column; min-height:0; }
+  .ch { display:flex; align-items:center; gap:0.6vw; flex:0 0 auto; margin-bottom:0.5vh; }
+  .flag { width: 3vh; height: 2vh; border-radius:3px; border:1px solid #222; }
+  .ch h2 { font-size:1.6vh; margin:0; letter-spacing:0.5px; color:#cfd6dd; }
+  .tableWrap { flex:1 1 auto; overflow:auto; }
+  table { width:100%; border-collapse:collapse; font-size:1.25vh; table-layout: fixed; }
+  th, td { padding: 0.4vh 0.4vw; border-bottom:1px solid #1c2330; text-align:left; }
+  thead th { background:#1f2733; color:#cfd6dd; font-weight:600; position:sticky; top:0; font-size:1.15vh; }
+  td.num, th.num { text-align:right; font-variant-numeric: tabular-nums; }
+  tbody tr:hover { background:#1a212c; }
+  td.sede { white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .pill { display:inline-block; padding:1px 6px; border-radius:999px; font-weight:600; font-size:1.15vh; min-width:4ch; text-align:center; }
+  .pill.good { background: rgba(63,185,80,0.18); color: var(--good); }
+  .pill.warn { background: rgba(210,153,34,0.20); color: var(--warn); }
+  .pill.bad  { background: rgba(248,81,73,0.18);  color: var(--bad); }
+  .pill.na   { background:#1f2733; color: var(--muted); }
+  .totalrow td { font-weight:700; background:#131922; }
+  .empty { color: var(--muted); padding: 1vh; font-size:1.4vh; }
+  .err { color: var(--bad); padding: 1vh; }
+  /* Detail page */
+  #p2 { background: var(--panel); border:1px solid var(--border); border-radius:8px; padding: 0.6vh 1vw; flex:1 1 auto; display:none; flex-direction:column; min-height:0; }
+  #p2.active { display:flex; }
+  .controls { display:flex; gap:0.6vw; align-items:end; margin-bottom:0.6vh; flex:0 0 auto; }
+  select { background:#0b0f14; color: var(--text); border:1px solid var(--border); border-radius:5px; padding:0.4vh 0.5vw; font-size:1.3vh; }
+  .help { font-size:1.15vh; color: var(--muted); line-height:1.45; margin-top: 0.6vh; }
   .help b { color: var(--text); }
-  .empty { color: var(--muted); padding: 12px; font-size: 13px; }
-  details summary { cursor: pointer; }
 </style>
 </head>
 <body>
-  <div class="wrap">
-    <div class="top">
-      <div class="title">COMPORTAMIENTO FACTURACION</div>
-      <div class="stamp"><strong id="maxdate">-</strong>Ultima fecha registrada</div>
-    </div>
-
+<div class="root">
+  <div class="top">
+    <div class="title">COMPORTAMIENTO FACTURACION</div>
     <div class="tabs">
-      <div class="tab active" data-tab="p1">Resumen por pais</div>
+      <div class="tab active" data-tab="p1">Resumen</div>
       <div class="tab" data-tab="p2">Detalle</div>
     </div>
+    <div class="stamp"><strong id="maxdate">-</strong>Ultima fecha registrada</div>
+  </div>
 
-    <div class="page" id="p1">
-      <div id="status" class="empty">Cargando...</div>
-      <div class="country">
-        <div class="ch">
-          <svg class="flag" viewBox="0 0 6 4" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-            <rect width="6" height="2" fill="#FCD116"/>
-            <rect y="2" width="6" height="1" fill="#003893"/>
-            <rect y="3" width="6" height="1" fill="#CE1126"/>
-          </svg>
-          <h2>COLOMBIA</h2>
-        </div>
-        <div id="t-co"></div>
+  <div class="grid" id="p1">
+    <div class="country">
+      <div class="ch">
+        <svg class="flag" viewBox="0 0 6 4" preserveAspectRatio="none"><rect width="6" height="2" fill="#FCD116"/><rect y="2" width="6" height="1" fill="#003893"/><rect y="3" width="6" height="1" fill="#CE1126"/></svg>
+        <h2>COLOMBIA</h2>
       </div>
-      <div class="country">
-        <div class="ch">
-          <svg class="flag" viewBox="0 0 6 4" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-            <rect width="2" height="4" fill="#006847"/>
-            <rect x="2" width="2" height="4" fill="#ffffff"/>
-            <rect x="4" width="2" height="4" fill="#CE1126"/>
-          </svg>
-          <h2>MEXICO</h2>
-        </div>
-        <div id="t-mx"></div>
-      </div>
-      <div class="country">
-        <div class="ch">
-          <svg class="flag" viewBox="0 0 14 10" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-            <rect width="14" height="10" fill="#009C3B"/>
-            <polygon points="7,1 13,5 7,9 1,5" fill="#FFDF00"/>
-            <circle cx="7" cy="5" r="2" fill="#002776"/>
-          </svg>
-          <h2>BRASIL</h2>
-        </div>
-        <div id="t-br"></div>
-      </div>
+      <div class="tableWrap"><div id="t-co"></div></div>
     </div>
-
-    <div class="page" id="p2" style="display:none">
-      <div class="controls">
-        <label>Pais
-          <select id="p2country">
-            <option value="CO" selected>Colombia</option>
-            <option value="MX">Mexico</option>
-            <option value="BR">Brasil</option>
-          </select>
-        </label>
+    <div class="country">
+      <div class="ch">
+        <svg class="flag" viewBox="0 0 6 4" preserveAspectRatio="none"><rect width="2" height="4" fill="#006847"/><rect x="2" width="2" height="4" fill="#ffffff"/><rect x="4" width="2" height="4" fill="#CE1126"/></svg>
+        <h2>MEXICO</h2>
       </div>
-      <div id="t-detail"></div>
-      <div class="help">
-        <p><b>1. % Mes anterior al dia:</b> Comparacion acumulada del mes actual (desde el 1ero a la fecha) contra el mes anterior en el mismo rango (desde el 1ero del mes anterior al dia equivalente).</p>
-        <p><b>2. % Mes anterior:</b> Ventas acumuladas del mes actual hasta hoy / Ventas totales del mes anterior. Si supera 100%, ya se supero el mes anterior aunque no sea cierre de mes.</p>
-        <p><b>3. Acumulado mes anterior dia hoy:</b> Ventas del mes anterior desde el 1ero hasta el dia equivalente al actual. Sirve para comparar el avance al mismo punto del mes.</p>
+      <div class="tableWrap"><div id="t-mx"></div></div>
+    </div>
+    <div class="country">
+      <div class="ch">
+        <svg class="flag" viewBox="0 0 14 10" preserveAspectRatio="none"><rect width="14" height="10" fill="#009C3B"/><polygon points="7,1 13,5 7,9 1,5" fill="#FFDF00"/><circle cx="7" cy="5" r="2" fill="#002776"/></svg>
+        <h2>BRASIL</h2>
       </div>
+      <div class="tableWrap"><div id="t-br"></div></div>
     </div>
   </div>
+
+  <div id="p2">
+    <div class="controls">
+      <label style="font-size:1.1vh;color:var(--muted);">Pais
+        <select id="p2country">
+          <option value="CO" selected>Colombia</option>
+          <option value="MX">Mexico</option>
+          <option value="BR">Brasil</option>
+        </select>
+      </label>
+    </div>
+    <div class="tableWrap" style="flex:1 1 auto;overflow:auto;"><div id="t-detail"></div></div>
+    <div class="help">
+      <b>1. % Mes anterior al dia:</b> [Ventas mes acumuladas / Acumulado mes anterior dia hoy] - 1. Delta vs mismo dia del mes anterior.
+      &nbsp;&nbsp;<b>2. % Mes anterior:</b> Ventas mes acumuladas / Total mes anterior. 100% = se igualo el mes pasado.
+      &nbsp;&nbsp;<b>3. % Ponderado mes actual:</b> Ventas de la sede / Ventas totales del pais este mes.
+    </div>
+  </div>
+</div>
 
 <script>
 const SOURCES = [
@@ -118,24 +106,25 @@ const SOURCES = [
   { code:"BR", live:"data/filtered_data_br.csv", backup:"data/backup/filtered_data_br.csv" },
 ];
 
+const fmtPct  = n => isFinite(n) ? (n*100).toFixed(1) + "%" : "-";
+const fmtPctSigned = n => isFinite(n) ? (n>=0?"+":"") + (n*100).toFixed(1) + "%" : "-";
 const fmtMoney = n => isFinite(n) ? new Intl.NumberFormat("es-CO", { maximumFractionDigits: 0 }).format(Math.round(n)) : "-";
-const fmtPct = n => isFinite(n) ? (n*100).toFixed(1) + "%" : "-";
 
 function loadCsv(code, file) {
   return new Promise(res => {
     Papa.parse(file, {
-      download: true, header: true, skipEmptyLines: true,
+      download:true, header:true, skipEmptyLines:true,
       complete: r => {
         if (!r.data) return res([]);
         res(r.data
           .filter(x => x.DtLancamento && x.ValorBaixa)
           .map(x => ({
             country: code,
-            filial: (x.display_name || x.Filial || "").trim(),
-            valor: parseFloat(String(x.ValorBaixa).replace(",", ".")) || 0,
+            sede: (x.display_name || x.Filial || "").trim(),
+            valor: parseFloat(String(x.ValorBaixa).replace(",",".")) || 0,
             date: x.DtLancamento,
           }))
-          .filter(x => x.date && !/^action$/i.test(x.filial)));
+          .filter(x => x.sede));
       },
       error: () => res([]),
     });
@@ -148,8 +137,7 @@ async function loadAll() {
     tasks.push(loadCsv(s.code, s.backup));
     tasks.push(loadCsv(s.code, s.live));
   }
-  const parts = await Promise.all(tasks);
-  return parts.flat();
+  return (await Promise.all(tasks)).flat();
 }
 
 function maxDate(rows) {
@@ -158,125 +146,153 @@ function maxDate(rows) {
   return m;
 }
 
-function dateRanges(maxStr) {
-  const d = new Date(maxStr + "T00:00:00");
-  const y = d.getUTCFullYear(), m = d.getUTCMonth(), day = d.getUTCDate();
+function ranges() {
+  // Anchor = TODAY()-1 (real yesterday) per the .pbix DAX.
+  const now = new Date();
+  const y = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()-1));
+  const yy = y.getUTCFullYear(), mm = y.getUTCMonth(), dd = y.getUTCDate();
   const pad = n => String(n).padStart(2,"0");
-  const iso = (yy,mm,dd) => `${yy}-${pad(mm+1)}-${pad(dd)}`;
-  const currStart = iso(y, m, 1);
-  const currEnd = maxStr;
-  const prevMonthDate = new Date(Date.UTC(y, m-1, 1));
-  const py = prevMonthDate.getUTCFullYear(), pm = prevMonthDate.getUTCMonth();
-  const prevStart = iso(py, pm, 1);
-  const prevLastDay = new Date(Date.UTC(y, m, 0)).getUTCDate();
-  const prevEnd = iso(py, pm, prevLastDay);
-  const sameDay = Math.min(day, prevLastDay);
-  const prevSame = iso(py, pm, sameDay);
-  return { currStart, currEnd, prevStart, prevEnd, prevSame };
+  const iso = (a,b,c) => `${a}-${pad(b+1)}-${pad(c)}`;
+  const currStart = iso(yy, mm, 1);
+  const currEnd   = iso(yy, mm, dd);
+  const prev = new Date(Date.UTC(yy, mm-1, 1));
+  const py = prev.getUTCFullYear(), pmo = prev.getUTCMonth();
+  const prevLast = new Date(Date.UTC(yy, mm, 0)).getUTCDate();
+  const prevStart = iso(py, pmo, 1);
+  const prevEnd   = iso(py, pmo, prevLast);
+  const sameDay = Math.min(dd, prevLast);
+  const prevSame  = iso(py, pmo, sameDay);
+  return { currStart, currEnd, prevStart, prevEnd, prevSame, anchor: currEnd };
 }
 
-function aggByFilial(rows, country, ranges) {
+function aggByFilial(rows, country, R) {
   const map = new Map();
   for (const r of rows) {
     if (r.country !== country) continue;
-    if (!map.has(r.filial)) map.set(r.filial, { vacm:0, vmaT:0, vmaD:0 });
-    const s = map.get(r.filial);
-    if (r.date >= ranges.currStart && r.date <= ranges.currEnd) s.vacm += r.valor;
-    if (r.date >= ranges.prevStart && r.date <= ranges.prevEnd) s.vmaT += r.valor;
-    if (r.date >= ranges.prevStart && r.date <= ranges.prevSame) s.vmaD += r.valor;
+    if (!map.has(r.sede)) map.set(r.sede, { vacm:0, vmaT:0, vmaD:0 });
+    const s = map.get(r.sede);
+    if (r.date >= R.currStart && r.date <= R.currEnd) s.vacm += r.valor;
+    if (r.date >= R.prevStart && r.date <= R.prevEnd) s.vmaT += r.valor;
+    if (r.date >= R.prevStart && r.date <= R.prevSame) s.vmaD += r.valor;
   }
   const out = [];
-  for (const [filial, v] of map) {
-    out.push({
-      filial,
-      ventas: v.vacm,
-      acum_prev: v.vmaD,
-      pct_mensual: v.vmaT > 0 ? v.vacm / v.vmaT : NaN,
-      pct_dia: v.vmaD > 0 ? v.vacm / v.vmaD : NaN,
-    });
+  let totVacm = 0, totVmaT = 0, totVmaD = 0;
+  for (const [sede, v] of map) {
+    out.push(v); v.sede = sede;
+    totVacm += v.vacm; totVmaT += v.vmaT; totVmaD += v.vmaD;
   }
-  out.sort((a,b)=> b.ventas - a.ventas);
-  return out;
+  for (const r of out) {
+    r.pct_dia      = r.vmaD > 0 ? (r.vacm / r.vmaD) - 1 : NaN;
+    r.pct_mensual  = r.vmaT > 0 ? r.vacm / r.vmaT : NaN;
+    r.pct_ponder   = totVacm > 0 ? r.vacm / totVacm : NaN;
+  }
+  out.sort((a,b)=> b.vacm - a.vacm);
+  const total = {
+    sede: "Total",
+    vacm: totVacm, vmaT: totVmaT, vmaD: totVmaD,
+    pct_dia:     totVmaD > 0 ? (totVacm/totVmaD) - 1 : NaN,
+    pct_mensual: totVmaT > 0 ? totVacm/totVmaT : NaN,
+    pct_ponder:  totVacm > 0 ? 1 : NaN,
+  };
+  return { rows: out, total };
 }
 
-function pctClass(p) {
+function clsRatio(p) {
   if (!isFinite(p)) return "na";
   if (p >= 1) return "good";
   if (p >= 0.85) return "warn";
   return "bad";
 }
-
-function renderSummary(target, rows) {
-  const el = document.getElementById(target);
-  if (!rows.length) { el.innerHTML = '<div class="empty">Sin datos</div>'; return; }
-  let total = { ventas:0, vmaT_w:0, vmaD_w:0 };
-  for (const r of rows) total.ventas += r.ventas;
-  const html = [
-    '<table><thead><tr>',
-    '<th>Sede</th>',
-    '<th class="num">% Mes anterior dia</th>',
-    '<th class="num">% Mensual</th>',
-    '<th class="num">Ventas mes acumuladas</th>',
-    '</tr></thead><tbody>',
-    ...rows.map(r => `<tr>
-      <td>${r.filial}</td>
-      <td class="num"><span class="pill ${pctClass(r.pct_dia)}">${fmtPct(r.pct_dia)}</span></td>
-      <td class="num"><span class="pill ${pctClass(r.pct_mensual)}">${fmtPct(r.pct_mensual)}</span></td>
-      <td class="num">${fmtMoney(r.ventas)}</td>
-    </tr>`),
-    `<tr class="totalrow"><td>Total</td><td class="num">-</td><td class="num">-</td><td class="num">${fmtMoney(total.ventas)}</td></tr>`,
-    '</tbody></table>'
-  ].join("");
-  el.innerHTML = html;
+function clsDelta(p) {
+  if (!isFinite(p)) return "na";
+  if (p >= 0) return "good";
+  if (p >= -0.10) return "warn";
+  return "bad";
 }
 
-function renderDetail(target, rows) {
+function renderSummary(target, data) {
   const el = document.getElementById(target);
-  if (!rows.length) { el.innerHTML = '<div class="empty">Sin datos</div>'; return; }
-  let total = { ventas:0, acum_prev:0 };
-  for (const r of rows) { total.ventas += r.ventas; total.acum_prev += r.acum_prev; }
-  el.innerHTML = [
-    '<table><thead><tr>',
-    '<th>Filial</th>',
-    '<th class="num">% Mensual</th>',
-    '<th class="num">% Mes anterior dia</th>',
-    '<th class="num">Acumulado mes anterior dia hoy</th>',
-    '<th class="num">Ventas mes acumuladas</th>',
-    '</tr></thead><tbody>',
-    ...rows.map(r => `<tr>
-      <td>${r.filial}</td>
-      <td class="num"><span class="pill ${pctClass(r.pct_mensual)}">${fmtPct(r.pct_mensual)}</span></td>
-      <td class="num"><span class="pill ${pctClass(r.pct_dia)}">${fmtPct(r.pct_dia)}</span></td>
-      <td class="num">${fmtMoney(r.acum_prev)}</td>
-      <td class="num">${fmtMoney(r.ventas)}</td>
-    </tr>`),
-    `<tr class="totalrow"><td>Total</td><td class="num">-</td><td class="num">-</td><td class="num">${fmtMoney(total.acum_prev)}</td><td class="num">${fmtMoney(total.ventas)}</td></tr>`,
-    '</tbody></table>'
-  ].join("");
+  if (!data.rows.length) { el.innerHTML = '<div class="empty">Sin datos</div>'; return; }
+  const tr = r => `<tr>
+    <td class="sede" title="${r.sede}">${r.sede}</td>
+    <td class="num"><span class="pill ${clsDelta(r.pct_dia)}">${fmtPctSigned(r.pct_dia)}</span></td>
+    <td class="num"><span class="pill ${clsRatio(r.pct_mensual)}">${fmtPct(r.pct_mensual)}</span></td>
+    <td class="num">${fmtPct(r.pct_ponder)}</td>
+  </tr>`;
+  const total = data.total;
+  el.innerHTML = `<table>
+    <colgroup><col style="width:38%"><col style="width:22%"><col style="width:22%"><col style="width:18%"></colgroup>
+    <thead><tr>
+      <th>SEDE</th>
+      <th class="num">% MES ANT. DIA</th>
+      <th class="num">% MES ANT.</th>
+      <th class="num">% PONDERADO</th>
+    </tr></thead>
+    <tbody>
+      ${data.rows.map(tr).join("")}
+      <tr class="totalrow">
+        <td>${total.sede}</td>
+        <td class="num"><span class="pill ${clsDelta(total.pct_dia)}">${fmtPctSigned(total.pct_dia)}</span></td>
+        <td class="num"><span class="pill ${clsRatio(total.pct_mensual)}">${fmtPct(total.pct_mensual)}</span></td>
+        <td class="num">${fmtPct(total.pct_ponder)}</td>
+      </tr>
+    </tbody>
+  </table>`;
 }
 
-let ALL = [], RANGES = null;
+function renderDetail(target, data) {
+  const el = document.getElementById(target);
+  if (!data.rows.length) { el.innerHTML = '<div class="empty">Sin datos</div>'; return; }
+  const t = data.total;
+  el.innerHTML = `<table>
+    <thead><tr>
+      <th>SEDE</th>
+      <th class="num">% MES ANTERIOR</th>
+      <th class="num">% MES ANT. DIA</th>
+      <th class="num">ACUM. MES ANT. AL DIA</th>
+      <th class="num">VENTAS MES ACUM.</th>
+      <th class="num">% PONDERADO</th>
+    </tr></thead>
+    <tbody>
+      ${data.rows.map(r => `<tr>
+        <td class="sede" title="${r.sede}">${r.sede}</td>
+        <td class="num"><span class="pill ${clsRatio(r.pct_mensual)}">${fmtPct(r.pct_mensual)}</span></td>
+        <td class="num"><span class="pill ${clsDelta(r.pct_dia)}">${fmtPctSigned(r.pct_dia)}</span></td>
+        <td class="num">${fmtMoney(r.vmaD)}</td>
+        <td class="num">${fmtMoney(r.vacm)}</td>
+        <td class="num">${fmtPct(r.pct_ponder)}</td>
+      </tr>`).join("")}
+      <tr class="totalrow">
+        <td>${t.sede}</td>
+        <td class="num"><span class="pill ${clsRatio(t.pct_mensual)}">${fmtPct(t.pct_mensual)}</span></td>
+        <td class="num"><span class="pill ${clsDelta(t.pct_dia)}">${fmtPctSigned(t.pct_dia)}</span></td>
+        <td class="num">${fmtMoney(t.vmaD)}</td>
+        <td class="num">${fmtMoney(t.vacm)}</td>
+        <td class="num">${fmtPct(t.pct_ponder)}</td>
+      </tr>
+    </tbody>
+  </table>`;
+}
+
+let ALL = [], R = null;
 
 function refreshDetail() {
   const c = document.getElementById("p2country").value;
-  renderDetail("t-detail", aggByFilial(ALL, c, RANGES));
+  renderDetail("t-detail", aggByFilial(ALL, c, R));
 }
 
 (async () => {
   try {
     ALL = await loadAll();
     if (!ALL.length) {
-      document.getElementById("status").textContent = "Sin datos. Espera al primer refresh.";
+      document.getElementById("maxdate").textContent = "Sin datos";
       return;
     }
-    document.getElementById("status").style.display = "none";
-    const md = maxDate(ALL);
-    document.getElementById("maxdate").textContent = md;
-    RANGES = dateRanges(md);
-
-    renderSummary("t-co", aggByFilial(ALL, "CO", RANGES));
-    renderSummary("t-mx", aggByFilial(ALL, "MX", RANGES));
-    renderSummary("t-br", aggByFilial(ALL, "BR", RANGES));
+    document.getElementById("maxdate").textContent = maxDate(ALL);
+    R = ranges();
+    renderSummary("t-co", aggByFilial(ALL, "CO", R));
+    renderSummary("t-mx", aggByFilial(ALL, "MX", R));
+    renderSummary("t-br", aggByFilial(ALL, "BR", R));
     refreshDetail();
 
     document.querySelectorAll(".tab").forEach(t => t.addEventListener("click", () => {
@@ -284,11 +300,11 @@ function refreshDetail() {
       t.classList.add("active");
       const id = t.dataset.tab;
       document.getElementById("p1").style.display = id==="p1" ? "" : "none";
-      document.getElementById("p2").style.display = id==="p2" ? "" : "none";
+      document.getElementById("p2").classList.toggle("active", id==="p2");
     }));
     document.getElementById("p2country").addEventListener("change", refreshDetail);
   } catch (e) {
-    document.getElementById("status").innerHTML = `<span class="err">Error: ${e.message}</span>`;
+    document.body.innerHTML = `<div class="err">Error: ${e.message}</div>`;
   }
 })();
 </script>
