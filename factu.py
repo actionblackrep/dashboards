@@ -4,14 +4,15 @@ import requests
 import pandas as pd
 from io import BytesIO
 from datetime import datetime, timedelta
-from concurrent.futures import ThreadPoolExecutor, as_completed
+from concurrent.futures import ThreadPoolExecutor
 
 BASE_URL = "https://evo-integracao.w12app.com.br/api/v1/receivables/summary-excel"
+BRANCHES_URL = os.environ.get("BRANCHES_URL", "https://action-branches-api.vercel.app/api/branches")
+BRANCHES_API_KEY = os.environ["BRANCHES_API_KEY"]
 DATA_DIR = os.environ.get("DATA_DIR", "data")
 HTTP_TIMEOUT = int(os.environ.get("HTTP_TIMEOUT", "300"))
 MAX_WORKERS = int(os.environ.get("MAX_WORKERS", "3"))
 
-# fast Excel reader; fall back to openpyxl if not installed
 try:
     import python_calamine  # noqa
     READ_ENGINE = "calamine"
@@ -23,7 +24,31 @@ CREDENTIALS = [
     {"username": os.environ["EVO_MX_USER"], "password": os.environ["EVO_MX_PASS"], "filename": "filtered_data_mx.csv"},
     {"username": os.environ["EVO_BR_USER"], "password": os.environ["EVO_BR_PASS"], "filename": "filtered_data_br.csv"},
 ]
-COLS = ["Filial", "ValorBaixa", "DtLancamento", "IdFilial"]
+RAW_COLS = ["Filial", "ValorBaixa", "DtLancamento", "IdFilial"]
+OUT_COLS = ["display_name", "ValorBaixa", "DtLancamento", "IdFilial"]
+
+
+def fetch_branches():
+    """Return dict {partner_id (int): display_name} for non-presale branches."""
+    headers = {"x-api-key": BRANCHES_API_KEY}
+    r = requests.get(BRANCHES_URL, headers=headers, timeout=60)
+    r.raise_for_status()
+    js = r.json()
+    items = js if isinstance(js, list) else js.get("data") or js.get("branches") or []
+    mapping = {}
+    for b in items:
+        if int(b.get("Presale", b.get("presale", 0)) or 0) == 1:
+            continue
+        pid = b.get("partner_id") or b.get("partnerId") or b.get("id")
+        name = b.get("display_name") or b.get("displayName") or b.get("name")
+        if pid is None or not name:
+            continue
+        try:
+            mapping[int(pid)] = str(name).strip()
+        except (TypeError, ValueError):
+            continue
+    print(f"branches: {len(mapping)} non-presale entries")
+    return mapping
 
 
 def monthly_ranges(start_date, end_date):
@@ -66,6 +91,8 @@ def main():
     ranges = monthly_ranges(start_date, end_date)
     print(f"Window: {start_date} -> {end_date} ({len(ranges)} chunks/country, engine={READ_ENGINE}, workers={MAX_WORKERS})")
 
+    branches = fetch_branches()
+
     tasks = [(c, s, e) for c in CREDENTIALS for s, e in ranges]
     by_file = {c["filename"]: [] for c in CREDENTIALS}
 
@@ -80,12 +107,17 @@ def main():
         if not frames:
             print(f"NO DATA {fname}")
             continue
-        df = pd.concat(frames, ignore_index=True)[COLS]
+        df = pd.concat(frames, ignore_index=True)[RAW_COLS]
         df["DtLancamento"] = pd.to_datetime(df["DtLancamento"], format="%d/%m/%Y", errors="coerce")
         df = df[df["DtLancamento"] <= end_dt]
         df["DtLancamento"] = df["DtLancamento"].dt.strftime("%Y-%m-%d")
+        df["IdFilial"] = pd.to_numeric(df["IdFilial"], errors="coerce").astype("Int64")
+        before = len(df)
+        df["display_name"] = df["IdFilial"].map(branches)
+        df = df.dropna(subset=["display_name"])
+        print(f"{fname}: {before} -> {len(df)} rows after branches join")
         out = os.path.join(DATA_DIR, fname)
-        df.to_csv(out, index=False)
+        df[OUT_COLS].to_csv(out, index=False)
         print(f"WROTE {out} ({len(df)} rows)")
 
     with open(os.path.join(DATA_DIR, "last_update.txt"), "w") as f:
