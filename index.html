@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Facturacion EVO</title>
+<script src="https://cdn.jsdelivr.net/npm/papaparse@5/papaparse.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+<style>
+  :root { color-scheme: light dark; }
+  * { box-sizing: border-box; }
+  body { font-family: -apple-system, system-ui, sans-serif; margin: 0; padding: 20px; background: #0b0d10; color: #e7e9ec; }
+  h1 { margin: 0 0 4px; font-size: 22px; }
+  .sub { color: #8a93a0; font-size: 13px; margin-bottom: 20px; }
+  .controls { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 20px; }
+  .controls label { font-size: 12px; color: #8a93a0; display: flex; flex-direction: column; gap: 4px; }
+  select, input { background: #161a20; color: #e7e9ec; border: 1px solid #2a313b; border-radius: 8px; padding: 8px 10px; font-size: 14px; }
+  .kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-bottom: 20px; }
+  .kpi { background: #161a20; border: 1px solid #2a313b; border-radius: 12px; padding: 14px; }
+  .kpi .l { font-size: 12px; color: #8a93a0; }
+  .kpi .v { font-size: 22px; font-weight: 600; margin-top: 4px; }
+  .charts { display: grid; grid-template-columns: 1fr; gap: 16px; }
+  @media (min-width: 900px) { .charts { grid-template-columns: 1fr 1fr; } }
+  .card { background: #161a20; border: 1px solid #2a313b; border-radius: 12px; padding: 14px; }
+  .card h3 { margin: 0 0 8px; font-size: 14px; color: #c9ced6; }
+  canvas { width: 100% !important; height: 300px !important; }
+  .err { color: #ff6b6b; }
+</style>
+</head>
+<body>
+  <h1>Facturacion EVO</h1>
+  <div class="sub" id="sub">Cargando...</div>
+
+  <div class="controls">
+    <label>Pais
+      <select id="country">
+        <option value="ALL">Todos</option>
+        <option value="CO">Colombia</option>
+        <option value="MX">Mexico</option>
+        <option value="BR">Brasil</option>
+      </select>
+    </label>
+    <label>Desde <input type="date" id="from"></label>
+    <label>Hasta <input type="date" id="to"></label>
+  </div>
+
+  <div class="kpis">
+    <div class="kpi"><div class="l">Total ValorBaixa</div><div class="v" id="kTotal">-</div></div>
+    <div class="kpi"><div class="l">Filiales</div><div class="v" id="kFiliales">-</div></div>
+    <div class="kpi"><div class="l">Transacciones</div><div class="v" id="kRows">-</div></div>
+    <div class="kpi"><div class="l">Promedio diario</div><div class="v" id="kAvg">-</div></div>
+  </div>
+
+  <div class="charts">
+    <div class="card"><h3>Evolucion mensual</h3><canvas id="cMonth"></canvas></div>
+    <div class="card"><h3>Top 10 filiales</h3><canvas id="cFiliales"></canvas></div>
+  </div>
+
+<script>
+const SOURCES = [
+  { country: "CO", file: "data/filtered_data.csv" },
+  { country: "MX", file: "data/filtered_data_mx.csv" },
+  { country: "BR", file: "data/filtered_data_br.csv" },
+];
+
+const fmtMoney = n => new Intl.NumberFormat("es-CO", { maximumFractionDigits: 0 }).format(n);
+let ALL = [];
+let chartMonth, chartFil;
+
+async function loadCsv(src) {
+  return new Promise((res, rej) => {
+    Papa.parse(src.file, {
+      download: true, header: true, skipEmptyLines: true,
+      complete: r => {
+        const rows = r.data
+          .filter(x => x.DtLancamento && x.ValorBaixa)
+          .map(x => ({
+            country: src.country,
+            filial: (x.Filial || "").trim(),
+            valor: parseFloat(String(x.ValorBaixa).replace(",", ".")) || 0,
+            date: x.DtLancamento,
+          }));
+        res(rows);
+      },
+      error: rej,
+    });
+  });
+}
+
+async function loadStamp() {
+  try {
+    const r = await fetch("data/last_update.txt");
+    if (!r.ok) return "";
+    return (await r.text()).trim();
+  } catch { return ""; }
+}
+
+function applyFilters() {
+  const c = document.getElementById("country").value;
+  const f = document.getElementById("from").value;
+  const t = document.getElementById("to").value;
+  return ALL.filter(r =>
+    (c === "ALL" || r.country === c) &&
+    (!f || r.date >= f) &&
+    (!t || r.date <= t)
+  );
+}
+
+function render() {
+  const data = applyFilters();
+  const total = data.reduce((s, r) => s + r.valor, 0);
+  const filiales = new Set(data.map(r => r.filial)).size;
+  const days = new Set(data.map(r => r.date)).size || 1;
+
+  document.getElementById("kTotal").textContent = fmtMoney(total);
+  document.getElementById("kFiliales").textContent = filiales;
+  document.getElementById("kRows").textContent = data.length.toLocaleString();
+  document.getElementById("kAvg").textContent = fmtMoney(total / days);
+
+  const byMonth = {};
+  for (const r of data) {
+    const k = r.date.slice(0, 7);
+    byMonth[k] = (byMonth[k] || 0) + r.valor;
+  }
+  const monthLabels = Object.keys(byMonth).sort();
+  const monthVals = monthLabels.map(k => byMonth[k]);
+
+  const byFil = {};
+  for (const r of data) byFil[r.filial] = (byFil[r.filial] || 0) + r.valor;
+  const top = Object.entries(byFil).sort((a, b) => b[1] - a[1]).slice(0, 10);
+
+  if (chartMonth) chartMonth.destroy();
+  chartMonth = new Chart(document.getElementById("cMonth"), {
+    type: "line",
+    data: { labels: monthLabels, datasets: [{ label: "ValorBaixa", data: monthVals, borderColor: "#4cc9f0", backgroundColor: "rgba(76,201,240,0.15)", fill: true, tension: 0.25 }] },
+    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } },
+  });
+
+  if (chartFil) chartFil.destroy();
+  chartFil = new Chart(document.getElementById("cFiliales"), {
+    type: "bar",
+    data: { labels: top.map(x => x[0]), datasets: [{ label: "ValorBaixa", data: top.map(x => x[1]), backgroundColor: "#7c5cff" }] },
+    options: { indexAxis: "y", responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } },
+  });
+}
+
+(async () => {
+  try {
+    const all = await Promise.all(SOURCES.map(loadCsv));
+    ALL = all.flat();
+    const stamp = await loadStamp();
+    const dates = ALL.map(r => r.date).sort();
+    if (dates.length) {
+      document.getElementById("from").value = dates[0];
+      document.getElementById("to").value = dates[dates.length - 1];
+    }
+    document.getElementById("sub").textContent =
+      `${ALL.length.toLocaleString()} registros - ultima actualizacion ${stamp || "n/d"}`;
+    ["country", "from", "to"].forEach(id =>
+      document.getElementById(id).addEventListener("change", render)
+    );
+    render();
+  } catch (e) {
+    document.getElementById("sub").innerHTML = `<span class="err">Error cargando datos: ${e.message}</span>`;
+  }
+})();
+</script>
+</body>
+</html>
