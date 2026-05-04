@@ -34,14 +34,28 @@ RAW_COLS = ["Filial", "ValorBaixa", "DtLancamento", "IdFilial"]
 OUT_COLS = ["display_name", "ValorBaixa", "DtLancamento", "IdFilial"]
 
 
+def _is_presale(v):
+    if v is None: return False
+    if isinstance(v, bool): return v
+    if isinstance(v, (int, float)): return int(v) == 1
+    return str(v).strip().lower() in ("1", "true", "yes", "y", "t")
+
+
 def fetch_branches():
     r = requests.get(BRANCHES_URL, headers={"x-api-key": BRANCHES_API_KEY}, timeout=60)
     r.raise_for_status()
     js = r.json()
     items = js if isinstance(js, list) else js.get("data") or js.get("branches") or []
     mapping = {}
+    skipped_presale = 0
+    skipped_brand = 0
     for b in items:
-        if int(b.get("Presale", b.get("presale", 0)) or 0) == 1:
+        if _is_presale(b.get("Presale", b.get("presale"))):
+            skipped_presale += 1
+            continue
+        brand = str(b.get("brand", b.get("Brand", "")) or "").strip().upper()
+        if brand == "ACTION_SPORT_CLUB":
+            skipped_brand += 1
             continue
         pid = b.get("partner_id") or b.get("partnerId") or b.get("id")
         name = b.get("display_name") or b.get("displayName") or b.get("name")
@@ -51,7 +65,7 @@ def fetch_branches():
             mapping[int(pid)] = str(name).strip()
         except (TypeError, ValueError):
             continue
-    print(f"branches: {len(mapping)} non-presale entries")
+    print(f"branches: {len(mapping)} kept, {skipped_presale} presale skipped, {skipped_brand} ACTION_SPORT_CLUB skipped")
     return mapping
 
 
