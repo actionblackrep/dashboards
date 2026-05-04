@@ -28,40 +28,37 @@ RAW_COLS = ["Filial", "ValorBaixa", "DtLancamento", "IdFilial"]
 OUT_COLS = ["display_name", "ValorBaixa", "DtLancamento", "IdFilial"]
 
 
-def _is_presale(v):
+def _truthy(v):
     if v is None: return False
     if isinstance(v, bool): return v
     if isinstance(v, (int, float)): return int(v) == 1
-    return str(v).strip().lower() in ("1", "true", "yes", "y", "t")
+    return str(v).strip().lower() in ("1", "true")
 
 
 def fetch_branches():
-    """Return dict {partner_id (int): display_name} excluding Presale and ACTION_SPORT_CLUB."""
-    headers = {"x-api-key": BRANCHES_API_KEY}
-    r = requests.get(BRANCHES_URL, headers=headers, timeout=60)
+    """Return dict {partner_id (int): display_name} excluding presale, deleted, and ACTION_SPORT_CLUB."""
+    r = requests.get(BRANCHES_URL, headers={"x-api-key": BRANCHES_API_KEY}, timeout=60)
     r.raise_for_status()
     js = r.json()
     items = js if isinstance(js, list) else js.get("data") or js.get("branches") or []
     mapping = {}
-    skipped_presale = 0
-    skipped_brand = 0
+    p = d = bsp = 0
     for b in items:
-        if _is_presale(b.get("Presale", b.get("presale"))):
-            skipped_presale += 1
-            continue
-        brand = str(b.get("brand", b.get("Brand", "")) or "").strip().upper()
-        if brand == "ACTION_SPORT_CLUB":
-            skipped_brand += 1
-            continue
-        pid = b.get("partner_id") or b.get("partnerId") or b.get("id")
-        name = b.get("display_name") or b.get("displayName") or b.get("name")
+        if _truthy(b.get("is_presale")):
+            p += 1; continue
+        if _truthy(b.get("is_deleted")):
+            d += 1; continue
+        if str(b.get("brand", "")).strip().upper() == "ACTION_SPORT_CLUB":
+            bsp += 1; continue
+        pid = b.get("partner_id")
+        name = b.get("display_name")
         if pid is None or not name:
             continue
         try:
             mapping[int(pid)] = str(name).strip()
         except (TypeError, ValueError):
             continue
-    print(f"branches: {len(mapping)} kept, {skipped_presale} presale skipped, {skipped_brand} ACTION_SPORT_CLUB skipped")
+    print(f"branches kept={len(mapping)} presale_skip={p} deleted_skip={d} action_sport_skip={bsp}")
     return mapping
 
 
