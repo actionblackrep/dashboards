@@ -132,12 +132,13 @@ function loadCsv(code, file) {
 }
 
 async function loadAll() {
-  const tasks = [];
+  const out = [];
   for (const s of SOURCES) {
-    tasks.push(loadCsv(s.code, s.backup));
-    tasks.push(loadCsv(s.code, s.live));
+    let rows = await loadCsv(s.code, s.live);
+    if (!rows.length) rows = await loadCsv(s.code, s.backup);
+    out.push(...rows);
   }
-  return (await Promise.all(tasks)).flat();
+  return out;
 }
 
 function maxDate(rows) {
