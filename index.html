@@ -112,7 +112,7 @@ const fmtMoney = n => isFinite(n) ? new Intl.NumberFormat("es-CO", { maximumFrac
 
 function loadCsv(code, file) {
   return new Promise(res => {
-    Papa.parse(file, {
+    Papa.parse(file + (file.indexOf('?')<0?'?':'&') + 'ts=' + Date.now(), {
       download:true, header:true, skipEmptyLines:true,
       complete: r => {
         if (!r.data) return res([]);
