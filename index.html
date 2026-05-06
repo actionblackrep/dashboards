@@ -216,25 +216,24 @@ function clsDelta(p) {
   return "bad";
 }
 
+function autoFit(el) {
+  const wrap = el;
+  const tbl = wrap.querySelector('table');
+  if (!tbl) return;
+  let fs = 24;
+  tbl.style.fontSize = fs + 'px';
+  // Reduce font size until table fits container
+  while (tbl.scrollHeight > wrap.clientHeight && fs > 5) {
+    fs -= 0.5;
+    tbl.style.fontSize = fs + 'px';
+  }
+  // Apply same font-size to pills inside
+  tbl.querySelectorAll('.pill').forEach(p => p.style.fontSize = (fs * 0.95) + 'px');
+}
+
 function renderSummary(target, data) {
   const el = document.getElementById(target);
   if (!data.rows.length) { el.innerHTML = '<div class="empty">Sin datos</div>'; return; }
-  const TOP = 15;
-  let visible = data.rows;
-  let otros = null;
-  if (data.rows.length > TOP) {
-    visible = data.rows.slice(0, TOP);
-    const rest = data.rows.slice(TOP);
-    let vacm=0, vmaT=0, vmaD=0;
-    for (const r of rest) { vacm += r.vacm; vmaT += r.vmaT; vmaD += r.vmaD; }
-    otros = {
-      sede: `Otros (${rest.length})`,
-      vacm, vmaT, vmaD,
-      pct_dia:     vmaD > 0 ? (vacm/vmaD) - 1 : NaN,
-      pct_mensual: vmaT > 0 ? vacm/vmaT : NaN,
-      pct_ponder:  data.total.vacm > 0 ? vacm/data.total.vacm : NaN,
-    };
-  }
   const tr = r => `<tr>
     <td class="sede" title="${r.sede}">${r.sede}</td>
     <td class="num"><span class="pill ${clsDelta(r.pct_dia)}">${fmtPctSigned(r.pct_dia)}</span></td>
@@ -251,8 +250,7 @@ function renderSummary(target, data) {
       <th class="num">% PONDERADO</th>
     </tr></thead>
     <tbody>
-      ${visible.map(tr).join("")}
-      ${otros ? tr(otros) : ""}
+      ${data.rows.map(tr).join("")}
       <tr class="totalrow">
         <td>${total.sede}</td>
         <td class="num"><span class="pill ${clsDelta(total.pct_dia)}">${fmtPctSigned(total.pct_dia)}</span></td>
@@ -261,6 +259,7 @@ function renderSummary(target, data) {
       </tr>
     </tbody>
   </table>`;
+  autoFit(el);
 }
 
 function renderDetail(target, data, code) {
@@ -295,6 +294,7 @@ function renderDetail(target, data, code) {
       </tr>
     </tbody>
   </table>`;
+  autoFit(el);
 }
 
 let ALL = [], R = null;
@@ -326,6 +326,12 @@ function refreshDetail() {
       document.getElementById("p2").classList.toggle("active", id==="p2");
     }));
     document.getElementById("p2country").addEventListener("change", refreshDetail);
+    window.addEventListener("resize", () => {
+      renderSummary("t-co", aggByFilial(ALL, "CO", R));
+      renderSummary("t-mx", aggByFilial(ALL, "MX", R));
+      renderSummary("t-br", aggByFilial(ALL, "BR", R));
+      refreshDetail();
+    });
   } catch (e) {
     document.body.innerHTML = `<div class="err">Error: ${e.message}</div>`;
   }
