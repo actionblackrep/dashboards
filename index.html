@@ -217,18 +217,23 @@ function clsDelta(p) {
 }
 
 function autoFit(el) {
-  const wrap = el;
-  const tbl = wrap.querySelector('table');
+  // The wrap is the .tableWrap parent; el is just the content holder.
+  const wrap = el.closest('.tableWrap') || el.parentElement || el;
+  const tbl = el.querySelector('table');
   if (!tbl) return;
-  let fs = 24;
-  tbl.style.fontSize = fs + 'px';
-  // Reduce font size until table fits container
-  while (tbl.scrollHeight > wrap.clientHeight && fs > 5) {
-    fs -= 0.5;
+  requestAnimationFrame(() => {
+    const avail = wrap.clientHeight;
+    if (!avail) return;
+    let fs = 28;
     tbl.style.fontSize = fs + 'px';
-  }
-  // Apply same font-size to pills inside
-  tbl.querySelectorAll('.pill').forEach(p => p.style.fontSize = (fs * 0.95) + 'px');
+    let guard = 60;
+    while (tbl.scrollHeight > avail && fs > 5 && guard-- > 0) {
+      fs -= 0.5;
+      tbl.style.fontSize = fs + 'px';
+    }
+    tbl.querySelectorAll('.pill').forEach(p => p.style.fontSize = (fs * 0.9) + 'px');
+    tbl.querySelectorAll('th').forEach(th => th.style.fontSize = (fs * 0.85) + 'px');
+  });
 }
 
 function renderSummary(target, data) {
