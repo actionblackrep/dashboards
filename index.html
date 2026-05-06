@@ -21,14 +21,14 @@
   .ch { display:flex; align-items:center; gap:0.6vw; flex:0 0 auto; margin-bottom:0.5vh; }
   .flag { width: 3.2vw; height: 2.2vw; border-radius:3px; border:1px solid #222; }
   .ch h2 { font-size:2vw; margin:0; letter-spacing:0.5px; color:#cfd6dd; }
-  .tableWrap { flex:1 1 auto; overflow:auto; }
-  table { width:100%; border-collapse:collapse; font-size:1.4vw; table-layout: fixed; }
-  th, td { padding: 0.4vh 0.4vw; border-bottom:1px solid #1c2330; text-align:left; }
-  thead th { background:#1f2733; color:#cfd6dd; font-weight:600; position:sticky; top:0; font-size:1.25vw; }
+  .tableWrap { flex:1 1 auto; overflow:hidden; min-height:0; }
+  table { width:100%; border-collapse:collapse; font-size:clamp(10px, 1.4vw, 22px); table-layout: fixed; height:100%; }
+  th, td { padding: 0.25vh 0.4vw; border-bottom:1px solid #1c2330; text-align:left; line-height:1.1; }
+  thead th { background:#1f2733; color:#cfd6dd; font-weight:600; font-size:clamp(9px, 1.2vw, 20px); }
   td.num, th.num { text-align:right; font-variant-numeric: tabular-nums; }
   tbody tr:hover { background:#1a212c; }
   td.sede { white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-  .pill { display:inline-block; padding:2px 8px; border-radius:999px; font-weight:600; font-size:1.3vw; min-width:4ch; text-align:center; }
+  .pill { display:inline-block; padding:1px 6px; border-radius:999px; font-weight:600; font-size:clamp(9px, 1.2vw, 20px); min-width:4ch; text-align:center; }
   .pill.good { background: rgba(63,185,80,0.18); color: var(--good); }
   .pill.warn { background: rgba(210,153,34,0.20); color: var(--warn); }
   .pill.bad  { background: rgba(248,81,73,0.18);  color: var(--bad); }
@@ -90,7 +90,7 @@
         </select>
       </label>
     </div>
-    <div class="tableWrap" style="flex:1 1 auto;overflow:auto;"><div id="t-detail"></div></div>
+    <div class="tableWrap" style="flex:1 1 auto;overflow:hidden;min-height:0;"><div id="t-detail"></div></div>
     <div class="help">
       <b>1. % Mes anterior al dia:</b> [Ventas mes acumuladas / Acumulado mes anterior dia hoy] - 1. Delta vs mismo dia del mes anterior.
       &nbsp;&nbsp;<b>2. % Mes anterior:</b> Ventas mes acumuladas / Total mes anterior. 100% = se igualo el mes pasado.
@@ -108,7 +108,12 @@ const SOURCES = [
 
 const fmtPct  = n => isFinite(n) ? (n*100).toFixed(1) + "%" : "-";
 const fmtPctSigned = n => isFinite(n) ? (n>=0?"+":"") + (n*100).toFixed(1) + "%" : "-";
-const fmtMoney = n => isFinite(n) ? new Intl.NumberFormat("es-CO", { maximumFractionDigits: 0 }).format(Math.round(n/1000)) : "-";
+const UNIT = { CO: { div:1000, suffix:" K COP" }, MX: { div:1, suffix:" MXN" }, BR: { div:1, suffix:" BRL" } };
+const fmtMoney = (n, code) => {
+  if (!isFinite(n)) return "-";
+  const u = UNIT[code] || { div:1, suffix:"" };
+  return new Intl.NumberFormat("es-CO", { maximumFractionDigits: 0 }).format(Math.round(n/u.div)) + u.suffix;
+};
 
 function loadCsv(code, file) {
   return new Promise(res => {
@@ -214,6 +219,22 @@ function clsDelta(p) {
 function renderSummary(target, data) {
   const el = document.getElementById(target);
   if (!data.rows.length) { el.innerHTML = '<div class="empty">Sin datos</div>'; return; }
+  const TOP = 15;
+  let visible = data.rows;
+  let otros = null;
+  if (data.rows.length > TOP) {
+    visible = data.rows.slice(0, TOP);
+    const rest = data.rows.slice(TOP);
+    let vacm=0, vmaT=0, vmaD=0;
+    for (const r of rest) { vacm += r.vacm; vmaT += r.vmaT; vmaD += r.vmaD; }
+    otros = {
+      sede: `Otros (${rest.length})`,
+      vacm, vmaT, vmaD,
+      pct_dia:     vmaD > 0 ? (vacm/vmaD) - 1 : NaN,
+      pct_mensual: vmaT > 0 ? vacm/vmaT : NaN,
+      pct_ponder:  data.total.vacm > 0 ? vacm/data.total.vacm : NaN,
+    };
+  }
   const tr = r => `<tr>
     <td class="sede" title="${r.sede}">${r.sede}</td>
     <td class="num"><span class="pill ${clsDelta(r.pct_dia)}">${fmtPctSigned(r.pct_dia)}</span></td>
@@ -230,7 +251,8 @@ function renderSummary(target, data) {
       <th class="num">% PONDERADO</th>
     </tr></thead>
     <tbody>
-      ${data.rows.map(tr).join("")}
+      ${visible.map(tr).join("")}
+      ${otros ? tr(otros) : ""}
       <tr class="totalrow">
         <td>${total.sede}</td>
         <td class="num"><span class="pill ${clsDelta(total.pct_dia)}">${fmtPctSigned(total.pct_dia)}</span></td>
@@ -241,7 +263,7 @@ function renderSummary(target, data) {
   </table>`;
 }
 
-function renderDetail(target, data) {
+function renderDetail(target, data, code) {
   const el = document.getElementById(target);
   if (!data.rows.length) { el.innerHTML = '<div class="empty">Sin datos</div>'; return; }
   const t = data.total;
@@ -259,16 +281,16 @@ function renderDetail(target, data) {
         <td class="sede" title="${r.sede}">${r.sede}</td>
         <td class="num"><span class="pill ${clsRatio(r.pct_mensual)}">${fmtPct(r.pct_mensual)}</span></td>
         <td class="num"><span class="pill ${clsDelta(r.pct_dia)}">${fmtPctSigned(r.pct_dia)}</span></td>
-        <td class="num">${fmtMoney(r.vmaD)}</td>
-        <td class="num">${fmtMoney(r.vacm)}</td>
+        <td class="num">${fmtMoney(r.vmaD, code)}</td>
+        <td class="num">${fmtMoney(r.vacm, code)}</td>
         <td class="num">${fmtPct(r.pct_ponder)}</td>
       </tr>`).join("")}
       <tr class="totalrow">
         <td>${t.sede}</td>
         <td class="num"><span class="pill ${clsRatio(t.pct_mensual)}">${fmtPct(t.pct_mensual)}</span></td>
         <td class="num"><span class="pill ${clsDelta(t.pct_dia)}">${fmtPctSigned(t.pct_dia)}</span></td>
-        <td class="num">${fmtMoney(t.vmaD)}</td>
-        <td class="num">${fmtMoney(t.vacm)}</td>
+        <td class="num">${fmtMoney(t.vmaD, code)}</td>
+        <td class="num">${fmtMoney(t.vacm, code)}</td>
         <td class="num">${fmtPct(t.pct_ponder)}</td>
       </tr>
     </tbody>
@@ -279,7 +301,7 @@ let ALL = [], R = null;
 
 function refreshDetail() {
   const c = document.getElementById("p2country").value;
-  renderDetail("t-detail", aggByFilial(ALL, c, R));
+  renderDetail("t-detail", aggByFilial(ALL, c, R), c);
 }
 
 (async () => {
