@@ -108,7 +108,7 @@ const SOURCES = [
 
 const fmtPct  = n => isFinite(n) ? (n*100).toFixed(1) + "%" : "-";
 const fmtPctSigned = n => isFinite(n) ? (n>=0?"+":"") + (n*100).toFixed(1) + "%" : "-";
-const fmtMoney = n => isFinite(n) ? new Intl.NumberFormat("es-CO", { maximumFractionDigits: 0 }).format(Math.round(n)) : "-";
+const fmtMoney = n => isFinite(n) ? new Intl.NumberFormat("es-CO", { maximumFractionDigits: 0 }).format(Math.round(n/1000)) : "-";
 
 function loadCsv(code, file) {
   return new Promise(res => {
@@ -121,7 +121,7 @@ function loadCsv(code, file) {
           .map(x => ({
             country: code,
             sede: (x.display_name || x.Filial || "").trim(),
-            valor: parseFloat(String(x.ValorBaixa).replace(",",".")) || 0,
+            valor: parseFloat(String(x.ValorBaixa).replace(/\./g,"").replace(",",".")) || 0,
             date: x.DtLancamento,
           }))
           .filter(x => x.sede));
