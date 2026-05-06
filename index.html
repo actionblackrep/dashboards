@@ -10,38 +10,38 @@
   html, body { margin:0; padding:0; height:100%; background: var(--bg); color: var(--text); font-family: -apple-system, system-ui, "Segoe UI", sans-serif; overflow:hidden; }
   .root { display:flex; flex-direction:column; height:100vh; padding: 0.8vh 1vw; box-sizing:border-box; gap: 0.8vh; }
   .top { display:flex; align-items:center; justify-content:space-between; gap:1vw; background:#0a0d12; border:1px solid var(--border); padding:0.6vh 1vw; border-radius:8px; flex:0 0 auto; }
-  .title { font-size: 2.2vh; font-weight:700; letter-spacing:0.5px; }
-  .stamp { font-size:1.3vh; color: var(--muted); text-align:right; }
-  .stamp strong { color: var(--text); display:block; font-size:1.7vh; text-transform:uppercase; }
+  .title { font-size: 2.6vw; font-weight:700; letter-spacing:0.5px; }
+  .stamp { font-size:1.4vw; color: var(--muted); text-align:right; }
+  .stamp strong { color: var(--text); display:block; font-size:1.8vw; text-transform:uppercase; }
   .tabs { display:flex; gap:4px; flex:0 0 auto; }
-  .tab { background:#0b0f14; color: var(--muted); border:1px solid var(--border); border-radius:6px 6px 0 0; padding: 0.4vh 0.9vw; cursor:pointer; font-size:1.3vh; }
+  .tab { background:#0b0f14; color: var(--muted); border:1px solid var(--border); border-radius:6px 6px 0 0; padding: 0.6vh 1.2vw; cursor:pointer; font-size:1.5vw; }
   .tab.active { background: var(--panel); color: var(--text); border-bottom-color: var(--panel); }
-  .grid { display:grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.8vw; flex:1 1 auto; min-height:0; }
+  .grid { display:grid; grid-template-columns: 1fr; grid-template-rows: 1fr 1fr 1fr; gap: 0.8vh; flex:1 1 auto; min-height:0; }
   .country { background: var(--panel); border:1px solid var(--border); border-radius:8px; padding:0.6vh 0.7vw; display:flex; flex-direction:column; min-height:0; }
   .ch { display:flex; align-items:center; gap:0.6vw; flex:0 0 auto; margin-bottom:0.5vh; }
-  .flag { width: 3vh; height: 2vh; border-radius:3px; border:1px solid #222; }
-  .ch h2 { font-size:1.6vh; margin:0; letter-spacing:0.5px; color:#cfd6dd; }
+  .flag { width: 3.2vw; height: 2.2vw; border-radius:3px; border:1px solid #222; }
+  .ch h2 { font-size:2vw; margin:0; letter-spacing:0.5px; color:#cfd6dd; }
   .tableWrap { flex:1 1 auto; overflow:auto; }
-  table { width:100%; border-collapse:collapse; font-size:1.25vh; table-layout: fixed; }
+  table { width:100%; border-collapse:collapse; font-size:1.4vw; table-layout: fixed; }
   th, td { padding: 0.4vh 0.4vw; border-bottom:1px solid #1c2330; text-align:left; }
-  thead th { background:#1f2733; color:#cfd6dd; font-weight:600; position:sticky; top:0; font-size:1.15vh; }
+  thead th { background:#1f2733; color:#cfd6dd; font-weight:600; position:sticky; top:0; font-size:1.25vw; }
   td.num, th.num { text-align:right; font-variant-numeric: tabular-nums; }
   tbody tr:hover { background:#1a212c; }
   td.sede { white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-  .pill { display:inline-block; padding:1px 6px; border-radius:999px; font-weight:600; font-size:1.15vh; min-width:4ch; text-align:center; }
+  .pill { display:inline-block; padding:2px 8px; border-radius:999px; font-weight:600; font-size:1.3vw; min-width:4ch; text-align:center; }
   .pill.good { background: rgba(63,185,80,0.18); color: var(--good); }
   .pill.warn { background: rgba(210,153,34,0.20); color: var(--warn); }
   .pill.bad  { background: rgba(248,81,73,0.18);  color: var(--bad); }
   .pill.na   { background:#1f2733; color: var(--muted); }
   .totalrow td { font-weight:700; background:#131922; }
-  .empty { color: var(--muted); padding: 1vh; font-size:1.4vh; }
+  .empty { color: var(--muted); padding: 1vh; font-size:1.6vw; }
   .err { color: var(--bad); padding: 1vh; }
   /* Detail page */
   #p2 { background: var(--panel); border:1px solid var(--border); border-radius:8px; padding: 0.6vh 1vw; flex:1 1 auto; display:none; flex-direction:column; min-height:0; }
   #p2.active { display:flex; }
   .controls { display:flex; gap:0.6vw; align-items:end; margin-bottom:0.6vh; flex:0 0 auto; }
-  select { background:#0b0f14; color: var(--text); border:1px solid var(--border); border-radius:5px; padding:0.4vh 0.5vw; font-size:1.3vh; }
-  .help { font-size:1.15vh; color: var(--muted); line-height:1.45; margin-top: 0.6vh; }
+  select { background:#0b0f14; color: var(--text); border:1px solid var(--border); border-radius:5px; padding:0.6vh 0.8vw; font-size:1.5vw; }
+  .help { font-size:1.2vw; color: var(--muted); line-height:1.45; margin-top: 0.6vh; }
   .help b { color: var(--text); }
 </style>
 </head>
