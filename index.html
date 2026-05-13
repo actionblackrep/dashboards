@@ -8,27 +8,27 @@
 <style>
   :root { color-scheme: dark; --bg:#0e1116; --panel:#161b22; --border:#243041; --text:#e6edf3; --muted:#8a93a0; --good:#3fb950; --warn:#d29922; --bad:#f85149; }
   html, body { margin:0; padding:0; height:100%; background: var(--bg); color: var(--text); font-family: -apple-system, system-ui, "Segoe UI", sans-serif; overflow:hidden; }
-  .root { display:flex; flex-direction:column; height:100vh; padding: 0.8vh 1vw; box-sizing:border-box; gap: 0.8vh; }
-  .top { display:flex; align-items:center; justify-content:space-between; gap:1vw; background:#0a0d12; border:1px solid var(--border); padding:0.6vh 1vw; border-radius:8px; flex:0 0 auto; }
-  .title { font-size: 2.6vw; font-weight:700; letter-spacing:0.5px; }
-  .stamp { font-size:1.4vw; color: var(--muted); text-align:right; }
-  .stamp strong { color: var(--text); display:block; font-size:1.8vw; text-transform:uppercase; }
-  .tabs { display:flex; gap:4px; flex:0 0 auto; }
-  .tab { background:#0b0f14; color: var(--muted); border:1px solid var(--border); border-radius:6px 6px 0 0; padding: 0.6vh 1.2vw; cursor:pointer; font-size:1.5vw; }
+  .root { display:flex; flex-direction:column; height:100vh; padding: 0.4vh 0.6vw; box-sizing:border-box; gap: 0.4vh; }
+  .top { display:flex; align-items:center; justify-content:space-between; gap:1vw; background:#0a0d12; border:1px solid var(--border); padding:0.3vh 0.8vw; border-radius:6px; flex:0 0 auto; }
+  .title { font-size: 1.3vw; font-weight:700; letter-spacing:0.5px; }
+  .stamp { font-size:0.8vw; color: var(--muted); text-align:right; line-height:1.1; }
+  .stamp strong { color: var(--text); display:block; font-size:1vw; text-transform:uppercase; }
+  .tabs { display:flex; gap:3px; flex:0 0 auto; }
+  .tab { background:#0b0f14; color: var(--muted); border:1px solid var(--border); border-radius:5px 5px 0 0; padding: 0.3vh 0.8vw; cursor:pointer; font-size:0.85vw; }
   .tab.active { background: var(--panel); color: var(--text); border-bottom-color: var(--panel); }
-  .grid { display:grid; grid-template-columns: 1fr; grid-template-rows: 1fr 1fr 1fr; gap: 0.8vh; flex:1 1 auto; min-height:0; }
-  .country { background: var(--panel); border:1px solid var(--border); border-radius:8px; padding:0.6vh 0.7vw; display:flex; flex-direction:column; min-height:0; }
-  .ch { display:flex; align-items:center; gap:0.6vw; flex:0 0 auto; margin-bottom:0.5vh; }
-  .flag { width: 3.2vw; height: 2.2vw; border-radius:3px; border:1px solid #222; }
-  .ch h2 { font-size:2vw; margin:0; letter-spacing:0.5px; color:#cfd6dd; }
-  .tableWrap { flex:1 1 auto; overflow:hidden; min-height:0; }
-  table { width:100%; border-collapse:collapse; font-size:clamp(10px, 1.4vw, 22px); table-layout: fixed; height:100%; }
-  th, td { padding: 0.25vh 0.4vw; border-bottom:1px solid #1c2330; text-align:left; line-height:1.1; }
-  thead th { background:#1f2733; color:#cfd6dd; font-weight:600; font-size:clamp(9px, 1.2vw, 20px); }
+  .grid { display:grid; grid-template-columns: 1fr; grid-template-rows: var(--fr-co, 1fr) var(--fr-mx, 1fr) var(--fr-br, 1fr); gap: 0.4vh; flex:1 1 auto; min-height:0; }
+  .country { background: var(--panel); border:1px solid var(--border); border-radius:6px; padding:0.2vh 0.5vw; display:flex; flex-direction:column; min-height:0; overflow:hidden; }
+  .ch { display:flex; align-items:center; gap:0.5vw; flex:0 0 auto; margin-bottom:0.2vh; }
+  .flag { width: 1.4vw; height: 0.95vw; border-radius:2px; border:1px solid #222; flex:0 0 auto; }
+  .ch h2 { font-size:0.95vw; margin:0; letter-spacing:0.5px; color:#cfd6dd; line-height:1; }
+  .tableWrap { overflow:hidden; flex:1 1 auto; min-height:0; }
+  table { width:100%; border-collapse:collapse; font-size:14px; table-layout: fixed; }
+  th, td { padding: 0.15vh 0.4vw; border-bottom:1px solid #1c2330; text-align:left; line-height:1.15; }
+  thead th { background:#1f2733; color:#cfd6dd; font-weight:600; font-size:0.92em; }
   td.num, th.num { text-align:right; font-variant-numeric: tabular-nums; }
   tbody tr:hover { background:#1a212c; }
   td.sede { white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-  .pill { display:inline-block; padding:1px 6px; border-radius:999px; font-weight:600; font-size:clamp(9px, 1.2vw, 20px); min-width:4ch; text-align:center; }
+  .pill { display:inline-block; padding:0px 5px; border-radius:999px; font-weight:600; font-size:0.92em; min-width:4ch; text-align:center; }
   .pill.good { background: rgba(63,185,80,0.18); color: var(--good); }
   .pill.warn { background: rgba(210,153,34,0.20); color: var(--warn); }
   .pill.bad  { background: rgba(248,81,73,0.18);  color: var(--bad); }
@@ -216,29 +216,51 @@ function clsDelta(p) {
   return "bad";
 }
 
-function autoFit(el) {
-  // The wrap is the .tableWrap parent; el is just the content holder.
-  const wrap = el.closest('.tableWrap') || el.parentElement || el;
-  const tbl = el.querySelector('table');
-  if (!tbl) return;
+// Proportional fit: rows from each country drive grid fr ratios + per-country font.
+const COUNTRY_ROWS = { CO: 0, MX: 0, BR: 0 };
+function setCountryRowCount(code, n) {
+  COUNTRY_ROWS[code] = Math.max(n, 1); // min 1 so empty countries keep a sliver
+}
+function autoFit() {
   requestAnimationFrame(() => {
-    const avail = wrap.clientHeight;
-    if (!avail) return;
-    let fs = 28;
-    tbl.style.fontSize = fs + 'px';
-    let guard = 60;
-    while (tbl.scrollHeight > avail && fs > 5 && guard-- > 0) {
-      fs -= 0.5;
+    const grid = document.getElementById('p1');
+    if (!grid) return;
+    // Step 1: proportional fr based on row counts (incl. total row, min 1)
+    const co = COUNTRY_ROWS.CO, mx = COUNTRY_ROWS.MX, br = COUNTRY_ROWS.BR;
+    grid.style.setProperty('--fr-co', co + 'fr');
+    grid.style.setProperty('--fr-mx', mx + 'fr');
+    grid.style.setProperty('--fr-br', br + 'fr');
+    // Step 2: per-country shrink-to-fit (each table independently)
+    document.querySelectorAll('#p1 .country').forEach(block => {
+      const tbl = block.querySelector('table');
+      if (!tbl) return;
+      const wrap = block.querySelector('.tableWrap');
+      tbl.style.fontSize = '';
+      let fs = 22, guard = 80;
       tbl.style.fontSize = fs + 'px';
-    }
-    tbl.querySelectorAll('.pill').forEach(p => p.style.fontSize = (fs * 0.9) + 'px');
-    tbl.querySelectorAll('th').forEach(th => th.style.fontSize = (fs * 0.85) + 'px');
+      while (tbl.scrollHeight > wrap.clientHeight && fs > 4 && guard-- > 0) {
+        fs -= 0.5;
+        tbl.style.fontSize = fs + 'px';
+      }
+      // also grow if there is leftover space (cap so it stays sensible)
+      guard = 80;
+      while (tbl.scrollHeight < wrap.clientHeight && fs < 60 && guard-- > 0) {
+        fs += 0.5;
+        tbl.style.fontSize = fs + 'px';
+        if (tbl.scrollHeight > wrap.clientHeight) { fs -= 0.5; tbl.style.fontSize = fs + 'px'; break; }
+      }
+    });
   });
 }
 
-function renderSummary(target, data) {
+function renderSummary(target, data, code) {
   const el = document.getElementById(target);
-  if (!data.rows.length) { el.innerHTML = '<div class="empty">Sin datos</div>'; return; }
+  if (!data.rows.length) {
+    setCountryRowCount(code, 1);
+    el.innerHTML = '<div class="empty">Sin datos</div>';
+    return;
+  }
+  setCountryRowCount(code, data.rows.length + 1); // +1 for total row
   const tr = r => `<tr>
     <td class="sede" title="${r.sede}">${r.sede}</td>
     <td class="num"><span class="pill ${clsDelta(r.pct_dia)}">${fmtPctSigned(r.pct_dia)}</span></td>
@@ -264,7 +286,6 @@ function renderSummary(target, data) {
       </tr>
     </tbody>
   </table>`;
-  autoFit(el);
 }
 
 function renderDetail(target, data, code) {
@@ -299,7 +320,6 @@ function renderDetail(target, data, code) {
       </tr>
     </tbody>
   </table>`;
-  autoFit(el);
 }
 
 let ALL = [], R = null;
@@ -318,9 +338,10 @@ function refreshDetail() {
     }
     document.getElementById("maxdate").textContent = maxDate(ALL);
     R = ranges();
-    renderSummary("t-co", aggByFilial(ALL, "CO", R));
-    renderSummary("t-mx", aggByFilial(ALL, "MX", R));
-    renderSummary("t-br", aggByFilial(ALL, "BR", R));
+    renderSummary("t-co", aggByFilial(ALL, "CO", R), "CO");
+    renderSummary("t-mx", aggByFilial(ALL, "MX", R), "MX");
+    renderSummary("t-br", aggByFilial(ALL, "BR", R), "BR");
+    autoFit();
     refreshDetail();
 
     document.querySelectorAll(".tab").forEach(t => t.addEventListener("click", () => {
@@ -329,14 +350,9 @@ function refreshDetail() {
       const id = t.dataset.tab;
       document.getElementById("p1").style.display = id==="p1" ? "" : "none";
       document.getElementById("p2").classList.toggle("active", id==="p2");
+      if (id === "p1") autoFit();
     }));
     document.getElementById("p2country").addEventListener("change", refreshDetail);
-    window.addEventListener("resize", () => {
-      renderSummary("t-co", aggByFilial(ALL, "CO", R));
-      renderSummary("t-mx", aggByFilial(ALL, "MX", R));
-      renderSummary("t-br", aggByFilial(ALL, "BR", R));
-      refreshDetail();
-    });
   } catch (e) {
     document.body.innerHTML = `<div class="err">Error: ${e.message}</div>`;
   }
