@@ -274,7 +274,7 @@ function renderSummary(target, data, code) {
     <td class="rank">${r.rank}</td>
     <td class="sede" title="${r.sede}">${r.sede}</td>
     <td class="num"><span class="pill ${clsDelta(r.pct_dia)}">${fmtPctSigned(r.pct_dia)}</span></td>
-    <td class="num"><span class="pill ${clsRatio(r.pct_mensual)}">${fmtPct(r.pct_mensual)}</span></td>
+    <td class="num">${fmtPct(r.pct_mensual)}</td>
     <td class="num">${fmtPct(r.pct_ponder)}</td>
   </tr>`;
   const total = data.total;
@@ -293,7 +293,7 @@ function renderSummary(target, data, code) {
         <td></td>
         <td>${total.sede}</td>
         <td class="num"><span class="pill ${clsDelta(total.pct_dia)}">${fmtPctSigned(total.pct_dia)}</span></td>
-        <td class="num"><span class="pill ${clsRatio(total.pct_mensual)}">${fmtPct(total.pct_mensual)}</span></td>
+        <td class="num">${fmtPct(total.pct_mensual)}</td>
         <td class="num">${fmtPct(total.pct_ponder)}</td>
       </tr>
     </tbody>
@@ -318,7 +318,7 @@ function renderDetail(target, data, code) {
       ${data.rows.map(r => `<tr>
         <td class="rank">${r.rank}</td>
         <td class="sede" title="${r.sede}">${r.sede}</td>
-        <td class="num"><span class="pill ${clsRatio(r.pct_mensual)}">${fmtPct(r.pct_mensual)}</span></td>
+        <td class="num">${fmtPct(r.pct_mensual)}</td>
         <td class="num"><span class="pill ${clsDelta(r.pct_dia)}">${fmtPctSigned(r.pct_dia)}</span></td>
         <td class="num">${fmtMoney(r.vmaD, code)}</td>
         <td class="num">${fmtMoney(r.vacm, code)}</td>
@@ -327,7 +327,7 @@ function renderDetail(target, data, code) {
       <tr class="totalrow">
         <td></td>
         <td>${t.sede}</td>
-        <td class="num"><span class="pill ${clsRatio(t.pct_mensual)}">${fmtPct(t.pct_mensual)}</span></td>
+        <td class="num">${fmtPct(t.pct_mensual)}</td>
         <td class="num"><span class="pill ${clsDelta(t.pct_dia)}">${fmtPctSigned(t.pct_dia)}</span></td>
         <td class="num">${fmtMoney(t.vmaD, code)}</td>
         <td class="num">${fmtMoney(t.vacm, code)}</td>
