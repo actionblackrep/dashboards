@@ -1,0 +1,91 @@
+display_name,country_code,city_name,state_name,region_name,address,brand,timezone,is_presale,is_sold_out,is_deleted,partner_name,partner_id
+Botafogo,BR,RIO DE JANEIRO,RIO DE JANEIRO,,"R. Voluntários da Pátria, 393 - Botafogo, Rio de Janeiro - RJ, 22270-005, Brazil",ACTION_EXPERIENCE,America/Sao_Paulo,0,0,0,EVO,2
+Savassi,BR,BELO HORIZONTE,MINAS GERAIS,,"R. Sergipe, 1208 - Funcionários, Belo Horizonte - MG, 30130-174, Brazil",ACTION_EXPERIENCE,America/Sao_Paulo,0,0,0,EVO,1
+Alto de palmas,CO,ENVIGADO,ANTIOQUIA,ANTIOQUIA SUR,"Ed. Indie, Av. Las Palmas, Vrd. El Penasco",ACTION_EXPERIENCE,America/Bogota,0,0,0,EVO,7
+Altos Del Prado,CO,BARRANQUILLA,ATLANTICO,B/QUILLA - CALI - PEREIRA,"Cra. 56 #75 155, Nte. Centro Historico",ACTION_EXPERIENCE,America/Bogota,0,0,0,EVO,19
+Atlantis,CO,"BOGOTÁ, D.C.",CUNDINAMARCA,BOGOTÁ,Cl. 81 # 13-85,ACTION_EXPERIENCE,America/Bogota,0,0,0,EVO,20
+Atrio,CO,"BOGOTÁ, D.C.",CUNDINAMARCA,BOGOTÁ,Cll 28 # 13a 75 Bogotá - piso 2,ACTION_EXPERIENCE,America/Bogota,1,0,0,EVO,66
+Aves Maria,CO,SABANETA,ANTIOQUIA,ANTIOQUIA SUR,Cl. 75 Sur #43A-202,ACTION_EXPERIENCE,America/Bogota,0,0,0,EVO,35
+Belen,CO,MEDELLÍN,ANTIOQUIA,ANTIOQUIA NORTE,"Cl. 30A #73-63, Belen",ACTION_EXPERIENCE,America/Bogota,0,0,0,EVO,10
+Calle 77,CO,CALI,VALLE DEL CAUCA,B/QUILLA - CALI - PEREIRA,CL 77 - 71 ESQUINA NORTE,ACTION_EXPERIENCE,America/Bogota,1,0,0,EVO,64
+Campanella Plaza,CO,CALI,VALLE DEL CAUCA,B/QUILLA - CALI - PEREIRA,"Cl. 18 #127-118, Barrio Pance",ACTION_EXPERIENCE,America/Bogota,0,0,0,EVO,29
+Campestre,CO,MEDELLÍN,ANTIOQUIA,ANTIOQUIA SUR,"Cra. 43A, Cl. 16AA Sur #24",ACTION_EXPERIENCE,America/Bogota,0,0,0,EVO,5
+Carulla 116,CO,"BOGOTÁ, D.C.",CUNDINAMARCA,BOGOTÁ,"Cra. 45 #116-34, Usaquén",ACTION_EXPERIENCE,America/Bogota,1,0,0,EVO,70
+CC Arkadia,CO,MEDELLÍN,ANTIOQUIA,ANTIOQUIA CENTRO,Cra. 51 #81 - 44,ACTION_EXPERIENCE,America/Bogota,0,0,0,EVO,67
+C.C Parque La Colina,CO,"BOGOTÁ, D.C.",CUNDINAMARCA,BOGOTÁ,"Cra. 58d #146-51, Bogotá",ACTION_EXPERIENCE,America/Bogota,0,0,0,EVO,60
+CC Florida,CO,MEDELLÍN,ANTIOQUIA,ANTIOQUIA NORTE,"Cl. 71 #65 - 150, El Progreso",ACTION_EXPERIENCE,America/Bogota,0,0,0,EVO,43
+C.C Multiplaza - La Felicidad,CO,"BOGOTÁ, D.C.",CUNDINAMARCA,BOGOTÁ,Cll 19A # 72-57 Piso 2 Local B-102A,ACTION_EXPERIENCE,America/Bogota,0,0,0,EVO,69
+Cedro Bolivar,CO,"BOGOTÁ, D.C.",CUNDINAMARCA,BOGOTÁ,"Carrera 17 #151-44, Usaquén, Bogotá",ACTION_EXPERIENCE,America/Bogota,0,0,0,EVO,33
+City Plaza,CO,ENVIGADO,ANTIOQUIA,ANTIOQUIA SUR,"Cl. 36D Sur, CC City Plaza #27A- 105 Local 261",ACTION_EXPERIENCE,America/Bogota,0,1,0,EVO,6
+Colina,CO,"BOGOTÁ, D.C.",CUNDINAMARCA,BOGOTÁ,Cl. 137B #56A-46,ACTION_EXPERIENCE,America/Bogota,0,0,0,EVO,31
+Connecta 26,CO,"BOGOTÁ, D.C.",CUNDINAMARCA,BOGOTÁ,"Ac. 26 #92-32, Engativá",ACTION_EXPERIENCE,America/Bogota,0,0,0,EVO,22
+Connecta 80,CO,"BOGOTÁ, D.C.",CUNDINAMARCA,BOGOTÁ,Cl. 81B con Av. Boyacá,ACTION_EXPERIENCE,America/Bogota,0,0,0,EVO,28
+Cortezza,CO,MEDELLÍN,ANTIOQUIA,ANTIOQUIA CENTRO,"Centro Empresarial Cortezza, Km 5, Av. Las Palmas",ACTION_EXPERIENCE,America/Bogota,0,0,0,EVO,24
+Country Mall,CO,CALI,VALLE DEL CAUCA,B/QUILLA - CALI - PEREIRA,CARRERA 4 10-203,ACTION_EXPERIENCE,America/Bogota,1,0,0,EVO,62
+Drive in,CO,MEDELLÍN,ANTIOQUIA,ANTIOQUIA SUR,"Cl 16A Sur #32B-20, El Poblado, Medellín, El Poblado, Medellín, Antioquia",ACTION_EXPERIENCE,America/Bogota,1,0,0,EVO,49
+El Edén,CO,"BOGOTÁ, D.C.",CUNDINAMARCA,BOGOTÁ,"Av. Boyacá #12b-18, Bogotá",ACTION_EXPERIENCE,America/Bogota,0,0,0,EVO,52
+Exito Armenia,CO,ARMENIA,QUINDIO,B/QUILLA - CALI - PEREIRA,"Cra. 14 #10 - 21, Armenia, Quindío",ACTION_EXPERIENCE,America/Bogota,1,0,0,EVO,42
+Éxito Av Colombia,CO,MEDELLÍN,ANTIOQUIA,ANTIOQUIA NORTE,"Cra 66 #49 - 0, Laureles - Estadio",ACTION_EXPERIENCE,America/Bogota,1,0,0,EVO,58
+Éxito Chapinero,CO,"BOGOTÁ, D.C.",CUNDINAMARCA,BOGOTÁ,"Cl. 52 #13-70, Bogotá",ACTION_EXPERIENCE,America/Bogota,0,0,0,EVO,55
+Éxito Poblado,CO,MEDELLÍN,ANTIOQUIA,ANTIOQUIA CENTRO,Cl. 10 No. 43E-135,ACTION_EXPERIENCE,America/Bogota,0,0,0,EVO,27
+Inferior,CO,MEDELLÍN,ANTIOQUIA,ANTIOQUIA CENTRO,"Cra. 30 #11C 09, Ed. Feeling, El Poblado",ACTION_EXPERIENCE,America/Bogota,0,0,0,EVO,12
+FIC 48 CD DEL RIO,CO,MEDELLÍN,ANTIOQUIA,ANTIOQUIA CENTRO,"Cra 44 #18a 13, El Poblado, Medellín, El Poblado",ACTION_EXPERIENCE,America/Bogota,0,0,0,EVO,68
+Corporate Center,CO,"BOGOTÁ, D.C.",CUNDINAMARCA,BOGOTÁ,"Av. El Dorado #69 B-53, Fontibón, Bogotá",ACTION_EXPERIENCE,America/Bogota,0,0,0,EVO,61
+Intermedia,CO,ENVIGADO,ANTIOQUIA,ANTIOQUIA SUR,"Cra. 27 #23 Sur 120, San Jorge",ACTION_EXPERIENCE,America/Bogota,0,0,0,EVO,1
+Jardines Llano Grande,CO,RIONEGRO,ANTIOQUIA,ANTIOQUIA NORTE,Don Diego-Llanogrande #Km 8,ACTION_EXPERIENCE,America/Bogota,1,0,0,EVO,41
+La 33,CO,MEDELLÍN,ANTIOQUIA,ANTIOQUIA NORTE,"Cl. 32F #66B-22, Belen",ACTION_EXPERIENCE,America/Bogota,0,0,0,EVO,9
+Las Palmas Bio 26,CO,MEDELLÍN,ANTIOQUIA,ANTIOQUIA CENTRO,"Cl. 26, Av. Las Palmas #38 - 26, Medellín, Antioquia",ACTION_EXPERIENCE,America/Bogota,0,0,0,EVO,46
+Laureles,CO,MEDELLÍN,ANTIOQUIA,ANTIOQUIA NORTE,"Cl. 37 #80-63, Laureles - Estadio",ACTION_EXPERIENCE,America/Bogota,0,0,0,EVO,8
+Loma De Los Bernal,CO,MEDELLÍN,ANTIOQUIA,ANTIOQUIA CENTRO,"Loma de los Bernal, Medellin, Antioquia",ACTION_EXPERIENCE,America/Bogota,1,0,0,EVO,71
+Los Colores,CO,MEDELLÍN,ANTIOQUIA,ANTIOQUIA NORTE,Cl. 51 #73 - 134 CC. El Diamante,ACTION_EXPERIENCE,America/Bogota,0,1,0,EVO,17
+Los Molinos,CO,MEDELLÍN,ANTIOQUIA,ANTIOQUIA NORTE,"Cl. 30A #82A-26, Medellín, Belén, Medellín, Antioquia",ACTION_EXPERIENCE,America/Bogota,0,0,0,EVO,48
+Mall Gran Via,CO,MEDELLÍN,ANTIOQUIA,ANTIOQUIA NORTE,"MALL GRAN VIA, 75 B - 106",ACTION_EXPERIENCE,America/Bogota,0,0,0,EVO,53
+Mall La Reserva,CO,AGUADAS,CALDAS,ANTIOQUIA NORTE,Cra 3ra #15 - 24,ACTION_EXPERIENCE,America/Bogota,0,0,0,EVO,75
+MALLPLAZA NQS,CO,"BOGOTÁ, D.C.",CUNDINAMARCA,BOGOTÁ,"Mallplaza NQS Avenida Carrera 30 #19, Los Mártires, Bogotá. Piso 2 local B-63
+
+",ACTION_EXPERIENCE,America/Bogota,0,0,0,EVO,79
+Niquia,CO,BELLO,ANTIOQUIA,ANTIOQUIA NORTE,"Centro Empresarial Tierra Agro, Av. 38 #51-39 Piso 3, Hermosa Provincia",ACTION_EXPERIENCE,America/Bogota,0,0,0,EVO,16
+Outlet,CO,MEDELLÍN,ANTIOQUIA,ANTIOQUIA CENTRO,Cl. 16 No. 55-129,ACTION_EXPERIENCE,America/Bogota,0,0,0,EVO,47
+Oviedo,CO,MEDELLÍN,ANTIOQUIA,ANTIOQUIA CENTRO,"Cra. 43A 7 sur 145 Sótano 1 Carulla Oviedo 24 horas, El Poblado",ACTION_EXPERIENCE,America/Bogota,0,0,0,EVO,14
+Park1433,CO,"BOGOTÁ, D.C.",CUNDINAMARCA,BOGOTÁ,Cl. 33A Al Costado Oriental de la Av. Caracas,ACTION_EXPERIENCE,America/Bogota,0,0,0,EVO,45
+Parque Arboleda,CO,PEREIRA,RISARALDA,B/QUILLA - CALI - PEREIRA,"Cra. 14 #5-20, Pereira, Risaralda",ACTION_EXPERIENCE,America/Bogota,0,0,0,EVO,54
+Ciudadela Sabaneta,CO,SABANETA,ANTIOQUIA,ANTIOQUIA SUR,"Cra. 43A #61 Sur-152, Alto Las Flores, Sabaneta, Antioquia",ACTION_EXPERIENCE,America/Bogota,0,0,0,EVO,50
+Mall Outlet Arauco Sopó,CO,SOPÓ,CUNDINAMARCA,BOGOTÁ,"Sopó, Cundinamarca. Local L47",ACTION_EXPERIENCE,America/Bogota,1,0,0,EVO,59
+Pepe Sierra,CO,"BOGOTÁ, D.C.",CUNDINAMARCA,BOGOTÁ,Av. Calle 116 #15-80,ACTION_EXPERIENCE,America/Bogota,0,0,0,EVO,32
+Plaza Campestre,CO,BARRANQUILLA,ATLANTICO,B/QUILLA - CALI - PEREIRA,Cra. 30 #2C #118,ACTION_EXPERIENCE,America/Bogota,0,0,0,EVO,44
+Parque Fabricato,CO,BELLO,ANTIOQUIA,ANTIOQUIA NORTE,Cra. 50 #38a-185,ACTION_EXPERIENCE,America/Bogota,0,0,0,EVO,56
+Plaza Rio Grande,CO,RIONEGRO,ANTIOQUIA,ANTIOQUIA NORTE,Cl. 41 #51-21,ACTION_EXPERIENCE,America/Bogota,0,0,0,EVO,23
+Sabaneta,CO,SABANETA,ANTIOQUIA,ANTIOQUIA SUR,Cl. 52 Sur #44-65,ACTION_EXPERIENCE,America/Bogota,0,1,0,EVO,4
+San Bernardo,CO,MEDELLÍN,ANTIOQUIA,ANTIOQUIA NORTE,"Cra. 70 #26A-10, Guayabal",ACTION_EXPERIENCE,America/Bogota,0,0,0,EVO,34
+Éxito San Diego,CO,MEDELLÍN,ANTIOQUIA,ANTIOQUIA CENTRO,"Cl. 33 #42B-06, La Candelaria, Medellín",ACTION_EXPERIENCE,America/Bogota,0,0,0,EVO,57
+San Lucas,CO,MEDELLÍN,ANTIOQUIA,ANTIOQUIA SUR,"Cl. 20 Sur #27-124, El Poblado",ACTION_EXPERIENCE,America/Bogota,0,0,0,EVO,15
+Santafe Bogota,CO,"BOGOTÁ, D.C.",CUNDINAMARCA,BOGOTÁ,Calle 185 # 45-03 Local 3-149,ACTION_EXPERIENCE,America/Bogota,0,0,0,EVO,13
+Sibelius Chía,CO,CHÍA,CUNDINAMARCA,BOGOTÁ,"Edificio Spaces Sibelius Chía Km 1,5 Vía Chía – Cajicá",ACTION_EXPERIENCE,America/Bogota,1,0,0,EVO,72
+Tesoro,CO,MEDELLÍN,ANTIOQUIA,ANTIOQUIA CENTRO,"Cra. 25A #1A Sur 45 local 47-70, El Poblado",ACTION_EXPERIENCE,America/Bogota,0,1,0,EVO,3
+Unicentro,CO,CALI,VALLE DEL CAUCA,B/QUILLA - CALI - PEREIRA,"Cra. 100 #5-169, Las Vegas",ACTION_EXPERIENCE,America/Bogota,0,0,0,EVO,30
+Epic Pereira,CO,PEREIRA,RISARALDA,B/QUILLA - CALI - PEREIRA,"Av. 30 de Agosto #75-51, Pereira, Risaralda",ACTION_EXPERIENCE,America/Bogota,0,0,0,EVO,51
+Viva Barranquilla,CO,BARRANQUILLA,ATLANTICO,B/QUILLA - CALI - PEREIRA,"CC. Viva, Cra. 51B #87-50, Riomar",ACTION_EXPERIENCE,America/Bogota,0,0,0,EVO,21
+Viva Envigado,CO,ENVIGADO,ANTIOQUIA,ANTIOQUIA SUR,"Cra. 48 #32B Sur-139, Zona 1",ACTION_EXPERIENCE,America/Bogota,0,0,0,EVO,18
+Viva Palmas,CO,ENVIGADO,ANTIOQUIA,ANTIOQUIA SUR,Km 17 Vía Las Palmas,ACTION_EXPERIENCE,America/Bogota,0,0,0,EVO,40
+Churchill,DO,SANTO DOMINGO,SANTO DOMINGO,,Avenida Winston Churchill esquina ángel severo Cabral Local L31,ACTION_EXPERIENCE,America/Santo_Domingo,1,0,0,AX,114
+Alcala,ES,MADRID,MADRID,,"C. de Alcalá, 211, Salamanca, 28028 Madrid",ACTION_EXPERIENCE,Europe/Madrid,1,0,0,TRAININGGYM,10228
+Ortega y Gasset,ES,MADRID,MADRID,,"C. de José Ortega y Gasset, 56",ACTION_EXPERIENCE,Europe/Madrid,1,0,0,TRAININGGYM,10321
+Ventas,ES,MADRID,MADRID,,"Calle Biarritz 1, Salamanca, 28028 Madrid",ACTION_EXPERIENCE,Europe/Madrid,1,0,0,TRAININGGYM,10229
+Oxford Circus,GB,LONDON,LONDON,,"Ambika House is located at 9-11/9-12 Portland Place, London, W1B 1PR",ACTION_EXPERIENCE,Europe/London,1,0,0,AX,115
+Bosque Real,MX,CUERNAVACA,MORELOS,MEXICO,"C. Jacarandas 103, Ricardo Flores Magon, 62376.",ACTION_EXPERIENCE,America/Mexico_City,1,0,0,EVO,12
+Cuernavaca,MX,CUERNAVACA,MORELOS,MEXICO,"C. Jacarandas 103, Ricardo Flores Magon, 62376.",ACTION_EXPERIENCE,America/Mexico_City,0,0,0,EVO,5
+Euroten Santa Fe,MX,CIUDAD DE MÉXICO,CIUDAD DE MÉXICO,MEXICO,"Calle Juan Salvador Agraz Número 61, Colonia Santa Fe, Delegación Cuajimalpa, Piso 6",ACTION_EXPERIENCE,America/Mexico_City,0,0,0,EVO,1
+Galerias Metepec,MX,METEPEC,"MEXICO, D.C.",MEXICO,"Blvrd Toluca Metepec Norte 400, Coaxustenco, 52141.",ACTION_EXPERIENCE,America/Mexico_City,1,0,0,EVO,7
+Interlomas,MX,CIUDAD DE MÉXICO,CIUDAD DE MÉXICO,MEXICO,"Vialidad de la Barranca Manzana 003, Col. Ex Hacienda Jesús del Monte, Bosque de las Palmas",ACTION_EXPERIENCE,America/Mexico_City,0,0,0,EVO,3
+La Comer Interlomas,MX,CIUDAD DE MÉXICO,CIUDAD DE MÉXICO,MEXICO,"Av. de la Palma Manzana 015, Villa de las Palmas, 52787 Estado de México, Méx.",ACTION_EXPERIENCE,America/Mexico_City,1,0,0,EVO,4
+Landmark,MX,GUADALAJARA,JALISCO,MEXICO,"Plaza Corporativa, P.º de los Virreyes 45, Puerta de Hierro, 45116 Zapopan, Jal. Local: S2-1B Piso: Sótano 2",ACTION_EXPERIENCE,America/Mexico_City,0,0,0,EVO,9
+Parque Duraznos,MX,CIUDAD DE MÉXICO,CIUDAD DE MÉXICO,MEXICO,"Bosque de Duraznos 39, Bosque de las Lomas, Miguel Hidalgo, 11700",ACTION_EXPERIENCE,America/Mexico_City,0,0,0,EVO,11
+Paseo Querétaro,MX,SANTIAGO DE QUERÉTARO,"MEXICO, D.C.",MEXICO,"Anillo Vial Fray Junípero Serra 7901, La Purísima, 76146 Santiago de Querétaro, Qro.",ACTION_EXPERIENCE,America/Mexico_City,1,0,0,EVO,6
+Reforma,MX,CIUDAD DE MÉXICO,CIUDAD DE MÉXICO,MEXICO,"Av. P.º de la Reforma 342, Juárez, Cuauhtémoc, 06600",ACTION_EXPERIENCE,America/Mexico_City,1,0,0,EVO,10
+Sao Paulo,MX,GUADALAJARA,JALISCO,MEXICO,"Valparaíso #2349 Local P-02 Col. Providencia Guadalajara, Jalisco",ACTION_EXPERIENCE,America/Mexico_City,0,0,0,EVO,2
+Town Square Metepec,MX,METEPEC,"MEXICO, D.C.",MEXICO,"Av. Ignacio Comonfort 1100, Residencial la Providencia, 52177 Providencia,
+",ACTION_EXPERIENCE,America/Mexico_City,1,0,0,EVO,8
+Parque Das Nacoes,PT,LISBOA,LISBOA,,,ACTION_EXPERIENCE,Europe/Lisbon,1,0,0,TRAININGGYM,10000000000
+Saldanha,PT,LISBOA,LISBOA,,"Avenida 5 de Outubro 56B, 1050-059 Lisboa",ACTION_EXPERIENCE,Europe/Lisbon,1,0,0,TRAININGGYM,10000000000
+Sao Sebastiao,PT,LISBOA,LISBOA,,"R. Dr. Nicolau Bettencourt 45, 1050-078 Lisboa",ACTION_EXPERIENCE,Europe/Lisbon,1,0,0,TRAININGGYM,10000000000
+Tribeca,US,NEW YORK,NEW YORK,,"152 Franklin ST, New York, 10013 NY",ACTION_EXPERIENCE,America/New_York,0,0,0,GLOFOX,64c96bc8aecbe3bb70046e94
