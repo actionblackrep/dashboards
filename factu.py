@@ -36,7 +36,8 @@ def _truthy(v):
 
 
 def fetch_branches_by_country():
-    """Return dict {country_code: {partner_id: display_name}} excluding presale, deleted, ACTION_SPORT_CLUB."""
+    """Return dict {country_code: {partner_id: display_name}} excluding presale, deleted, ACTION_SPORT_CLUB.
+    Also writes data/branches.csv with full ACTION_EXPERIENCE rows for the frontend Sedes tab."""
     r = requests.get(BRANCHES_URL, headers={"x-api-key": BRANCHES_API_KEY}, timeout=60)
     r.raise_for_status()
     js = r.json()
@@ -59,7 +60,23 @@ def fetch_branches_by_country():
             continue
     summary = ", ".join(f"{c}={len(m)}" for c, m in sorted(by_country.items()))
     print(f"branches by country: {summary}; presale_skip={p} deleted_skip={d} action_sport_skip={bsp}")
+    _export_branches_csv(items)
     return by_country
+
+
+def _export_branches_csv(items):
+    """Write data/branches.csv (brand=ACTION_EXPERIENCE only) for the Sedes tab in index.html."""
+    cols = ["display_name","country_code","city_name","state_name","region_name","address",
+            "brand","timezone","is_presale","is_sold_out","is_deleted","partner_name","partner_id"]
+    rows = []
+    for b in items:
+        if str(b.get("brand", "")).strip().upper() != "ACTION_EXPERIENCE":
+            continue
+        rows.append({c: b.get(c, "") for c in cols})
+    os.makedirs(DATA_DIR, exist_ok=True)
+    out = os.path.join(DATA_DIR, "branches.csv")
+    pd.DataFrame(rows, columns=cols).to_csv(out, index=False)
+    print(f"WROTE {out} ({len(rows)} ACTION_EXPERIENCE rows)")
 
 
 def monthly_ranges(start_date, end_date):
