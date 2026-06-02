@@ -16,8 +16,16 @@
   .tabs { display:flex; gap:3px; flex:0 0 auto; }
   .tab { background:#000000; color: var(--muted); border:1px solid var(--border); border-radius:5px 5px 0 0; padding: 0.3vh 0.8vw; cursor:pointer; font-size:0.85vw; }
   .tab.active { background: var(--panel); color: var(--text); border-bottom-color: var(--panel); }
-  .grid { display:grid; grid-template-columns: 1fr; grid-template-rows: var(--fr-co, 1fr) var(--fr-mx, 1fr) var(--fr-br, 1fr); gap: 0.4vh; flex:1 1 auto; min-height:0; }
-  .country { background: var(--panel); border:1px solid var(--border); border-radius:6px; padding:0.2vh 0.5vw; display:flex; flex-direction:column; min-height:0; overflow:hidden; }
+  .grid { display:grid; grid-template-columns: 1fr; grid-template-rows: var(--top-h, 65%) 6px 1fr; gap: 0; flex:1 1 auto; min-height:0; }
+  .bottom-row { display:grid; grid-template-columns: var(--mx-w, 50%) 6px 1fr; gap: 0; min-height:0; min-width:0; }
+  .splitter-h { background: var(--border); cursor: row-resize; transition: background 0.15s; }
+  .splitter-h:hover, .splitter-h.dragging { background: var(--muted); }
+  .splitter-v { background: var(--border); cursor: col-resize; transition: background 0.15s; }
+  .splitter-v:hover, .splitter-v.dragging { background: var(--muted); }
+  .country { background: var(--panel); border:1px solid var(--border); border-radius:6px; padding:0.2vh 0.5vw; display:flex; flex-direction:column; min-height:0; min-width:0; overflow:hidden; box-sizing:border-box; }
+  .grid > .country { margin-bottom: 2px; }
+  .bottom-row > .country:first-child { margin-right: 2px; }
+  .bottom-row > .country:last-child { margin-left: 2px; }
   .ch { display:flex; align-items:center; gap:0.5vw; flex:0 0 auto; margin-bottom:0.2vh; }
   .flag { width: 1.4vw; height: 0.95vw; border-radius:2px; border:1px solid #222; flex:0 0 auto; }
   .ch h2 { font-size:0.95vw; margin:0; letter-spacing:0.5px; color:#cfd6dd; line-height:1; }
@@ -76,19 +84,23 @@
       </div>
       <div class="tableWrap"><div id="t-co"></div></div>
     </div>
-    <div class="country">
-      <div class="ch">
-        <svg class="flag" viewBox="0 0 6 4" preserveAspectRatio="none"><rect width="2" height="4" fill="#006847"/><rect x="2" width="2" height="4" fill="#ffffff"/><rect x="4" width="2" height="4" fill="#CE1126"/></svg>
-        <h2>MEXICO</h2>
+    <div class="splitter-h" id="splitH" title="Arrastrar para ajustar"></div>
+    <div class="bottom-row">
+      <div class="country">
+        <div class="ch">
+          <svg class="flag" viewBox="0 0 6 4" preserveAspectRatio="none"><rect width="2" height="4" fill="#006847"/><rect x="2" width="2" height="4" fill="#ffffff"/><rect x="4" width="2" height="4" fill="#CE1126"/></svg>
+          <h2>MEXICO</h2>
+        </div>
+        <div class="tableWrap"><div id="t-mx"></div></div>
       </div>
-      <div class="tableWrap"><div id="t-mx"></div></div>
-    </div>
-    <div class="country">
-      <div class="ch">
-        <svg class="flag" viewBox="0 0 14 10" preserveAspectRatio="none"><rect width="14" height="10" fill="#009C3B"/><polygon points="7,1 13,5 7,9 1,5" fill="#FFDF00"/><circle cx="7" cy="5" r="2" fill="#002776"/></svg>
-        <h2>BRASIL</h2>
+      <div class="splitter-v" id="splitV" title="Arrastrar para ajustar"></div>
+      <div class="country">
+        <div class="ch">
+          <svg class="flag" viewBox="0 0 14 10" preserveAspectRatio="none"><rect width="14" height="10" fill="#009C3B"/><polygon points="7,1 13,5 7,9 1,5" fill="#FFDF00"/><circle cx="7" cy="5" r="2" fill="#002776"/></svg>
+          <h2>BRASIL</h2>
+        </div>
+        <div class="tableWrap"><div id="t-br"></div></div>
       </div>
-      <div class="tableWrap"><div id="t-br"></div></div>
     </div>
   </div>
 
@@ -250,51 +262,107 @@ function clsDelta(p) {
   return "bad";
 }
 
-// Proportional fit: rows from each country drive grid fr ratios + per-country font.
-const COUNTRY_ROWS = { CO: 0, MX: 0, BR: 0 };
-function setCountryRowCount(code, n) {
-  COUNTRY_ROWS[code] = Math.max(n, 1); // min 1 so empty countries keep a sliver
+// Layout: CO full-width top, MX|BR side-by-side bottom. User-adjustable splitters.
+const LS_TOP = "factu.topH", LS_MX = "factu.mxW";
+const MIN_TOP = 30, MAX_TOP = 85;   // % height for CO
+const MIN_SIDE = 20, MAX_SIDE = 80; // % width for MX (BR mirrors)
+const MIN_FONT = 11, MAX_FONT = 60;
+
+function getTopH() {
+  const v = parseFloat(localStorage.getItem(LS_TOP));
+  return isFinite(v) ? Math.min(MAX_TOP, Math.max(MIN_TOP, v)) : 65;
 }
+function getMxW() {
+  const v = parseFloat(localStorage.getItem(LS_MX));
+  return isFinite(v) ? Math.min(MAX_SIDE, Math.max(MIN_SIDE, v)) : 50;
+}
+function applyLayout() {
+  const grid = document.getElementById('p1');
+  if (!grid) return;
+  grid.style.setProperty('--top-h', getTopH() + '%');
+  const row = grid.querySelector('.bottom-row');
+  if (row) row.style.setProperty('--mx-w', getMxW() + '%');
+}
+
 function autoFit() {
   requestAnimationFrame(() => {
-    const grid = document.getElementById('p1');
-    if (!grid) return;
-    // Step 1: proportional fr based on row counts (incl. total row, min 1)
-    const co = COUNTRY_ROWS.CO, mx = COUNTRY_ROWS.MX, br = COUNTRY_ROWS.BR;
-    grid.style.setProperty('--fr-co', co + 'fr');
-    grid.style.setProperty('--fr-mx', mx + 'fr');
-    grid.style.setProperty('--fr-br', br + 'fr');
-    // Step 2: per-country shrink-to-fit (each table independently)
     document.querySelectorAll('#p1 .country').forEach(block => {
       const tbl = block.querySelector('table');
       if (!tbl) return;
       const wrap = block.querySelector('.tableWrap');
+      if (!wrap || wrap.clientHeight <= 0) return;
       tbl.style.fontSize = '';
       let fs = 22, guard = 80;
       tbl.style.fontSize = fs + 'px';
-      while (tbl.scrollHeight > wrap.clientHeight && fs > 4 && guard-- > 0) {
+      while (tbl.scrollHeight > wrap.clientHeight && fs > MIN_FONT && guard-- > 0) {
         fs -= 0.5;
         tbl.style.fontSize = fs + 'px';
       }
-      // also grow if there is leftover space (cap so it stays sensible)
       guard = 80;
-      while (tbl.scrollHeight < wrap.clientHeight && fs < 60 && guard-- > 0) {
+      while (tbl.scrollHeight < wrap.clientHeight && fs < MAX_FONT && guard-- > 0) {
         fs += 0.5;
         tbl.style.fontSize = fs + 'px';
         if (tbl.scrollHeight > wrap.clientHeight) { fs -= 0.5; tbl.style.fontSize = fs + 'px'; break; }
       }
+      if (fs < MIN_FONT) { fs = MIN_FONT; tbl.style.fontSize = fs + 'px'; }
     });
   });
+}
+
+function initSplitters() {
+  const grid = document.getElementById('p1');
+  const splitH = document.getElementById('splitH');
+  const splitV = document.getElementById('splitV');
+  if (!grid || !splitH || !splitV) return;
+
+  const drag = (el, getPct, setPct, axis) => {
+    let active = false;
+    const onDown = e => {
+      active = true;
+      el.classList.add('dragging');
+      document.body.style.cursor = axis === 'y' ? 'row-resize' : 'col-resize';
+      document.body.style.userSelect = 'none';
+      e.preventDefault();
+    };
+    const onMove = e => {
+      if (!active) return;
+      const rect = (axis === 'y' ? grid : grid.querySelector('.bottom-row')).getBoundingClientRect();
+      const pct = axis === 'y'
+        ? ((e.clientY - rect.top) / rect.height) * 100
+        : ((e.clientX - rect.left) / rect.width) * 100;
+      setPct(pct);
+      applyLayout();
+      autoFit();
+    };
+    const onUp = () => {
+      if (!active) return;
+      active = false;
+      el.classList.remove('dragging');
+      document.body.style.cursor = '';
+      document.body.style.userSelect = '';
+    };
+    el.addEventListener('mousedown', onDown);
+    document.addEventListener('mousemove', onMove);
+    document.addEventListener('mouseup', onUp);
+  };
+
+  drag(splitH, getTopH, p => {
+    const clamped = Math.min(MAX_TOP, Math.max(MIN_TOP, p));
+    localStorage.setItem(LS_TOP, clamped.toFixed(2));
+  }, 'y');
+
+  drag(splitV, getMxW, p => {
+    const clamped = Math.min(MAX_SIDE, Math.max(MIN_SIDE, p));
+    localStorage.setItem(LS_MX, clamped.toFixed(2));
+  }, 'x');
 }
 
 function renderSummary(target, data, code) {
   const el = document.getElementById(target);
   if (!data.rows.length) {
-    setCountryRowCount(code, 1);
     el.innerHTML = '<div class="empty">Sin datos</div>';
     return;
   }
-  setCountryRowCount(code, data.rows.length + 1); // +1 for total row
   const tr = r => `<tr>
     <td class="rank">${r.rank}</td>
     <td class="sede" title="${r.sede}">${r.sede}</td>
@@ -417,6 +485,8 @@ function renderSedes() {
 
 (async () => {
   try {
+    applyLayout();
+    initSplitters();
     ALL = await loadAll();
     if (!ALL.length) {
       document.getElementById("maxdate").textContent = "Sin datos";
@@ -428,6 +498,7 @@ function renderSedes() {
     renderSummary("t-mx", aggByFilial(ALL, "MX", R), "MX");
     renderSummary("t-br", aggByFilial(ALL, "BR", R), "BR");
     autoFit();
+    window.addEventListener('resize', autoFit);
     refreshDetail();
 
     SEDES = await loadSedes();
