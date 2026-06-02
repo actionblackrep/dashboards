@@ -16,16 +16,10 @@
   .tabs { display:flex; gap:3px; flex:0 0 auto; }
   .tab { background:#000000; color: var(--muted); border:1px solid var(--border); border-radius:5px 5px 0 0; padding: 0.3vh 0.8vw; cursor:pointer; font-size:0.85vw; }
   .tab.active { background: var(--panel); color: var(--text); border-bottom-color: var(--panel); }
-  .grid { display:grid; grid-template-columns: 1fr; grid-template-rows: var(--top-h, 65%) 6px 1fr; gap: 0; flex:1 1 auto; min-height:0; }
-  .bottom-row { display:grid; grid-template-columns: var(--mx-w, 50%) 6px 1fr; gap: 0; min-height:0; min-width:0; }
+  .grid { display:grid; grid-template-columns: 1fr; grid-template-rows: var(--co-h, 65%) 6px var(--mx-h, 20%) 6px 1fr; gap: 0; flex:1 1 auto; min-height:0; }
   .splitter-h { background: var(--border); cursor: row-resize; transition: background 0.15s; }
   .splitter-h:hover, .splitter-h.dragging { background: var(--muted); }
-  .splitter-v { background: var(--border); cursor: col-resize; transition: background 0.15s; }
-  .splitter-v:hover, .splitter-v.dragging { background: var(--muted); }
   .country { background: var(--panel); border:1px solid var(--border); border-radius:6px; padding:0.2vh 0.5vw; display:flex; flex-direction:column; min-height:0; min-width:0; overflow:hidden; box-sizing:border-box; }
-  .grid > .country { margin-bottom: 2px; }
-  .bottom-row > .country:first-child { margin-right: 2px; }
-  .bottom-row > .country:last-child { margin-left: 2px; }
   .ch { display:flex; align-items:center; gap:0.5vw; flex:0 0 auto; margin-bottom:0.2vh; }
   .flag { width: 1.4vw; height: 0.95vw; border-radius:2px; border:1px solid #222; flex:0 0 auto; }
   .ch h2 { font-size:0.95vw; margin:0; letter-spacing:0.5px; color:#cfd6dd; line-height:1; }
@@ -84,23 +78,21 @@
       </div>
       <div class="tableWrap"><div id="t-co"></div></div>
     </div>
-    <div class="splitter-h" id="splitH" title="Arrastrar para ajustar"></div>
-    <div class="bottom-row">
-      <div class="country">
-        <div class="ch">
-          <svg class="flag" viewBox="0 0 6 4" preserveAspectRatio="none"><rect width="2" height="4" fill="#006847"/><rect x="2" width="2" height="4" fill="#ffffff"/><rect x="4" width="2" height="4" fill="#CE1126"/></svg>
-          <h2>MEXICO</h2>
-        </div>
-        <div class="tableWrap"><div id="t-mx"></div></div>
+    <div class="splitter-h" id="splitCO" title="Arrastrar para ajustar"></div>
+    <div class="country">
+      <div class="ch">
+        <svg class="flag" viewBox="0 0 6 4" preserveAspectRatio="none"><rect width="2" height="4" fill="#006847"/><rect x="2" width="2" height="4" fill="#ffffff"/><rect x="4" width="2" height="4" fill="#CE1126"/></svg>
+        <h2>MEXICO</h2>
       </div>
-      <div class="splitter-v" id="splitV" title="Arrastrar para ajustar"></div>
-      <div class="country">
-        <div class="ch">
-          <svg class="flag" viewBox="0 0 14 10" preserveAspectRatio="none"><rect width="14" height="10" fill="#009C3B"/><polygon points="7,1 13,5 7,9 1,5" fill="#FFDF00"/><circle cx="7" cy="5" r="2" fill="#002776"/></svg>
-          <h2>BRASIL</h2>
-        </div>
-        <div class="tableWrap"><div id="t-br"></div></div>
+      <div class="tableWrap"><div id="t-mx"></div></div>
+    </div>
+    <div class="splitter-h" id="splitMX" title="Arrastrar para ajustar"></div>
+    <div class="country">
+      <div class="ch">
+        <svg class="flag" viewBox="0 0 14 10" preserveAspectRatio="none"><rect width="14" height="10" fill="#009C3B"/><polygon points="7,1 13,5 7,9 1,5" fill="#FFDF00"/><circle cx="7" cy="5" r="2" fill="#002776"/></svg>
+        <h2>BRASIL</h2>
       </div>
+      <div class="tableWrap"><div id="t-br"></div></div>
     </div>
   </div>
 
@@ -262,26 +254,27 @@ function clsDelta(p) {
   return "bad";
 }
 
-// Layout: CO full-width top, MX|BR side-by-side bottom. User-adjustable splitters.
-const LS_TOP = "factu.topH", LS_MX = "factu.mxW";
-const MIN_TOP = 30, MAX_TOP = 85;   // % height for CO
-const MIN_SIDE = 20, MAX_SIDE = 80; // % width for MX (BR mirrors)
-const MIN_FONT = 11, MAX_FONT = 60;
+// Layout: 3 stacked rows CO/MX/BR. Two horizontal splitters. Persisted heights.
+const LS_CO = "factu.coH", LS_MX = "factu.mxH";
+const MIN_PCT = 10, MAX_PCT = 80;   // each country: % of grid height
+const MIN_FONT = 11, MAX_FONT = 22;
 
-function getTopH() {
-  const v = parseFloat(localStorage.getItem(LS_TOP));
-  return isFinite(v) ? Math.min(MAX_TOP, Math.max(MIN_TOP, v)) : 65;
+function clamp(v, lo, hi) { return Math.min(hi, Math.max(lo, v)); }
+function getCoH() {
+  const v = parseFloat(localStorage.getItem(LS_CO));
+  return isFinite(v) ? clamp(v, MIN_PCT, MAX_PCT) : 65;
 }
-function getMxW() {
+function getMxH() {
   const v = parseFloat(localStorage.getItem(LS_MX));
-  return isFinite(v) ? Math.min(MAX_SIDE, Math.max(MIN_SIDE, v)) : 50;
+  return isFinite(v) ? clamp(v, MIN_PCT, MAX_PCT) : 20;
 }
 function applyLayout() {
   const grid = document.getElementById('p1');
   if (!grid) return;
-  grid.style.setProperty('--top-h', getTopH() + '%');
-  const row = grid.querySelector('.bottom-row');
-  if (row) row.style.setProperty('--mx-w', getMxW() + '%');
+  let co = getCoH(), mx = getMxH();
+  if (co + mx > 100 - MIN_PCT) mx = 100 - MIN_PCT - co; // ensure BR has min
+  grid.style.setProperty('--co-h', co + '%');
+  grid.style.setProperty('--mx-h', mx + '%');
 }
 
 function autoFit() {
@@ -292,17 +285,11 @@ function autoFit() {
       const wrap = block.querySelector('.tableWrap');
       if (!wrap || wrap.clientHeight <= 0) return;
       tbl.style.fontSize = '';
-      let fs = 22, guard = 80;
+      let fs = MAX_FONT, guard = 80;
       tbl.style.fontSize = fs + 'px';
       while (tbl.scrollHeight > wrap.clientHeight && fs > MIN_FONT && guard-- > 0) {
         fs -= 0.5;
         tbl.style.fontSize = fs + 'px';
-      }
-      guard = 80;
-      while (tbl.scrollHeight < wrap.clientHeight && fs < MAX_FONT && guard-- > 0) {
-        fs += 0.5;
-        tbl.style.fontSize = fs + 'px';
-        if (tbl.scrollHeight > wrap.clientHeight) { fs -= 0.5; tbl.style.fontSize = fs + 'px'; break; }
       }
       if (fs < MIN_FONT) { fs = MIN_FONT; tbl.style.fontSize = fs + 'px'; }
     });
@@ -311,50 +298,49 @@ function autoFit() {
 
 function initSplitters() {
   const grid = document.getElementById('p1');
-  const splitH = document.getElementById('splitH');
-  const splitV = document.getElementById('splitV');
-  if (!grid || !splitH || !splitV) return;
+  const splitCO = document.getElementById('splitCO');
+  const splitMX = document.getElementById('splitMX');
+  if (!grid || !splitCO || !splitMX) return;
 
-  const drag = (el, getPct, setPct, axis) => {
+  const drag = (el, onDrag) => {
     let active = false;
-    const onDown = e => {
+    el.addEventListener('mousedown', e => {
       active = true;
       el.classList.add('dragging');
-      document.body.style.cursor = axis === 'y' ? 'row-resize' : 'col-resize';
+      document.body.style.cursor = 'row-resize';
       document.body.style.userSelect = 'none';
       e.preventDefault();
-    };
-    const onMove = e => {
+    });
+    document.addEventListener('mousemove', e => {
       if (!active) return;
-      const rect = (axis === 'y' ? grid : grid.querySelector('.bottom-row')).getBoundingClientRect();
-      const pct = axis === 'y'
-        ? ((e.clientY - rect.top) / rect.height) * 100
-        : ((e.clientX - rect.left) / rect.width) * 100;
-      setPct(pct);
+      const rect = grid.getBoundingClientRect();
+      const pctY = ((e.clientY - rect.top) / rect.height) * 100;
+      onDrag(pctY);
       applyLayout();
       autoFit();
-    };
-    const onUp = () => {
+    });
+    document.addEventListener('mouseup', () => {
       if (!active) return;
       active = false;
       el.classList.remove('dragging');
       document.body.style.cursor = '';
       document.body.style.userSelect = '';
-    };
-    el.addEventListener('mousedown', onDown);
-    document.addEventListener('mousemove', onMove);
-    document.addEventListener('mouseup', onUp);
+    });
   };
 
-  drag(splitH, getTopH, p => {
-    const clamped = Math.min(MAX_TOP, Math.max(MIN_TOP, p));
-    localStorage.setItem(LS_TOP, clamped.toFixed(2));
-  }, 'y');
+  // splitCO sits between CO and MX. y% from top = CO height.
+  drag(splitCO, pctY => {
+    const mx = getMxH();
+    const co = clamp(pctY, MIN_PCT, 100 - MIN_PCT - mx);
+    localStorage.setItem(LS_CO, co.toFixed(2));
+  });
 
-  drag(splitV, getMxW, p => {
-    const clamped = Math.min(MAX_SIDE, Math.max(MIN_SIDE, p));
-    localStorage.setItem(LS_MX, clamped.toFixed(2));
-  }, 'x');
+  // splitMX sits between MX and BR. y% from top = CO + MX heights.
+  drag(splitMX, pctY => {
+    const co = getCoH();
+    const mx = clamp(pctY - co, MIN_PCT, 100 - MIN_PCT - co);
+    localStorage.setItem(LS_MX, mx.toFixed(2));
+  });
 }
 
 function renderSummary(target, data, code) {
