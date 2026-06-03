@@ -250,18 +250,18 @@ function clsDelta(p) {
   return "bad";
 }
 
-// 3 stacked panels. Grid rows proportional to (row count + header + total) so every
-// data row gets the SAME vertical pitch across CO/MX/BR. Per-table autoFit picks
-// the largest font that fits. On a tall portrait screen this yields readable text
-// everywhere with all sedes visible and no scroll.
+// 3 stacked panels. Each country gets a TARGET row pitch (px). Smaller countries
+// get a larger pitch so their fonts read bigger than CO's. Grid rows distribute
+// proportionally to (rows + header + total) * target pitch.
 const ROW_COUNTS = { CO: 0, MX: 0, BR: 0 };
+const TARGET_PITCH = { CO: 18, MX: 34, BR: 48 }; // px per row - tune to taste
 const EXTRA_ROWS = 2;   // header + total
 const MIN_FONT = 8, MAX_FONT = 80;
 
 function applyGridRows() {
   const grid = document.getElementById('p1');
   if (!grid) return;
-  const w = c => Math.max(1, ROW_COUNTS[c] + EXTRA_ROWS);
+  const w = c => Math.max(1, (ROW_COUNTS[c] + EXTRA_ROWS) * TARGET_PITCH[c]);
   grid.style.setProperty('--rows', `${w('CO')}fr ${w('MX')}fr ${w('BR')}fr`);
 }
 
