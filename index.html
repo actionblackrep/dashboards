@@ -16,16 +16,12 @@
   .tabs { display:flex; gap:3px; flex:0 0 auto; }
   .tab { background:#000000; color: var(--muted); border:1px solid var(--border); border-radius:5px 5px 0 0; padding: 0.3vh 0.8vw; cursor:pointer; font-size:0.85vw; }
   .tab.active { background: var(--panel); color: var(--text); border-bottom-color: var(--panel); }
-  .grid { display:grid; grid-template-columns: 1fr; grid-template-rows: var(--co-h, 65%) 6px var(--mx-h, 20%) 6px 1fr; gap: 0; flex:1 1 auto; min-height:0; }
-  .splitter-h { background: var(--border); cursor: row-resize; transition: background 0.15s; }
-  .splitter-h:hover, .splitter-h.dragging { background: var(--muted); }
+  .grid { display:grid; grid-template-columns: 1fr; grid-template-rows: var(--rows, 1fr 1fr 1fr); gap: 0.3vh; flex:1 1 auto; min-height:0; }
   .country { background: var(--panel); border:1px solid var(--border); border-radius:6px; padding:0.2vh 0.5vw; display:flex; flex-direction:column; min-height:0; min-width:0; overflow:hidden; box-sizing:border-box; }
   .ch { display:flex; align-items:center; gap:0.5vw; flex:0 0 auto; margin-bottom:0.2vh; }
   .flag { width: 1.4vw; height: 0.95vw; border-radius:2px; border:1px solid #222; flex:0 0 auto; }
   .ch h2 { font-size:0.95vw; margin:0; letter-spacing:0.5px; color:#cfd6dd; line-height:1; }
-  .tableWrap { overflow:auto; flex:1 1 auto; min-height:0; }
-  .tableWrap::-webkit-scrollbar { width:6px; height:6px; }
-  .tableWrap::-webkit-scrollbar-thumb { background: var(--border); border-radius:3px; }
+  .tableWrap { overflow:hidden; flex:1 1 auto; min-height:0; }
   table { width:100%; border-collapse:collapse; font-size:14px; table-layout: fixed; }
   th, td { padding: 0 0.4vw; border-bottom:1px solid var(--border); text-align:left; line-height:1.1; }
   thead th { background: var(--header); color:#cfd6dd; font-weight:600; font-size:0.92em; }
@@ -80,7 +76,6 @@
       </div>
       <div class="tableWrap"><div id="t-co"></div></div>
     </div>
-    <div class="splitter-h" id="splitCO" title="Arrastrar para ajustar"></div>
     <div class="country">
       <div class="ch">
         <svg class="flag" viewBox="0 0 6 4" preserveAspectRatio="none"><rect width="2" height="4" fill="#006847"/><rect x="2" width="2" height="4" fill="#ffffff"/><rect x="4" width="2" height="4" fill="#CE1126"/></svg>
@@ -88,7 +83,6 @@
       </div>
       <div class="tableWrap"><div id="t-mx"></div></div>
     </div>
-    <div class="splitter-h" id="splitMX" title="Arrastrar para ajustar"></div>
     <div class="country">
       <div class="ch">
         <svg class="flag" viewBox="0 0 14 10" preserveAspectRatio="none"><rect width="14" height="10" fill="#009C3B"/><polygon points="7,1 13,5 7,9 1,5" fill="#FFDF00"/><circle cx="7" cy="5" r="2" fill="#002776"/></svg>
@@ -256,101 +250,53 @@ function clsDelta(p) {
   return "bad";
 }
 
-// Layout: 3 stacked rows CO/MX/BR. Two horizontal splitters. Persisted heights.
-const LS_CO = "factu.coH", LS_MX = "factu.mxH";
-const MIN_PCT = 10, MAX_PCT = 80;   // each country: % of grid height
-const MIN_FONT = 8, MAX_FONT = 22;
+// 3 stacked rows. Row heights = proportional to rows × target font per country.
+// All sedes visible, no scroll, no side-by-side. Smaller countries get larger fonts.
+const ROW_COUNTS = { CO: 0, MX: 0, BR: 0 };
+const TARGET_FONT = { CO: 13, MX: 18, BR: 22 }; // ideal px font per country
+const MIN_FONT    = { CO: 6,  MX: 12, BR: 14 }; // hard floor (CO must fit ALL sedes)
+const MAX_FONT    = { CO: 18, MX: 22, BR: 26 };
+const LINE_H = 1.15, EXTRA_ROWS = 2; // header + total
 
-function clamp(v, lo, hi) { return Math.min(hi, Math.max(lo, v)); }
-function getCoH() {
-  const v = parseFloat(localStorage.getItem(LS_CO));
-  return isFinite(v) ? clamp(v, MIN_PCT, MAX_PCT) : 65;
-}
-function getMxH() {
-  const v = parseFloat(localStorage.getItem(LS_MX));
-  return isFinite(v) ? clamp(v, MIN_PCT, MAX_PCT) : 20;
-}
-function applyLayout() {
+function applyGridRows() {
   const grid = document.getElementById('p1');
   if (!grid) return;
-  let co = getCoH(), mx = getMxH();
-  if (co + mx > 100 - MIN_PCT) mx = 100 - MIN_PCT - co; // ensure BR has min
-  grid.style.setProperty('--co-h', co + '%');
-  grid.style.setProperty('--mx-h', mx + '%');
+  const need = c => Math.max(1, (ROW_COUNTS[c] + EXTRA_ROWS) * TARGET_FONT[c] * LINE_H);
+  grid.style.setProperty('--rows', `${need('CO')}fr ${need('MX')}fr ${need('BR')}fr`);
 }
 
 function autoFit() {
   requestAnimationFrame(() => {
-    document.querySelectorAll('#p1 .country').forEach(block => {
-      const tbl = block.querySelector('table');
+    const codes = ['CO', 'MX', 'BR'];
+    const targets = [['t-co','CO'], ['t-mx','MX'], ['t-br','BR']];
+    targets.forEach(([id, code]) => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const tbl = el.querySelector('table');
       if (!tbl) return;
-      const wrap = block.querySelector('.tableWrap');
+      const wrap = el.parentElement; // .tableWrap
       if (!wrap || wrap.clientHeight <= 0) return;
-      tbl.style.fontSize = '';
-      let fs = MAX_FONT, guard = 80;
+      let fs = MAX_FONT[code], guard = 200;
       tbl.style.fontSize = fs + 'px';
-      while (tbl.scrollHeight > wrap.clientHeight && fs > MIN_FONT && guard-- > 0) {
+      while (tbl.scrollHeight > wrap.clientHeight && fs > MIN_FONT[code] && guard-- > 0) {
         fs -= 0.5;
         tbl.style.fontSize = fs + 'px';
       }
-      if (fs < MIN_FONT) { fs = MIN_FONT; tbl.style.fontSize = fs + 'px'; }
+      if (fs < MIN_FONT[code]) { fs = MIN_FONT[code]; tbl.style.fontSize = fs + 'px'; }
     });
   });
 }
 
-function initSplitters() {
-  const grid = document.getElementById('p1');
-  const splitCO = document.getElementById('splitCO');
-  const splitMX = document.getElementById('splitMX');
-  if (!grid || !splitCO || !splitMX) return;
-
-  const drag = (el, onDrag) => {
-    let active = false;
-    el.addEventListener('mousedown', e => {
-      active = true;
-      el.classList.add('dragging');
-      document.body.style.cursor = 'row-resize';
-      document.body.style.userSelect = 'none';
-      e.preventDefault();
-    });
-    document.addEventListener('mousemove', e => {
-      if (!active) return;
-      const rect = grid.getBoundingClientRect();
-      const pctY = ((e.clientY - rect.top) / rect.height) * 100;
-      onDrag(pctY);
-      applyLayout();
-      autoFit();
-    });
-    document.addEventListener('mouseup', () => {
-      if (!active) return;
-      active = false;
-      el.classList.remove('dragging');
-      document.body.style.cursor = '';
-      document.body.style.userSelect = '';
-    });
-  };
-
-  // splitCO sits between CO and MX. y% from top = CO height.
-  drag(splitCO, pctY => {
-    const mx = getMxH();
-    const co = clamp(pctY, MIN_PCT, 100 - MIN_PCT - mx);
-    localStorage.setItem(LS_CO, co.toFixed(2));
-  });
-
-  // splitMX sits between MX and BR. y% from top = CO + MX heights.
-  drag(splitMX, pctY => {
-    const co = getCoH();
-    const mx = clamp(pctY - co, MIN_PCT, 100 - MIN_PCT - co);
-    localStorage.setItem(LS_MX, mx.toFixed(2));
-  });
-}
+function relayout() { applyGridRows(); autoFit(); }
 
 function renderSummary(target, data, code) {
   const el = document.getElementById(target);
   if (!data.rows.length) {
+    ROW_COUNTS[code] = 0;
     el.innerHTML = '<div class="empty">Sin datos</div>';
     return;
   }
+  ROW_COUNTS[code] = data.rows.length;
   const tr = r => `<tr>
     <td class="rank">${r.rank}</td>
     <td class="sede" title="${r.sede}">${r.sede}</td>
@@ -473,8 +419,6 @@ function renderSedes() {
 
 (async () => {
   try {
-    applyLayout();
-    initSplitters();
     ALL = await loadAll();
     if (!ALL.length) {
       document.getElementById("maxdate").textContent = "Sin datos";
@@ -485,8 +429,8 @@ function renderSedes() {
     renderSummary("t-co", aggByFilial(ALL, "CO", R), "CO");
     renderSummary("t-mx", aggByFilial(ALL, "MX", R), "MX");
     renderSummary("t-br", aggByFilial(ALL, "BR", R), "BR");
-    autoFit();
-    window.addEventListener('resize', autoFit);
+    relayout();
+    window.addEventListener('resize', relayout);
     refreshDetail();
 
     SEDES = await loadSedes();
@@ -499,7 +443,7 @@ function renderSedes() {
       document.getElementById("p1").style.display = id==="p1" ? "" : "none";
       document.getElementById("p2").classList.toggle("active", id==="p2");
       document.getElementById("p3").classList.toggle("active", id==="p3");
-      if (id === "p1") autoFit();
+      if (id === "p1") relayout();
     }));
     document.getElementById("p2country").addEventListener("change", refreshDetail);
     document.getElementById("p3name").addEventListener("input", renderSedes);
