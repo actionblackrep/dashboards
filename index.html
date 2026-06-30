@@ -260,7 +260,7 @@ const MIN_FONT = 8, MAX_FONT = 80;
 
 // Rotation: phase 0 = Colombia full screen, phase 1 = Mexico + Brazil together.
 const PHASES = [ ['CO'], ['MX','BR'] ];
-const ROTATE_MS = 5 * 60 * 1000; // 5 minutes
+const ROTATE_MS = 10 * 1000; // TEMP: 10s test (restore to 5*60*1000 for production)
 let phaseIdx = 0;
 
 function applyPhase() {
@@ -443,7 +443,13 @@ function renderSedes() {
     renderSummary("t-br", aggByFilial(ALL, "BR", R), "BR");
     relayout();
     window.addEventListener('resize', relayout);
-    setInterval(() => { phaseIdx = (phaseIdx + 1) % PHASES.length; applyPhase(); }, ROTATE_MS);
+    // Wall-clock anchored rotation: recomputes the phase from elapsed time every
+    // second, so it self-corrects if the TV/kiosk browser throttles timers.
+    const ROTATE_START = Date.now();
+    setInterval(() => {
+      const idx = Math.floor((Date.now() - ROTATE_START) / ROTATE_MS) % PHASES.length;
+      if (idx !== phaseIdx) { phaseIdx = idx; applyPhase(); }
+    }, 1000);
     refreshDetail();
 
     SEDES = await loadSedes();
