@@ -69,21 +69,21 @@
   </div>
 
   <div class="grid" id="p1">
-    <div class="country">
+    <div class="country" id="panel-co">
       <div class="ch">
         <svg class="flag" viewBox="0 0 6 4" preserveAspectRatio="none"><rect width="6" height="2" fill="#FCD116"/><rect y="2" width="6" height="1" fill="#003893"/><rect y="3" width="6" height="1" fill="#CE1126"/></svg>
         <h2>COLOMBIA</h2>
       </div>
       <div class="tableWrap"><div id="t-co"></div></div>
     </div>
-    <div class="country">
+    <div class="country" id="panel-mx">
       <div class="ch">
         <svg class="flag" viewBox="0 0 6 4" preserveAspectRatio="none"><rect width="2" height="4" fill="#006847"/><rect x="2" width="2" height="4" fill="#ffffff"/><rect x="4" width="2" height="4" fill="#CE1126"/></svg>
         <h2>MEXICO</h2>
       </div>
       <div class="tableWrap"><div id="t-mx"></div></div>
     </div>
-    <div class="country">
+    <div class="country" id="panel-br">
       <div class="ch">
         <svg class="flag" viewBox="0 0 14 10" preserveAspectRatio="none"><rect width="14" height="10" fill="#009C3B"/><polygon points="7,1 13,5 7,9 1,5" fill="#FFDF00"/><circle cx="7" cy="5" r="2" fill="#002776"/></svg>
         <h2>BRASIL</h2>
@@ -258,11 +258,27 @@ const TARGET_PITCH = { CO: 18, MX: 18, BR: 18 }; // equal pitch -> equal font
 const EXTRA_ROWS = 2;   // header + total
 const MIN_FONT = 8, MAX_FONT = 80;
 
+// Rotation: phase 0 = Colombia full screen, phase 1 = Mexico + Brazil together.
+const PHASES = [ ['CO'], ['MX','BR'] ];
+const ROTATE_MS = 5 * 60 * 1000; // 5 minutes
+let phaseIdx = 0;
+
+function applyPhase() {
+  const visible = PHASES[phaseIdx];
+  [['CO','panel-co'], ['MX','panel-mx'], ['BR','panel-br']].forEach(([c, pid]) => {
+    const panel = document.getElementById(pid);
+    if (panel) panel.style.display = visible.includes(c) ? '' : 'none';
+  });
+  applyGridRows();
+  autoFit();
+}
+
 function applyGridRows() {
   const grid = document.getElementById('p1');
   if (!grid) return;
   const w = c => Math.max(1, (ROW_COUNTS[c] + EXTRA_ROWS) * TARGET_PITCH[c]);
-  grid.style.setProperty('--rows', `${w('CO')}fr ${w('MX')}fr ${w('BR')}fr`);
+  const visible = PHASES[phaseIdx];
+  grid.style.setProperty('--rows', visible.map(c => `${w(c)}fr`).join(' '));
 }
 
 function autoFit() {
@@ -283,7 +299,7 @@ function autoFit() {
   });
 }
 
-function relayout() { applyGridRows(); autoFit(); }
+function relayout() { applyPhase(); }
 
 function renderSummary(target, data, code) {
   const el = document.getElementById(target);
@@ -427,6 +443,7 @@ function renderSedes() {
     renderSummary("t-br", aggByFilial(ALL, "BR", R), "BR");
     relayout();
     window.addEventListener('resize', relayout);
+    setInterval(() => { phaseIdx = (phaseIdx + 1) % PHASES.length; applyPhase(); }, ROTATE_MS);
     refreshDetail();
 
     SEDES = await loadSedes();
