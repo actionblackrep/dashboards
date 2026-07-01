@@ -260,7 +260,7 @@ const MIN_FONT = 8, MAX_FONT = 22;
 
 // Rotation: phase 0 = Colombia full screen, phase 1 = Mexico + Brazil together.
 const PHASES = [ ['CO'], ['MX','BR'] ];
-const ROTATE_MS = 10 * 1000; // TEMP: 10s test (restore to 5*60*1000 for production)
+const ROTATE_MS = 120 * 1000; // 120 seconds
 let phaseIdx = 0;
 
 function applyPhase() {
