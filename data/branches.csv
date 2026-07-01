@@ -1,6 +1,7 @@
 display_name,country_code,city_name,state_name,region_name,address,brand,timezone,is_presale,is_sold_out,is_deleted,partner_name,partner_id
 Botafogo,BR,RIO DE JANEIRO,RIO DE JANEIRO,,"R. Voluntários da Pátria, 393 - Botafogo, Rio de Janeiro - RJ, 22270-005, Brazil",ACTION_EXPERIENCE,America/Sao_Paulo,0,0,0,EVO,2
 Savassi,BR,BELO HORIZONTE,MINAS GERAIS,,"R. Sergipe, 1208 - Funcionários, Belo Horizonte - MG, 30130-174, Brazil",ACTION_EXPERIENCE,America/Sao_Paulo,0,0,0,EVO,1
+7 De Agosto,CO,"BOGOTÁ, D.C.",CUNDINAMARCA,BOGOTÁ,"Cra 35 #63d-48, Barrios Unidos",ACTION_EXPERIENCE,America/Bogota,1,0,0,EVO,73
 Alto de palmas,CO,ENVIGADO,ANTIOQUIA,ANTIOQUIA SUR,"Ed. Indie, Av. Las Palmas, Vrd. El Penasco",ACTION_EXPERIENCE,America/Bogota,0,0,0,EVO,7
 Altos Del Prado,CO,BARRANQUILLA,ATLANTICO,B/QUILLA - CALI - PEREIRA,"Cra. 56 #75 155, Nte. Centro Historico",ACTION_EXPERIENCE,America/Bogota,0,0,0,EVO,19
 Atlantis,CO,"BOGOTÁ, D.C.",CUNDINAMARCA,BOGOTÁ,Cl. 81 # 13-85,ACTION_EXPERIENCE,America/Bogota,0,0,0,EVO,20
@@ -24,7 +25,6 @@ Cortezza,CO,MEDELLÍN,ANTIOQUIA,ANTIOQUIA CENTRO,"Centro Empresarial Cortezza, K
 Country Mall,CO,CALI,VALLE DEL CAUCA,B/QUILLA - CALI - PEREIRA,CARRERA 4 10-203,ACTION_EXPERIENCE,America/Bogota,1,0,0,EVO,62
 Drive in,CO,MEDELLÍN,ANTIOQUIA,ANTIOQUIA SUR,"Cl 16A Sur #32B-20, El Poblado, Medellín, El Poblado, Medellín, Antioquia",ACTION_EXPERIENCE,America/Bogota,1,0,0,EVO,49
 El Edén,CO,"BOGOTÁ, D.C.",CUNDINAMARCA,BOGOTÁ,"Av. Boyacá #12b-18, Bogotá",ACTION_EXPERIENCE,America/Bogota,0,0,0,EVO,52
-Exito Armenia,CO,ARMENIA,QUINDIO,B/QUILLA - CALI - PEREIRA,"Cra. 14 #10 - 21, Armenia, Quindío",ACTION_EXPERIENCE,America/Bogota,1,0,0,EVO,42
 Éxito Av Colombia,CO,MEDELLÍN,ANTIOQUIA,ANTIOQUIA NORTE,"Cra 66 #49 - 0, Laureles - Estadio",ACTION_EXPERIENCE,America/Bogota,1,0,0,EVO,58
 Éxito Chapinero,CO,"BOGOTÁ, D.C.",CUNDINAMARCA,BOGOTÁ,"Cl. 52 #13-70, Bogotá",ACTION_EXPERIENCE,America/Bogota,0,0,0,EVO,55
 Éxito Poblado,CO,MEDELLÍN,ANTIOQUIA,ANTIOQUIA CENTRO,Cl. 10 No. 43E-135,ACTION_EXPERIENCE,America/Bogota,0,0,0,EVO,27
@@ -34,6 +34,7 @@ Corporate Center,CO,"BOGOTÁ, D.C.",CUNDINAMARCA,BOGOTÁ,"Av. El Dorado #69 B-53
 Intermedia,CO,ENVIGADO,ANTIOQUIA,ANTIOQUIA SUR,"Cra. 27 #23 Sur 120, San Jorge",ACTION_EXPERIENCE,America/Bogota,0,0,0,EVO,1
 Jardines Llano Grande,CO,RIONEGRO,ANTIOQUIA,ANTIOQUIA NORTE,Don Diego-Llanogrande #Km 8,ACTION_EXPERIENCE,America/Bogota,1,0,0,EVO,41
 La 33,CO,MEDELLÍN,ANTIOQUIA,ANTIOQUIA NORTE,"Cl. 32F #66B-22, Belen",ACTION_EXPERIENCE,America/Bogota,0,0,0,EVO,9
+La 45,CO,MEDELLÍN,ANTIOQUIA,ANTIOQUIA CENTRO,"Cra 45 # 69 - 57, Manrique",ACTION_EXPERIENCE,America/Bogota,1,0,0,EVO,42
 Las Palmas Bio 26,CO,MEDELLÍN,ANTIOQUIA,ANTIOQUIA CENTRO,"Cl. 26, Av. Las Palmas #38 - 26, Medellín, Antioquia",ACTION_EXPERIENCE,America/Bogota,0,0,0,EVO,46
 Laureles,CO,MEDELLÍN,ANTIOQUIA,ANTIOQUIA NORTE,"Cl. 37 #80-63, Laureles - Estadio",ACTION_EXPERIENCE,America/Bogota,0,0,0,EVO,8
 Loma De Los Bernal,CO,MEDELLÍN,ANTIOQUIA,ANTIOQUIA CENTRO,"Loma de los Bernal, Medellin, Antioquia",ACTION_EXPERIENCE,America/Bogota,1,0,0,EVO,71
@@ -61,7 +62,9 @@ San Bernardo,CO,MEDELLÍN,ANTIOQUIA,ANTIOQUIA NORTE,"Cra. 70 #26A-10, Guayabal",
 San Lucas,CO,MEDELLÍN,ANTIOQUIA,ANTIOQUIA SUR,"Cl. 20 Sur #27-124, El Poblado",ACTION_EXPERIENCE,America/Bogota,0,0,0,EVO,15
 Santafe Bogota,CO,"BOGOTÁ, D.C.",CUNDINAMARCA,BOGOTÁ,Calle 185 # 45-03 Local 3-149,ACTION_EXPERIENCE,America/Bogota,0,0,0,EVO,13
 Sibelius Chía,CO,CHÍA,CUNDINAMARCA,BOGOTÁ,"Edificio Spaces Sibelius Chía Km 1,5 Vía Chía – Cajicá",ACTION_EXPERIENCE,America/Bogota,1,0,0,EVO,72
+Terminal,CO,MONTERÍA,CÓRDOBA,CARIBE,Calle 41 # 17-55,ACTION_EXPERIENCE,America/Bogota,1,0,0,EVO,65
 Tesoro,CO,MEDELLÍN,ANTIOQUIA,ANTIOQUIA CENTRO,"Cra. 25A #1A Sur 45 local 47-70, El Poblado",ACTION_EXPERIENCE,America/Bogota,0,1,0,EVO,3
+Toledo,CO,LA ESTRELLA,ANTIOQUIA,ANTIOQUIA SUR,Calle 76 sur # 60-91 sector Toledo,ACTION_EXPERIENCE,America/Bogota,1,0,0,EVO,63
 Unicentro,CO,CALI,VALLE DEL CAUCA,B/QUILLA - CALI - PEREIRA,"Cra. 100 #5-169, Las Vegas",ACTION_EXPERIENCE,America/Bogota,0,0,0,EVO,30
 Epic Pereira,CO,PEREIRA,RISARALDA,B/QUILLA - CALI - PEREIRA,"Av. 30 de Agosto #75-51, Pereira, Risaralda",ACTION_EXPERIENCE,America/Bogota,0,0,0,EVO,51
 Viva Barranquilla,CO,BARRANQUILLA,ATLANTICO,B/QUILLA - CALI - PEREIRA,"CC. Viva, Cra. 51B #87-50, Riomar",ACTION_EXPERIENCE,America/Bogota,0,0,0,EVO,21
