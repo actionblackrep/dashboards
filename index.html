@@ -281,6 +281,16 @@ function applyGridRows() {
   grid.style.setProperty('--rows', visible.map(c => `${w(c)}fr`).join(' '));
 }
 
+// True if any numeric cell or header overflows its (fixed) column width.
+// .sede cells are excluded: they truncate with an ellipsis by design.
+function tooWide(tbl) {
+  const cells = tbl.querySelectorAll('td.num, thead th');
+  for (let i = 0; i < cells.length; i++) {
+    if (cells[i].scrollWidth > cells[i].clientWidth + 1) return true;
+  }
+  return false;
+}
+
 function autoFit() {
   requestAnimationFrame(() => {
     [['t-co','CO'], ['t-mx','MX'], ['t-br','BR']].forEach(([id]) => {
@@ -288,9 +298,15 @@ function autoFit() {
       const tbl = el && el.querySelector('table');
       const wrap = el && el.parentElement; // .tableWrap
       if (!tbl || !wrap || wrap.clientHeight <= 0) return;
-      let fs = MAX_FONT, guard = 240;
+      let fs = MAX_FONT, guard = 300;
       tbl.style.fontSize = fs + 'px';
+      // Shrink to fit height...
       while (tbl.scrollHeight > wrap.clientHeight && fs > MIN_FONT && guard-- > 0) {
+        fs -= 0.5;
+        tbl.style.fontSize = fs + 'px';
+      }
+      // ...then shrink further so columns never overlap (matches Colombia).
+      while (tooWide(tbl) && fs > MIN_FONT && guard-- > 0) {
         fs -= 0.5;
         tbl.style.fontSize = fs + 'px';
       }
