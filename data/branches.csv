@@ -75,7 +75,7 @@ Alcala,ES,MADRID,MADRID,,"C. de Alcalá, 211, Salamanca, 28028 Madrid",ACTION_EX
 Ortega y Gasset,ES,MADRID,MADRID,,"C. de José Ortega y Gasset, 56",ACTION_EXPERIENCE,Europe/Madrid,1,0,0,TRAININGGYM,10321
 Ventas,ES,MADRID,MADRID,,"Calle Biarritz 1, Salamanca, 28028 Madrid",ACTION_EXPERIENCE,Europe/Madrid,1,0,0,TRAININGGYM,10229
 Oxford Circus,GB,LONDON,LONDON,,"Ambika House is located at 11 Portland Place, London, W1B 1PR",ACTION_EXPERIENCE,Europe/London,1,0,0,AX,115
-Bosque Real,MX,CUERNAVACA,MORELOS,MEXICO,"C. Jacarandas 103, Ricardo Flores Magon, 62376.",ACTION_EXPERIENCE,America/Mexico_City,1,0,0,EVO,12
+Bosque Real,MX,CIUDAD DE MÉXICO,MORELOS,MEXICO,"C. Jacarandas 103, Ricardo Flores Magon, 62376.",ACTION_EXPERIENCE,America/Mexico_City,0,0,0,EVO,12
 Cuernavaca,MX,CUERNAVACA,MORELOS,MEXICO,"C. Jacarandas 103, Ricardo Flores Magon, 62376.",ACTION_EXPERIENCE,America/Mexico_City,0,0,0,EVO,5
 Euroten Santa Fe,MX,CIUDAD DE MÉXICO,CIUDAD DE MÉXICO,MEXICO,"Calle Juan Salvador Agraz Número 61, Colonia Santa Fe, Delegación Cuajimalpa, Piso 6",ACTION_EXPERIENCE,America/Mexico_City,0,0,0,EVO,1
 Galerias Metepec,MX,METEPEC,"MEXICO, D.C.",MEXICO,"Blvrd Toluca Metepec Norte 400, Coaxustenco, 52141.",ACTION_EXPERIENCE,America/Mexico_City,1,0,0,EVO,7
@@ -84,7 +84,7 @@ La Comer Interlomas,MX,CIUDAD DE MÉXICO,CIUDAD DE MÉXICO,MEXICO,"Av. de la Pal
 Landmark,MX,GUADALAJARA,JALISCO,MEXICO,"Plaza Corporativa, P.º de los Virreyes 45, Puerta de Hierro, 45116 Zapopan, Jal. Local: S2-1B Piso: Sótano 2",ACTION_EXPERIENCE,America/Mexico_City,0,0,0,EVO,9
 Parque Duraznos,MX,CIUDAD DE MÉXICO,CIUDAD DE MÉXICO,MEXICO,"Bosque de Duraznos 39, Bosque de las Lomas, Miguel Hidalgo, 11700",ACTION_EXPERIENCE,America/Mexico_City,0,0,0,EVO,11
 Paseo Querétaro,MX,SANTIAGO DE QUERÉTARO,"MEXICO, D.C.",MEXICO,"Anillo Vial Fray Junípero Serra 7901, La Purísima, 76146 Santiago de Querétaro, Qro.",ACTION_EXPERIENCE,America/Mexico_City,1,0,0,EVO,6
-Reforma,MX,CIUDAD DE MÉXICO,CIUDAD DE MÉXICO,MEXICO,"Av. P.º de la Reforma 342, Juárez, Cuauhtémoc, 06600",ACTION_EXPERIENCE,America/Mexico_City,1,0,0,EVO,10
+Reforma,MX,CIUDAD DE MÉXICO,CIUDAD DE MÉXICO,MEXICO,"Av. P.º de la Reforma 342, Juárez, Cuauhtémoc, 06600",ACTION_EXPERIENCE,America/Mexico_City,0,0,0,EVO,10
 Sao Paulo,MX,GUADALAJARA,JALISCO,MEXICO,"Valparaíso #2349 Local P-02 Col. Providencia Guadalajara, Jalisco",ACTION_EXPERIENCE,America/Mexico_City,0,0,0,EVO,2
 Town Square Metepec,MX,METEPEC,"MEXICO, D.C.",MEXICO,"Av. Ignacio Comonfort 1100, Residencial la Providencia, 52177 Providencia,
 ",ACTION_EXPERIENCE,America/Mexico_City,1,0,0,EVO,8
