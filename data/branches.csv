@@ -70,7 +70,7 @@ Epic Pereira,CO,PEREIRA,RISARALDA,B/QUILLA - CALI - PEREIRA,"Av. 30 de Agosto #7
 Viva Barranquilla,CO,BARRANQUILLA,ATLANTICO,B/QUILLA - CALI - PEREIRA,"CC. Viva, Cra. 51B #87-50, Riomar",ACTION_EXPERIENCE,America/Bogota,0,0,0,EVO,21
 Viva Envigado,CO,ENVIGADO,ANTIOQUIA,ANTIOQUIA SUR,"Cra. 48 #32B Sur-139, Zona 1",ACTION_EXPERIENCE,America/Bogota,0,0,0,EVO,18
 Viva Palmas,CO,ENVIGADO,ANTIOQUIA,ANTIOQUIA SUR,Km 17 Vía Las Palmas,ACTION_EXPERIENCE,America/Bogota,0,0,0,EVO,40
-Churchill,DO,SANTO DOMINGO,SANTO DOMINGO,,Avenida Winston Churchill esquina ángel severo Cabral Local L31,ACTION_EXPERIENCE,America/Santo_Domingo,1,0,0,AX,114
+Action Black Churchill,DO,SANTO DOMINGO,SANTO DOMINGO,,Avenida Winston Churchill esquina ángel severo Cabral Local L31,ACTION_EXPERIENCE,America/Santo_Domingo,1,0,0,AX,114
 Alcala,ES,MADRID,MADRID,,"C. de Alcalá, 211, Salamanca, 28028 Madrid",ACTION_EXPERIENCE,Europe/Madrid,1,0,0,TRAININGGYM,10228
 Ortega y Gasset,ES,MADRID,MADRID,,"C. de José Ortega y Gasset, 56",ACTION_EXPERIENCE,Europe/Madrid,1,0,0,TRAININGGYM,10321
 Ventas,ES,MADRID,MADRID,,"Calle Biarritz 1, Salamanca, 28028 Madrid",ACTION_EXPERIENCE,Europe/Madrid,1,0,0,TRAININGGYM,10229
@@ -87,7 +87,7 @@ Paseo Querétaro,MX,SANTIAGO DE QUERÉTARO,"MEXICO, D.C.",MEXICO,"Anillo Vial Fr
 Reforma,MX,CIUDAD DE MÉXICO,CIUDAD DE MÉXICO,MEXICO,"Av. P.º de la Reforma 342, Juárez, Cuauhtémoc, 06600",ACTION_EXPERIENCE,America/Mexico_City,0,0,0,EVO,10
 Sao Paulo,MX,GUADALAJARA,JALISCO,MEXICO,"Valparaíso #2349 Local P-02 Col. Providencia Guadalajara, Jalisco",ACTION_EXPERIENCE,America/Mexico_City,0,0,0,EVO,2
 Town Square Metepec,MX,METEPEC,"MEXICO, D.C.",MEXICO,"Av. Ignacio Comonfort 1100, Residencial la Providencia, 52177 Providencia,
-",ACTION_EXPERIENCE,America/Mexico_City,1,0,0,EVO,8
+",ACTION_EXPERIENCE,America/Mexico_City,0,0,0,EVO,8
 Parque Das Nacoes,PT,LISBOA,LISBOA,,,ACTION_EXPERIENCE,Europe/Lisbon,1,0,0,TRAININGGYM,10000000000
 Saldanha,PT,LISBOA,LISBOA,,"Avenida 5 de Outubro 56B, 1050-059 Lisboa",ACTION_EXPERIENCE,Europe/Lisbon,1,0,0,TRAININGGYM,10000000000
 Sao Sebastiao,PT,LISBOA,LISBOA,,"R. Dr. Nicolau Bettencourt 45, 1050-078 Lisboa",ACTION_EXPERIENCE,Europe/Lisbon,1,0,0,TRAININGGYM,10000000000
