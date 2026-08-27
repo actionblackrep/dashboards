@@ -115,11 +115,10 @@
       <label>Buscar sede
         <input type="text" id="p3name" placeholder="Filtrar por display_name...">
       </label>
-      <label>is_presale
-        <select id="p3presale">
+      <label>Estado
+        <select id="p3estado">
+          <option value="activo" selected>Activo</option>
           <option value="">Todos</option>
-          <option value="true">true</option>
-          <option value="false">false</option>
         </select>
       </label>
       <label>&nbsp;<span id="p3count" style="font-size:0.9vw;color:var(--muted);">-</span></label>
@@ -436,12 +435,18 @@ function fmtBool(v) {
 function renderSedes() {
   const el = document.getElementById("t-sedes");
   const q = document.getElementById("p3name").value.trim().toLowerCase();
-  const pf = document.getElementById("p3presale").value;
+  const ef = document.getElementById("p3estado").value;
   let rows = SEDES;
   if (q) rows = rows.filter(r => String(r.display_name || r.name || "").toLowerCase().includes(q));
-  if (pf !== "") {
-    const want = pf === "true";
-    rows = rows.filter(r => isTruthy(r.is_presale) === want);
+  if (ef === "activo") {
+    // Estado column drives validity: keep ACTIV*, drop the rest (Preventa,
+    // Operacion, Inactiva...). If the column is not in the data yet, fall
+    // back to the legacy is_presale/is_deleted logic (schema-proof).
+    const estadoOf = r => String(r.estado ?? r.Estado ?? r.ESTADO ?? "").trim().toUpperCase();
+    const hasEstado = rows.some(r => estadoOf(r) !== "");
+    rows = hasEstado
+      ? rows.filter(r => estadoOf(r).startsWith("ACTIV"))
+      : rows.filter(r => !isTruthy(r.is_presale) && !isTruthy(r.is_deleted));
   }
   document.getElementById("p3count").textContent = rows.length + " sedes";
   if (!rows.length) { el.innerHTML = '<div class="empty">Sin resultados</div>'; return; }
@@ -493,7 +498,7 @@ function renderSedes() {
     }));
     document.getElementById("p2country").addEventListener("change", refreshDetail);
     document.getElementById("p3name").addEventListener("input", renderSedes);
-    document.getElementById("p3presale").addEventListener("change", renderSedes);
+    document.getElementById("p3estado").addEventListener("change", renderSedes);
   } catch (e) {
     document.body.innerHTML = `<div class="err">Error: ${e.message}</div>`;
   }
