@@ -9,6 +9,8 @@ from concurrent.futures import ThreadPoolExecutor
 BASE_URL = "https://evo-integracao.w12app.com.br/api/v1/receivables/summary-excel"
 BRANCHES_URL = os.environ.get("BRANCHES_URL", "https://action-branches-api.vercel.app/api/branches")
 BRANCHES_API_KEY = os.environ["BRANCHES_API_KEY"]
+ADMIN_BASE_URL = os.environ.get("ADMIN_BASE_URL", "https://project-4663d.vercel.app")
+ADMIN_PASSWORD = os.environ.get("ADMIN_PASSWORD")
 DATA_DIR = os.environ.get("DATA_DIR", "data")
 HTTP_TIMEOUT = int(os.environ.get("HTTP_TIMEOUT", "300"))
 MAX_WORKERS = int(os.environ.get("MAX_WORKERS", "3"))
@@ -79,6 +81,33 @@ def _export_branches_csv(items):
     print(f"WROTE {out} ({len(rows)} ACTION_EXPERIENCE rows)")
 
 
+def fetch_admin_sedes():
+    """Write data/sedes.csv from /api/admin (all columns, schema-proof).
+    Columns = union of keys across rows; new upstream fields appear automatically."""
+    if not ADMIN_PASSWORD:
+        print("WARNING: ADMIN_PASSWORD not set, skipping sedes.csv")
+        return
+    try:
+        s = requests.Session()
+        r = s.post(f"{ADMIN_BASE_URL}/api/admin",
+                   json={"action": "login", "password": ADMIN_PASSWORD}, timeout=60)
+        r.raise_for_status()
+        r = s.get(f"{ADMIN_BASE_URL}/api/admin", timeout=60)
+        r.raise_for_status()
+        rows = r.json().get("sedes") or []
+        if not rows:
+            print("WARNING: /api/admin returned no sedes, keeping previous sedes.csv")
+            return
+        cols = list(dict.fromkeys(k for row in rows for k in row))
+        table = [{c: row.get(c) for c in cols} for row in rows]
+        os.makedirs(DATA_DIR, exist_ok=True)
+        out = os.path.join(DATA_DIR, "sedes.csv")
+        pd.DataFrame(table, columns=cols).to_csv(out, index=False)
+        print(f"WROTE {out} ({len(table)} rows, {len(cols)} cols)")
+    except Exception as ex:
+        print(f"FAIL admin sedes: {ex}")
+
+
 def monthly_ranges(start_date, end_date):
     s = datetime.strptime(start_date, "%Y-%m-%d")
     e = datetime.strptime(end_date, "%Y-%m-%d")
@@ -120,6 +149,7 @@ def main():
     print(f"Window: {start_date} -> {end_date} ({len(ranges)} chunks/country, engine={READ_ENGINE}, workers={MAX_WORKERS})")
 
     branches_by_country = fetch_branches_by_country()
+    fetch_admin_sedes()
 
     tasks = [(c, s, e) for c in CREDENTIALS for s, e in ranges]
     by_file = {c["filename"]: [] for c in CREDENTIALS}

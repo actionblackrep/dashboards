@@ -399,17 +399,26 @@ function refreshDetail() {
   renderDetail("t-detail", aggByFilial(ALL, c, R), c);
 }
 
-const SEDES_COLS = ["display_name","country_code","city_name","state_name","region_name","address",
-                    "brand","timezone","is_presale","is_sold_out","is_deleted","partner_name","partner_id"];
+// Columns are derived from the CSV header at load time (schema-proof):
+// new fields in /api/admin show up automatically, nothing is hardcoded.
+let SEDES_COLS = [];
+const BOOL_COL = /^is_|^(nueva|pendiente|desaparecida)$/;
 
-function loadSedes() {
+function parseCsv(file) {
   return new Promise(res => {
-    Papa.parse("data/branches.csv?ts=" + Date.now(), {
+    Papa.parse(file + "?ts=" + Date.now(), {
       download:true, header:true, skipEmptyLines:true,
-      complete: r => res(r.data || []),
-      error: () => res([]),
+      complete: r => res({ rows: r.data || [], cols: (r.meta && r.meta.fields) || [] }),
+      error: () => res({ rows: [], cols: [] }),
     });
   });
+}
+
+async function loadSedes() {
+  // Primary: sedes.csv (from /api/admin). Fallback: legacy branches.csv.
+  let r = await parseCsv("data/sedes.csv");
+  if (!r.rows.length) r = await parseCsv("data/branches.csv");
+  return r;
 }
 
 function isTruthy(v) {
@@ -429,7 +438,7 @@ function renderSedes() {
   const q = document.getElementById("p3name").value.trim().toLowerCase();
   const pf = document.getElementById("p3presale").value;
   let rows = SEDES;
-  if (q) rows = rows.filter(r => String(r.display_name || "").toLowerCase().includes(q));
+  if (q) rows = rows.filter(r => String(r.display_name || r.name || "").toLowerCase().includes(q));
   if (pf !== "") {
     const want = pf === "true";
     rows = rows.filter(r => isTruthy(r.is_presale) === want);
@@ -439,7 +448,7 @@ function renderSedes() {
   const head = SEDES_COLS.map(c => `<th>${c}</th>`).join("");
   const body = rows.map(r => "<tr>" + SEDES_COLS.map(c => {
     const v = r[c] == null ? "" : r[c];
-    if (c === "is_presale" || c === "is_sold_out" || c === "is_deleted") return `<td>${fmtBool(v)}</td>`;
+    if (BOOL_COL.test(c)) return `<td>${fmtBool(v)}</td>`;
     return `<td>${String(v).replace(/</g,"&lt;")}</td>`;
   }).join("") + "</tr>").join("");
   el.innerHTML = `<table><thead><tr>${head}</tr></thead><tbody>${body}</tbody></table>`;
@@ -468,7 +477,9 @@ function renderSedes() {
     }, 1000);
     refreshDetail();
 
-    SEDES = await loadSedes();
+    const sedesData = await loadSedes();
+    SEDES = sedesData.rows;
+    SEDES_COLS = sedesData.cols;
     renderSedes();
 
     document.querySelectorAll(".tab").forEach(t => t.addEventListener("click", () => {
