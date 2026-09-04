@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>COLOMBIA | Usuarios</title>
+<style>
+  :root{ color-scheme:dark;
+    --bg:#000000; --panel:#000000; --border:#2B2B2B; --header:#2B2B2B;
+    --text:#e6edf3; --muted:#8a93a0;
+    --green:#1BFF42; --yellow:#FFE403; --red:#FE0100;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%;margin:0;padding:0;background:var(--bg);color:var(--text);
+    font-family:-apple-system,system-ui,"Segoe UI",sans-serif;overflow:hidden}
+  body{display:flex;flex-direction:column;height:100vh;padding:.4vh .6vw;gap:.4vh}
+
+  .topbar{display:flex;align-items:center;justify-content:space-between;gap:1vw;
+    background:#000;border:1px solid var(--border);border-radius:6px;
+    padding:clamp(4px,.6vh,12px) clamp(6px,1vw,16px);flex:0 0 auto}
+  .country{display:flex;align-items:center;gap:.8vw;font-size:clamp(12px,min(2.2vh,2.2vw),32px);font-weight:700;letter-spacing:.5px}
+  .flag{width:clamp(24px,3vh,48px);height:clamp(16px,2vh,32px);border-radius:2px;overflow:hidden;display:inline-block;flex:none;border:1px solid #222}
+  .flag div:nth-child(1){height:50%;background:#FCD116}
+  .flag div:nth-child(2){height:25%;background:#003893}
+  .flag div:nth-child(3){height:25%;background:#CE1126}
+  .daytitle{flex:1;text-align:center;font-size:clamp(11px,min(2.6vh,2vw),38px);font-weight:700;letter-spacing:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+  .rightbox{display:flex;flex-direction:column;align-items:flex-end;gap:.4vh}
+  .refresh{color:var(--muted);font-size:clamp(8px,1.1vh,14px);text-align:right;line-height:1.15}
+  .refresh strong{color:var(--text)}
+  .rotator{display:flex;gap:4px}
+  .dot{background:#000;border:1px solid var(--border);color:var(--muted);
+    font-size:clamp(8px,1.2vh,14px);font-weight:700;padding:.3vh .8vw;cursor:pointer;letter-spacing:.5px}
+  .dot.active{background:var(--yellow);border-color:var(--yellow);color:#000}
+
+  .view{display:none;flex:1 1 auto;min-height:0}
+  .view.active{display:flex;flex-direction:column;gap:.4vh}
+  .pbiframe{width:100%;height:100%;flex:1 1 auto;border:0;background:#000}
+
+  .tabs{display:flex;gap:3px;flex:0 0 auto}
+  .tab-btn{background:#000;border:1px solid var(--border);color:var(--muted);
+    font-size:clamp(10px,1.4vh,18px);font-weight:700;padding:clamp(4px,.6vh,10px) clamp(10px,1.4vw,22px);
+    cursor:pointer;letter-spacing:.5px;border-radius:5px 5px 0 0}
+  .tab-btn.active{color:#000;background:var(--yellow);border-color:var(--yellow)}
+  .tab-panel{display:none;flex:1 1 auto;min-height:0}
+  .tab-panel.active{display:flex;flex-direction:column}
+  .sec{display:flex;flex-direction:column;flex:1 1 auto;min-height:0;
+    background:var(--panel);border:1px solid var(--border);border-radius:6px;
+    padding:clamp(4px,.6vh,12px) clamp(6px,.8vw,14px);gap:.4vh}
+
+  .controls{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.6vw;flex:0 0 auto}
+  .kpis{display:flex;gap:.6vw;flex-wrap:wrap}
+  .kpi{background:#000;border:1px solid var(--border);padding:.4vh 1.2vw;text-align:center}
+  .kpi .l{color:var(--muted);font-size:clamp(7px,1vh,12px);text-transform:uppercase;letter-spacing:1px}
+  .kpi .v{font-size:clamp(13px,2.2vh,30px);font-weight:700;font-variant-numeric:tabular-nums}
+  .datebox{display:flex;align-items:center;gap:.5vw}
+  .datebox label{color:var(--muted);font-size:clamp(9px,1.2vh,15px)}
+  input[type=date]{background:#000;border:1px solid var(--border);color:var(--text);border-radius:5px;
+    padding:.4vh .6vw;font-size:clamp(10px,1.3vh,16px);color-scheme:dark}
+  .info{color:var(--muted);font-size:clamp(8px,1.1vh,13px);text-align:right;line-height:1.15}
+
+  .tablewrap{flex:1 1 auto;min-height:0;overflow:hidden}
+  table{border-collapse:collapse;width:100%;font-size:14px;table-layout:fixed}
+  thead th{background:var(--header);color:#cfd6dd;font-weight:600;text-align:right;
+    padding:.2vh .4vw;font-size:.85em;letter-spacing:.3px;line-height:1.15;vertical-align:bottom}
+  thead th.txt{text-align:left}
+  tbody td{padding:0 .4vw;text-align:right;font-weight:700;font-variant-numeric:tabular-nums;
+    border-bottom:1px solid var(--border);white-space:nowrap;line-height:1.18;overflow:hidden}
+  tbody td.txt{text-align:left;text-overflow:ellipsis}
+  td.cell-g{background:var(--green)!important;color:#000}
+  td.cell-y{background:var(--yellow)!important;color:#000}
+  td.cell-r{background:var(--red)!important;color:#000}
+  td.rank{text-align:center;color:var(--muted)}
+
+  /* USUARIOS view: stacked countries (grid rows weighted by row count) */
+  .countries{display:grid;grid-template-columns:1fr;grid-template-rows:var(--rows,1fr 1fr 1fr);gap:.4vh;flex:1 1 auto;min-height:0}
+  .cblock{display:flex;flex-direction:column;min-height:0;min-width:0;overflow:hidden;
+    background:var(--panel);border:1px solid var(--border);border-radius:6px;padding:clamp(2px,.3vh,6px) clamp(4px,.6vw,10px)}
+  .ch{display:flex;align-items:center;justify-content:space-between;gap:.8vw;flex:0 0 auto;margin-bottom:clamp(2px,.3vh,6px)}
+  .ch .cname{display:flex;align-items:center;gap:.6vw;font-size:clamp(12px,1.8vh,26px);font-weight:700;letter-spacing:.5px;color:#cfd6dd}
+  .ch .ctot{display:flex;gap:1vw;color:var(--muted);font-size:clamp(8px,1.2vh,15px);white-space:nowrap}
+  .ch .ctot b{color:var(--text);font-variant-numeric:tabular-nums}
+  .fl{width:clamp(20px,2.4vh,40px);height:clamp(14px,1.6vh,28px);border-radius:2px;border:1px solid #222;flex:none;position:relative;overflow:hidden}
+  .fl-mx{background:linear-gradient(90deg,#006847 33.3%,#fff 33.3% 66.6%,#ce1126 66.6%)}
+  .fl-es{background:linear-gradient(180deg,#aa151b 25%,#f1bf00 25% 75%,#aa151b 75%)}
+  .fl-br{background:#009c3b}
+  .fl-br::before{content:"";position:absolute;inset:15%;background:#ffdf00;clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%)}
+  .fl-br::after{content:"";position:absolute;left:35%;top:30%;width:30%;height:40%;border-radius:50%;background:#002776}
+  .cmsg{color:var(--muted);font-size:clamp(9px,1.3vh,16px);padding:1vh}
+  .cmsg.err{color:#ff8080}
+  .state{display:none;padding:4vh;text-align:center;color:var(--muted);font-size:clamp(12px,1.8vh,20px)}
+  .state.error{color:#ff8080}
+  .spinner{width:26px;height:26px;border:3px solid #333;border-top-color:var(--yellow);border-radius:50%;margin:0 auto 12px;animation:spin .8s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .loading .content{display:none}
+  .loading .state.loading{display:block}
+  .haserror .content{display:none}
+  .haserror .state.error{display:block}
+</style>
+</head>
+<body>
+  <div class="topbar">
+    <div class="country">COLOMBIA <span class="flag"><div></div><div></div><div></div></span></div>
+    <div class="daytitle" id="dayTitle">—</div>
+    <div class="rightbox">
+      <div class="refresh">Última actualización <strong id="lastRefresh">—</strong></div>
+      <div class="rotator" id="rotator"></div>
+    </div>
+  </div>
+
+  <div class="view active" id="view0">
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="tabY">AYER</button>
+      <button class="tab-btn" data-tab="tabH">HISTÓRICO</button>
+    </div>
+
+    <div class="tab-panel active" id="tabY">
+      <div id="secY" class="sec loading">
+        <div class="controls">
+          <div class="kpis">
+            <div class="kpi"><div class="l">Activos</div><div class="v" id="yAct">—</div></div>
+            <div class="kpi"><div class="l">Deudores</div><div class="v" id="yDeu">—</div></div>
+            <div class="kpi"><div class="l">Pagantes</div><div class="v" id="yPag">—</div></div>
+          </div>
+          <div class="info" id="yInfo"></div>
+        </div>
+        <div class="state loading"><div class="spinner"></div>Cargando…</div>
+        <div class="state error">Error</div>
+        <div class="content tablewrap"><table id="tblY"></table></div>
+      </div>
+    </div>
+
+    <div class="tab-panel" id="tabH">
+      <div id="secH" class="sec loading">
+        <div class="controls">
+          <div class="kpis">
+            <div class="kpi"><div class="l">Activos</div><div class="v" id="hAct">—</div></div>
+            <div class="kpi"><div class="l">Deudores</div><div class="v" id="hDeu">—</div></div>
+            <div class="kpi"><div class="l">Pagantes</div><div class="v" id="hPag">—</div></div>
+          </div>
+          <div class="datebox"><label for="datePick">Fecha</label><input type="date" id="datePick"></div>
+        </div>
+        <div class="state loading"><div class="spinner"></div>Cargando…</div>
+        <div class="state error">Error</div>
+        <div class="content tablewrap"><table id="tblH"></table></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="view" id="view1">
+    <div class="countries" id="countries">
+      <section class="cblock" data-country="MX">
+        <div class="ch"><div class="cname"><span class="fl fl-mx"></span>MEXICO</div><div class="ctot" id="tot-MX"></div></div>
+        <div class="tablewrap"><table class="fit" id="tbl-MX"></table></div>
+      </section>
+      <section class="cblock" data-country="ES">
+        <div class="ch"><div class="cname"><span class="fl fl-es"></span>ESPAÑA</div><div class="ctot" id="tot-ES"></div></div>
+        <div class="tablewrap"><table class="fit" id="tbl-ES"></table></div>
+      </section>
+      <section class="cblock" data-country="BR">
+        <div class="ch"><div class="cname"><span class="fl fl-br"></span>BRASIL</div><div class="ctot" id="tot-BR"></div></div>
+        <div class="tablewrap"><table class="fit" id="tbl-BR"></table></div>
+      </section>
+    </div>
+  </div>
+  <div class="view" id="view2">
+    <iframe class="pbiframe" id="frame2" title="Preventas" allowfullscreen></iframe>
+  </div>
+
+<script>
+const COLS = ["ID","Sede","Usuarios pagantes","Deudores","% Deudores","% Crecimiento mes Activos","Punto equilibrio","Congelados","U_M2"];
+const COLW = ["5%","23%","12%","9%","10%","13%","12%","9%","7%"];
+const int0 = v => v == null ? "" : String(Math.round(v));
+const pct = (v,d) => v == null ? "" : (v*100).toFixed(d) + " %";
+const num2 = v => v == null ? "" : v.toFixed(2);
+
+// PBIX conditional formatting rules
+const cDeud = v => v == null ? "" : v >= 0.08 ? "cell-r" : v >= 0.05 ? "cell-y" : "cell-g";
+const cEq   = v => v == null ? "" : v >= 1 ? "cell-g" : "cell-r";
+const cCrec = v => v == null ? "" : v > 0.05 ? "cell-g" : v > 0 ? "cell-y" : "cell-r";
+
+function dayTitle(iso){
+  const d = new Date(iso);
+  const wd = d.toLocaleDateString("es-CO",{weekday:"long",timeZone:"UTC"});
+  const mo = d.toLocaleDateString("es-CO",{month:"long",timeZone:"UTC"});
+  return (wd+" "+String(d.getUTCDate()).padStart(2,"0")+" "+mo+" "+d.getUTCFullYear()).toUpperCase();
+}
+
+function renderTable(tbl, sedes){
+  let h = "<colgroup>" + COLW.map(w=>`<col style="width:${w}">`).join("") + "</colgroup><thead><tr>";
+  COLS.forEach((c,i)=>{ h += `<th class="${i===1?"txt":""}">${c}</th>`; });
+  h += "</tr></thead><tbody>";
+  for (const r of sedes){
+    h += "<tr>"
+      + `<td class="rank">${r.id}</td>`
+      + `<td class="txt" title="${r.sede}">${r.sede}</td>`
+      + `<td>${int0(r.pagantes)}</td>`
+      + `<td>${int0(r.deudores)}</td>`
+      + `<td class="${cDeud(r.pctDeudores)}">${pct(r.pctDeudores,1)}</td>`
+      + `<td class="${cCrec(r.crecPagantes)}">${pct(r.crecActivos,2)}</td>`
+      + `<td class="${cEq(r.puntoEq)}">${pct(r.puntoEq,1)}</td>`
+      + `<td>${int0(r.congelados)}</td>`
+      + `<td>${num2(r.um2)}</td>`
+      + "</tr>";
+  }
+  tbl.innerHTML = h + "</tbody>";
+  autoFit();
+}
+
+// --- Auto-fit (same approach as the facturacion TV dashboard):
+// shrink font until the table fits its container height and no cell overflows.
+const MAX_FONT = 30, MIN_FONT = 6;
+function tooWide(tbl){
+  const cells = tbl.querySelectorAll("td:not(.txt), thead th");
+  for (let i = 0; i < cells.length; i++)
+    if (cells[i].scrollWidth > cells[i].clientWidth + 1) return true;
+  return false;
+}
+function autoFit(){
+  requestAnimationFrame(() => {
+    document.querySelectorAll("#tblY, #tblH, table.fit").forEach(tbl => {
+      const wrap = tbl.parentElement;
+      if (!tbl || !wrap || wrap.clientHeight <= 0) return;
+      let fs = MAX_FONT, guard = 300;
+      tbl.style.fontSize = fs + "px";
+      while (tbl.scrollHeight > wrap.clientHeight && fs > MIN_FONT && guard-- > 0){
+        fs -= 0.5; tbl.style.fontSize = fs + "px";
+      }
+      while (tooWide(tbl) && fs > MIN_FONT && guard-- > 0){
+        fs -= 0.5; tbl.style.fontSize = fs + "px";
+      }
+    });
+  });
+}
+window.addEventListener("resize", autoFit);
+
+document.querySelectorAll(".tab-btn").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    document.querySelectorAll(".tab-btn").forEach(b=>b.classList.remove("active"));
+    document.querySelectorAll(".tab-panel").forEach(p=>p.classList.remove("active"));
+    btn.classList.add("active");
+    document.getElementById(btn.dataset.tab).classList.add("active");
+    autoFit();
+  });
+});
+
+async function fetchSnap(date, country){
+  const qs = [];
+  if (date) qs.push("date=" + date);
+  if (country) qs.push("country=" + country);
+  const r = await fetch("/api/snapshot" + (qs.length ? "?" + qs.join("&") : ""));
+  const j = await r.json();
+  if (!r.ok || !j.ok) throw new Error(j.error || `HTTP ${r.status}`);
+  return j;
+}
+function setState(el, st, msg){
+  el.classList.remove("loading","haserror");
+  if (st==="loading") el.classList.add("loading");
+  if (st==="error"){ el.classList.add("haserror"); el.querySelector(".state.error").textContent = msg || "Error cargando datos"; }
+}
+const fmtTot = n => n.toLocaleString("es-CO");
+
+async function loadYesterday(){
+  const sec = document.getElementById("secY");
+  setState(sec,"loading");
+  try{
+    const j = await fetchSnap(null);
+    const s = j.snapshot;
+    if (!s) throw new Error("Sin datos disponibles");
+    document.getElementById("dayTitle").textContent = dayTitle(s.snapshotTimestamp);
+    document.getElementById("yAct").textContent = fmtTot(s.totals.activos);
+    document.getElementById("yDeu").textContent = fmtTot(s.totals.deudores);
+    document.getElementById("yPag").textContent = fmtTot(s.totals.pagantes);
+    document.getElementById("yInfo").innerHTML = `Ayer: ${j.date} (America/Bogota) · ${s.sedeCount} sedes`;
+    document.getElementById("lastRefresh").textContent = new Date(j.meta.lastRefresh).toLocaleString("es-CO",{timeZone:"America/Bogota"});
+    setState(sec,"ok");
+    renderTable(document.getElementById("tblY"), s.sedes);
+  }catch(e){ setState(sec,"error",e.message); }
+}
+
+async function loadHistorical(date){
+  const sec = document.getElementById("secH");
+  setState(sec,"loading");
+  try{
+    const j = await fetchSnap(date);
+    const s = j.snapshot;
+    const pick = document.getElementById("datePick");
+    pick.min = j.meta.minDate; pick.max = j.meta.maxDate;
+    if (!pick.value) pick.value = j.date;
+    if (!s) throw new Error("No hay snapshots antes de esta fecha");
+    document.getElementById("hAct").textContent = fmtTot(s.totals.activos);
+    document.getElementById("hDeu").textContent = fmtTot(s.totals.deudores);
+    document.getElementById("hPag").textContent = fmtTot(s.totals.pagantes);
+    setState(sec,"ok");
+    renderTable(document.getElementById("tblH"), s.sedes);
+  }catch(e){ setState(sec,"error",e.message); }
+}
+
+document.getElementById("datePick").addEventListener("change", e=>{
+  if (e.target.value) loadHistorical(e.target.value);
+});
+loadYesterday();
+loadHistorical(null);
+setTimeout(() => loadCountries(true), 1500);
+
+// --- USUARIOS view: Mexico / España / Brasil (same table + logic as Colombia)
+const OTHER = ["MX","ES","BR"];
+let lastCountriesRefresh = 0;
+async function loadCountries(force){
+  if (!force && Date.now() - lastCountriesRefresh < 5 * 60 * 1000) return;
+  lastCountriesRefresh = Date.now();
+  const counts = {};
+  await Promise.all(OTHER.map(async c => {
+    const tbl = document.getElementById("tbl-" + c);
+    const tot = document.getElementById("tot-" + c);
+    try{
+      const j = await fetchSnap(null, c);
+      const s = j.snapshot;
+      if (!s){ tbl.innerHTML = `<tr><td class="cmsg">Sin datos aún</td></tr>`; tot.textContent = ""; counts[c] = 1; return; }
+      counts[c] = s.sedeCount;
+      tot.innerHTML = `<span>Activos <b>${fmtTot(s.totals.activos)}</b></span><span>Deudores <b>${fmtTot(s.totals.deudores)}</b></span><span>Pagantes <b>${fmtTot(s.totals.pagantes)}</b></span><span>${dayTitle(s.snapshotTimestamp)}</span>`;
+      renderTable(tbl, s.sedes);
+    }catch(e){
+      tbl.innerHTML = `<tr><td class="cmsg err">${e.message}</td></tr>`; tot.textContent = ""; counts[c] = 1;
+    }
+  }));
+  // weight grid rows by table size (header ~2 rows), like the facturacion dashboard
+  const w = c => (counts[c] || 1) + 2;
+  document.getElementById("countries").style.setProperty("--rows", OTHER.map(c => `${w(c)}fr`).join(" "));
+  autoFit();
+}
+
+// --- Rotacion de visuales cada 120 s: dashboard -> usuarios (MX/ES/BR) -> preventas
+const ROTATE_MS = 120000;
+const VIEWS = [
+  { id: "view0", label: "DASHBOARD" },
+  { id: "view1", label: "USUARIOS", countries: true },
+  { id: "view2", label: "PREVENTAS", frame: "frame2",
+    src: "https://app.powerbi.com/view?r=eyJrIjoiMDhmYjg2YTEtZWRlMS00MWIyLTk4ODktYjVkZTRhNjc2MWM2IiwidCI6IjA1MDA0NDYzLTRiZjMtNDJiYy1hYTFiLTVjYmE1ZWM0YTc5ZiJ9" },
+];
+let curView = 0, rotateTimer = null, lastDashRefresh = Date.now();
+
+const rot = document.getElementById("rotator");
+VIEWS.forEach((v, i) => {
+  const b = document.createElement("button");
+  b.className = "dot" + (i === 0 ? " active" : "");
+  b.textContent = v.label;
+  b.addEventListener("click", () => { showView(i); resetRotation(); });
+  rot.appendChild(b);
+});
+
+function showView(i){
+  curView = i;
+  const v = VIEWS[i];
+  if (v.frame){
+    const f = document.getElementById(v.frame);
+    if (!f.src) f.src = v.src;
+  }
+  document.querySelectorAll(".view").forEach((el, k) => el.classList.toggle("active", k === i));
+  rot.querySelectorAll(".dot").forEach((el, k) => el.classList.toggle("active", k === i));
+  if (v.countries){ loadCountries(false).then(autoFit); }
+  if (i === 0){
+    autoFit();
+    if (Date.now() - lastDashRefresh > 5 * 60 * 1000){
+      lastDashRefresh = Date.now();
+      loadYesterday();
+      const d = document.getElementById("datePick").value;
+      loadHistorical(d || null);
+    }
+  }
+}
+function resetRotation(){
+  clearInterval(rotateTimer);
+  rotateTimer = setInterval(() => showView((curView + 1) % VIEWS.length), ROTATE_MS);
+}
+resetRotation();
+
+// Preload both Power BI reports so rotation shows them instantly
+setTimeout(() => {
+  VIEWS.forEach(v => {
+    if (!v.frame) return;
+    const f = document.getElementById(v.frame);
+    if (!f.src) f.src = v.src;
+  });
+}, 5000);
+</script>
+</body>
+</html>
