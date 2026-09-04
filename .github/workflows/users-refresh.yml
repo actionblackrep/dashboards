@@ -1,0 +1,51 @@
+name: users-refresh
+
+# Daily EVO snapshot (Mexico + Brasil) for the users dashboard.
+# Writes users-dashboard/data/evo_snapshots.json. Independent from factu-refresh.
+
+on:
+  schedule:
+    - cron: "30 0 * * *"   # 00:30 UTC = 19:30 Bogota / 18:30 CDMX (previous day), same convention as CO snapshots
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: users-refresh
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install -r users-dashboard/requirements-job.txt
+      - name: EVO snapshot
+        run: python users-dashboard/evo_snapshot.py
+        env:
+          # Dedicated tokens from users-dashboard/resources/CONNECT_EVO_*.md (not the factu ones)
+          EVO_USERS_MX_USER: ${{ secrets.EVO_USERS_MX_USER }}
+          EVO_USERS_MX_TOKEN: ${{ secrets.EVO_USERS_MX_TOKEN }}
+          EVO_USERS_BR_USER: ${{ secrets.EVO_USERS_BR_USER }}
+          EVO_USERS_BR_TOKEN: ${{ secrets.EVO_USERS_BR_TOKEN }}
+      - name: Commit and push (with rebase + retry)
+        run: |
+          set -e
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add users-dashboard/data/
+          git diff --cached --quiet && { echo "no changes"; exit 0; }
+          git commit -m "users data refresh $(date -u +%Y-%m-%d)"
+          for i in 1 2 3 4 5; do
+            git pull --rebase origin main && git push && exit 0 || true
+            echo "push attempt $i failed, retrying..."
+            sleep $((i*5))
+          done
+          echo "push failed after retries" && exit 1
