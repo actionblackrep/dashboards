@@ -20,7 +20,7 @@ DATA_DIR = os.environ.get("DATA_DIR", os.path.join(os.path.dirname(os.path.abspa
 OUT = os.path.join(DATA_DIR, "evo_snapshots.json")
 PAGE = 100
 PAUSE = float(os.environ.get("EVO_PAUSE", "1.6"))  # 40 req/min limit
-MAX_HISTORY_DAYS = int(os.environ.get("MAX_HISTORY_DAYS", "800"))
+MAX_HISTORY_DAYS = int(os.environ.get("MAX_HISTORY_DAYS", "1500"))
 
 # Dedicated credentials from resources/CONNECT_EVO_MX.md / CONNECT_EVO_BR.md.
 # Do NOT reuse the factu.py secrets (EVO_*_PASS): different EVO tokens carry
