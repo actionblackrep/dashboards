@@ -304,6 +304,7 @@ setTimeout(() => loadCountries(true), 1500);
 
 // --- USUARIOS view: Mexico / España / Brasil (same table + logic as Colombia)
 const OTHER = ["MX","ES","BR"];
+const bogotaToday = () => new Date(Date.now() - 5 * 3600 * 1000).toISOString().slice(0, 10);
 let lastCountriesRefresh = 0;
 async function loadCountries(force){
   if (!force && Date.now() - lastCountriesRefresh < 5 * 60 * 1000) return;
@@ -313,7 +314,7 @@ async function loadCountries(force){
     const tbl = document.getElementById("tbl-" + c);
     const tot = document.getElementById("tot-" + c);
     try{
-      const j = await fetchSnap(null, c);
+      const j = await fetchSnap(bogotaToday(), c); // latest snapshot available as of today
       const s = j.snapshot;
       if (!s){ tbl.innerHTML = `<tr><td class="cmsg">Sin datos aún</td></tr>`; tot.textContent = ""; counts[c] = 1; return; }
       counts[c] = s.sedeCount;

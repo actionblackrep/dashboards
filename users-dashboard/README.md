@@ -1,39 +1,36 @@
-# COL Users Dashboard
+# Users Dashboard (Colombia / Mexico / Brasil / España)
 
-Dashboard de usuarios (solo Colombia) que replica el visual "Summary" del PBIX:
-por cada sede se toma el ultimo snapshot con timestamp <= fecha seleccionada
-(America/Bogota), se excluyen sedes zombie/invalidas y Pagantes = Activos - Deudores.
-Tabla identica al PBIX (ID, Sede, Usuarios pagantes, Deudores, % Deudores,
-% Crecimiento mes Activos, Punto equilibrio, Congelados, Nuevos, U_M2, Bajas)
-con su mismo formato condicional.
+Replica el visual "Summary" del PBIX: por cada sede se toma el ultimo snapshot
+con Fecha <= fecha seleccionada, Pagantes = Activos - Deudores, % Deudores,
+% Crecimiento mes (vs ultimo snapshot del mes anterior), Punto equilibrio,
+Congelados, U_M2, con el mismo formato condicional. Vista TV (sin scroll,
+auto-fit) y rotacion cada 120 s: DASHBOARD (CO) -> USUARIOS (MX/ES/BR) -> PREVENTAS (Power BI).
 
-## Fuentes de datos
-- Usuarios: `UPSTREAM_BASE /api/usuarios/Operacion` (X-API-Key).
-- Sedes: `ADMIN_BASE /api/admin` (login con cookie, ver
-  `resources/CONNECT_ADMIN_DATA.md`). Filtra CO y excluye ACTION_SPORT_CLUB
-  y desaparecida. La validez viene de la columna `estado`: se toman las
-  "Activa" y se ignoran las inactivas. Mientras /api/admin no exponga ese
-  campo (su GET proyecta columnas fijas, caveat 4 del doc), se usa el
-  fallback is_presale/is_deleted; al aparecer `estado` en la respuesta el
-  filtro cambia solo. El m2 vivo del admin alimenta U_M2 (fallback: Mt2 del
-  master_sedes del PBIX).
-- Punto Equilibrio y nombres de sede: master_sedes extraido del PBIX
-  (embebido en `api/snapshot.js`).
+## Fuentes
+| Pais | Usuarios (activos/deudores) | Sedes (estado, m2, PE, apertura) |
+|---|---|---|
+| CO | `UPSTREAM_BASE /api/usuarios/Operacion` (X-API-Key) | financialsab `/api/admin` |
+| MX, BR | `users-dashboard/data/evo_snapshots.json` en GitHub, generado a diario por `evo_snapshot.py` (GitHub Action `users-refresh`, EVO API directa; ver `resources/CONNECT_EVO_*.md`) | financialsab `/api/admin` |
+| ES | financialsab `/api/usuarios-es` (X-API-Key, cortes mensuales manuales; ver `resources/API_USUARIOS_ES.md`) | financialsab `/api/admin` |
 
-`Planes vendidos` y `Bajas` llegan null desde el upstream, por eso
-Nuevos mes/dia y Bajas se muestran en blanco.
+Validez de sede = `estado` "activa" del admin (se ignoran inactivas, desaparecidas y
+ACTION_SPORT_CLUB) y `apertura` <= fecha consultada. Nombres EVO/Excel se normalizan
+(`lib/core.js` `sedeKey` + `ALIAS`) para cruzarlos con `display_name` del admin.
 
 ## Estructura
-- `api/snapshot.js` - `GET /api/snapshot?date=YYYY-MM-DD` (sin `date` = ayer
-  en Bogota). Credenciales solo en el servidor.
-- `public/index.html` - frontend estilo PBIX, pestañas AYER / HISTORICO.
+- `lib/core.js` - logica compartida (admin, fuentes, computeSnapshot).
+- `api/snapshot.js` - `GET /api/snapshot?country=CO|MX|BR|ES&date=YYYY-MM-DD`.
+- `public/index.html` - frontend.
+- `evo_snapshot.py` + `requirements-job.txt` - job diario EVO (MX + BR).
+- `.github/workflows/users-refresh.yml` - Action (cron 00:30 UTC + manual).
 
 ## Variables de entorno (Vercel)
-- `BRANCHES_API_KEY` (requerida)
-- `ADMIN_PASSWORD` (requerida)
-- `ADMIN_BASE` (opcional, default https://financialsab.vercel.app)
-- `UPSTREAM_BASE` (opcional, default https://action-branches-api.vercel.app)
-- `ZOMBIE_DAYS` (opcional, default 7)
+- `BRANCHES_API_KEY`, `ADMIN_PASSWORD`, `ES_USERS_API_KEY` (requeridas)
+- `ADMIN_BASE`, `UPSTREAM_BASE`, `EVO_SNAPSHOTS_URL`, `ZOMBIE_DAYS` (opcionales)
+
+## Secrets GitHub (repo actionblackrep/dashboards)
+`EVO_USERS_MX_USER`, `EVO_USERS_MX_TOKEN`, `EVO_USERS_BR_USER`, `EVO_USERS_BR_TOKEN`
+(tokens de `resources/CONNECT_EVO_*.md`; no reutilizar los de factu.py).
 
 ## Deploy
 ```
