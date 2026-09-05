@@ -54,7 +54,7 @@
   .kpi .v{font-size:clamp(13px,2.2vh,30px);font-weight:700;font-variant-numeric:tabular-nums}
   .datebox{display:flex;align-items:center;gap:.5vw}
   .datebox label{color:var(--muted);font-size:clamp(9px,1.2vh,15px)}
-  input[type=date]{background:#000;border:1px solid var(--border);color:var(--text);border-radius:5px;
+  input[type=date],select{background:#000;border:1px solid var(--border);color:var(--text);border-radius:5px;
     padding:.4vh .6vw;font-size:clamp(10px,1.3vh,16px);color-scheme:dark}
   .info{color:var(--muted);font-size:clamp(8px,1.1vh,13px);text-align:right;line-height:1.15}
 
@@ -137,7 +137,16 @@
             <div class="kpi"><div class="l">Deudores</div><div class="v" id="hDeu">—</div></div>
             <div class="kpi"><div class="l">Pagantes</div><div class="v" id="hPag">—</div></div>
           </div>
-          <div class="datebox"><label for="datePick">Fecha</label><input type="date" id="datePick"></div>
+          <div class="datebox">
+          <label for="countryPick">País</label>
+          <select id="countryPick">
+            <option value="CO">Colombia</option>
+            <option value="MX">México</option>
+            <option value="BR">Brasil</option>
+            <option value="ES">España</option>
+          </select>
+          <label for="datePick">Fecha</label><input type="date" id="datePick">
+        </div>
         </div>
         <div class="state loading"><div class="spinner"></div>Cargando…</div>
         <div class="state error">Error</div>
@@ -281,12 +290,13 @@ async function loadHistorical(date){
   const sec = document.getElementById("secH");
   setState(sec,"loading");
   try{
-    const j = await fetchSnap(date);
+    const country = document.getElementById("countryPick").value;
+    const j = await fetchSnap(date, country);
     const s = j.snapshot;
     const pick = document.getElementById("datePick");
     pick.min = j.meta.minDate; pick.max = j.meta.maxDate;
     if (!pick.value) pick.value = j.date;
-    if (!s) throw new Error("No hay snapshots antes de esta fecha");
+    if (!s) throw new Error("No hay snapshots de " + j.label + " antes de esta fecha");
     document.getElementById("hAct").textContent = fmtTot(s.totals.activos);
     document.getElementById("hDeu").textContent = fmtTot(s.totals.deudores);
     document.getElementById("hPag").textContent = fmtTot(s.totals.pagantes);
@@ -297,6 +307,10 @@ async function loadHistorical(date){
 
 document.getElementById("datePick").addEventListener("change", e=>{
   if (e.target.value) loadHistorical(e.target.value);
+});
+document.getElementById("countryPick").addEventListener("change", ()=>{
+  const d = document.getElementById("datePick").value;
+  loadHistorical(d || null);
 });
 loadYesterday();
 loadHistorical(null);
