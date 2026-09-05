@@ -181,7 +181,7 @@ def main():
     kept.extend(new_rows)
     cutoff = (now.timestamp() - MAX_HISTORY_DAYS * 86400)
     kept = [r for r in kept if datetime.fromisoformat(r["Fecha"]).timestamp() >= cutoff]
-    kept.sort(key=lambda r: (r["Fecha"], r["country"], r["idBranch"]))
+    kept.sort(key=lambda r: (r["Fecha"], r["country"], r.get("idBranch") if isinstance(r.get("idBranch"), int) else -1))
 
     with open(OUT, "w", encoding="utf-8") as f:
         json.dump(kept, f, ensure_ascii=False, indent=0)
