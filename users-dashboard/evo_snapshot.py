@@ -89,6 +89,31 @@ def debtors(auth, id_branch):
     return len(members), total or 0
 
 
+def congelados(auth):
+    """Congelados (Suspensos) per idBranch: distinct idMember with
+    membershipStatus == "Suspended" from /api/v2/members?status=1
+    (CONNECT_EVO_MX.md 2.4 / CONNECT_EVO_USERS.md 0.2). take max 50, no total:
+    iterate until a page comes back with < 50 rows."""
+    per_branch = {}
+    skip = 0
+    while True:
+        page = get(auth, "/api/v2/members", {"status": 1, "showMemberships": "true", "take": 50, "skip": skip})
+        if not isinstance(page, list):
+            page = page.get("results") or []
+        for m in page:
+            if str(m.get("membershipStatus", "")).lower() == "suspended":
+                try:
+                    bid = int(m.get("idBranch"))
+                except (TypeError, ValueError):
+                    continue
+                per_branch.setdefault(bid, set()).add(m.get("idMember"))
+        skip += 50
+        if len(page) < 50:
+            break
+        time.sleep(PAUSE)
+    return {b: len(s) for b, s in per_branch.items()}
+
+
 def load_existing():
     if not os.path.exists(OUT):
         return []
@@ -121,6 +146,9 @@ def main():
             act = active_members(auth)
             print(f"[{cc}] {len(brs)} branches, activos total={sum(act.values())}")
             time.sleep(PAUSE)
+            cong = congelados(auth)
+            print(f"[{cc}] congelados total={sum(cong.values())}")
+            time.sleep(PAUSE)
             for b in brs:
                 bid = b["idBranch"]
                 activos = int(act.get(bid, 0))
@@ -132,11 +160,11 @@ def main():
                     "Sede/club": b["name"],
                     "Clientes activos": activos,
                     "Deudores": int(deud),
-                    "Suspensos": None,
+                    "Suspensos": int(cong.get(bid, 0)),
                     "openingDate": b["openingDate"],
                     "source": "evo",
                 })
-                print(f"[{cc}] {b['name']:40} activos={activos:5} deudores={deud:4} (recibos={total_receipts})")
+                print(f"[{cc}] {b['name']:40} activos={activos:5} deudores={deud:4} congelados={cong.get(bid, 0):3} (recibos={total_receipts})")
                 time.sleep(PAUSE)
             print(f"[{cc}] done in {time.time()-t0:.0f}s")
         except Exception as ex:
