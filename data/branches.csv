@@ -1,5 +1,6 @@
 display_name,country_code,city_name,state_name,region_name,address,brand,timezone,is_presale,is_sold_out,is_deleted,partner_name,partner_id
 Botafogo,BR,RIO DE JANEIRO,RIO DE JANEIRO,,"R. Voluntários da Pátria, 393 - Botafogo, Rio de Janeiro - RJ, 22270-005, Brazil",ACTION_EXPERIENCE,America/Sao_Paulo,0,0,0,EVO,2
+Juiz De Fora,BR,RIO DE JANEIRO,RIO DE JANEIRO,,RUA VOLUNTÁRIOS DA PÁTRIA,ACTION_EXPERIENCE,America/Sao_Paulo,1,0,0,EVO,3
 Savassi,BR,BELO HORIZONTE,MINAS GERAIS,,"R. Sergipe, 1208 - Funcionários, Belo Horizonte - MG, 30130-174, Brazil",ACTION_EXPERIENCE,America/Sao_Paulo,0,0,0,EVO,1
 7 De Agosto,CO,"BOGOTÁ, D.C.",CUNDINAMARCA,BOGOTÁ,"Cra 35 #63d-48, Barrios Unidos",ACTION_EXPERIENCE,America/Bogota,1,0,0,EVO,73
 Alto de palmas,CO,ENVIGADO,ANTIOQUIA,ANTIOQUIA SUR,"Ed. Indie, Av. Las Palmas, Vrd. El Penasco",ACTION_EXPERIENCE,America/Bogota,0,0,0,EVO,7
@@ -64,7 +65,6 @@ Pepe Sierra,CO,"BOGOTÁ, D.C.",CUNDINAMARCA,BOGOTÁ,Av. Calle 116 #15-80,ACTION_
 Plaza Campestre,CO,BARRANQUILLA,ATLANTICO,B/QUILLA - CALI - PEREIRA,Cra. 30 #2C #118,ACTION_EXPERIENCE,America/Bogota,0,0,0,EVO,44
 Parque Fabricato,CO,BELLO,ANTIOQUIA,ANTIOQUIA NORTE,Cra. 50 #38a-185,ACTION_EXPERIENCE,America/Bogota,0,0,0,EVO,56
 Plaza Rio Grande,CO,RIONEGRO,ANTIOQUIA,ANTIOQUIA CENTRO,Cl. 41 #51-21,ACTION_EXPERIENCE,America/Bogota,0,0,0,EVO,23
-Sabaneta,CO,SABANETA,ANTIOQUIA,ANTIOQUIA SUR,Cl. 52 Sur #44-65,ACTION_EXPERIENCE,America/Bogota,1,0,0,EVO,4
 San Bernardo,CO,MEDELLÍN,ANTIOQUIA,ANTIOQUIA NORTE,"Cra. 70 #26A-10, Guayabal",ACTION_EXPERIENCE,America/Bogota,0,0,0,EVO,34
 Éxito San Diego,CO,MEDELLÍN,ANTIOQUIA,ANTIOQUIA CENTRO,"Cl. 33 #42B-06, La Candelaria, Medellín",ACTION_EXPERIENCE,America/Bogota,0,0,0,EVO,57
 San Lucas,CO,MEDELLÍN,ANTIOQUIA,ANTIOQUIA SUR,"Cl. 20 Sur #27-124, El Poblado",ACTION_EXPERIENCE,America/Bogota,0,0,0,EVO,15
@@ -87,7 +87,7 @@ Action Black Kōen,EC,QUITO,PICHINCHA,SIERRA,"Av. 2 de Agosto 1026, 170184",ACTI
 Alcalá,ES,MADRID,MADRID,,"C. de Alcalá, 211, Salamanca, 28028 Madrid",ACTION_EXPERIENCE,Europe/Madrid,0,0,0,TRAININGGYM,10228
 Ortega y Gasset,ES,MADRID,MADRID,,"C. de José Ortega y Gasset, 56",ACTION_EXPERIENCE,Europe/Madrid,0,0,0,TRAININGGYM,10321
 Ventas,ES,MADRID,MADRID,,"Calle Biarritz 1, Salamanca, 28028 Madrid",ACTION_EXPERIENCE,Europe/Madrid,0,0,0,TRAININGGYM,10229
-Oxford Circus,GB,LONDON,LONDON,,"Ambika House is located at 11 Portland Place, London, W1B 1PR",ACTION_EXPERIENCE,Europe/London,1,0,0,AX,115
+Ambika House,GB,LONDON,LONDON,,"Ambika House is located at 11 Portland Place, London, W1B 1PR",ACTION_EXPERIENCE,Europe/London,1,0,0,AX,115
 Bosque Real,MX,CIUDAD DE MÉXICO,MORELOS,MEXICO,"C. Jacarandas 103, Ricardo Flores Magon, 62376.",ACTION_EXPERIENCE,America/Mexico_City,0,0,0,EVO,12
 Cuernavaca,MX,CUERNAVACA,MORELOS,MEXICO,"C. Jacarandas 103, Ricardo Flores Magon, 62376.",ACTION_EXPERIENCE,America/Mexico_City,0,0,0,EVO,5
 Euroten Santa Fe,MX,CIUDAD DE MÉXICO,CIUDAD DE MÉXICO,MEXICO,"Calle Juan Salvador Agraz Número 61, Colonia Santa Fe, Delegación Cuajimalpa, Piso 6",ACTION_EXPERIENCE,America/Mexico_City,0,0,0,EVO,1
