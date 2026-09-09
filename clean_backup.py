@@ -1,12 +1,13 @@
-"""Re-filter existing data/backup/*.csv against the current branches API.
+"""Re-filter existing data/backup/*.csv against the current sedes master (/api/admin).
 Drops rows whose IdFilial is presale or whose brand is ACTION_SPORT_CLUB.
 """
 import os
 import requests
 import pandas as pd
 
-BRANCHES_URL = os.environ.get("BRANCHES_URL", "https://action-branches-api.vercel.app/api/branches")
-BRANCHES_API_KEY = os.environ["BRANCHES_API_KEY"]
+# Sedes master: financialsab /api/admin, read-only key (see ../API_SEDES_READONLY.md)
+SEDES_API_URL = os.environ.get("SEDES_API_URL", "https://financialsab.vercel.app/api/admin")
+SEDES_API_KEY = os.environ["SEDES_API_KEY"]
 BACKUP_DIR = os.environ.get("BACKUP_DIR", "data/backup")
 
 FILES = [
@@ -23,29 +24,48 @@ def _truthy(v):
     return str(v).strip().lower() in ("1", "true")
 
 
-def fetch_branches_by_country():
-    r = requests.get(BRANCHES_URL, headers={"x-api-key": BRANCHES_API_KEY}, timeout=60)
+def fetch_sedes():
+    """GET /api/admin with the read-only key. Returns the raw list of sede rows."""
+    r = requests.get(SEDES_API_URL, headers={"X-API-Key": SEDES_API_KEY}, timeout=60)
     r.raise_for_status()
-    js = r.json()
-    items = js if isinstance(js, list) else js.get("data") or js.get("branches") or []
+    return r.json().get("sedes") or []
+
+
+def is_operativa(b):
+    """Business rules, API_SEDES_READONLY.md section 5.
+    vigente = not desaparecida and not (is_deleted and estado != activa)
+    fase operativa = not is_presale and estado == activa. ACTION_SPORT_CLUB excluded."""
+    estado = str(b.get("estado") or "").strip().lower()
+    if _truthy(b.get("desaparecida")): return False
+    if _truthy(b.get("is_deleted")) and estado != "activa": return False
+    if _truthy(b.get("is_presale")): return False
+    if estado != "activa": return False
+    if str(b.get("brand", "")).strip().upper() == "ACTION_SPORT_CLUB": return False
+    return True
+
+
+def branches_by_country_from(items):
+    """{country: {partner_id (EVO IdFilial): display_name}} for operativa sedes."""
     by_country = {}
-    p = d = bsp = 0
+    skipped = 0
     for b in items:
-        if _truthy(b.get("is_presale")): p += 1; continue
-        if _truthy(b.get("is_deleted")): d += 1; continue
-        if str(b.get("brand", "")).strip().upper() == "ACTION_SPORT_CLUB":
-            bsp += 1; continue
+        if not is_operativa(b): skipped += 1; continue
         pid = b.get("partner_id")
-        name = b.get("display_name")
-        cc = (b.get("country_code") or "").strip().upper()
+        name = b.get("display_name") or b.get("name")
+        cc = (b.get("country") or "").strip().upper()
         if pid is None or not name or not cc:
             continue
         try:
             by_country.setdefault(cc, {})[int(pid)] = str(name).strip()
         except (TypeError, ValueError):
             continue
-    print(f"branches by country: " + ", ".join(f"{c}={len(m)}" for c, m in sorted(by_country.items())))
+    summary = ", ".join(f"{c}={len(m)}" for c, m in sorted(by_country.items()))
+    print(f"sedes operativas by country: {summary}; skipped={skipped}")
     return by_country
+
+
+def fetch_branches_by_country():
+    return branches_by_country_from(fetch_sedes())
 
 
 def main():

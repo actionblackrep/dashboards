@@ -7,10 +7,9 @@ from datetime import datetime, timedelta
 from concurrent.futures import ThreadPoolExecutor
 
 BASE_URL = "https://evo-integracao.w12app.com.br/api/v1/receivables/summary-excel"
-BRANCHES_URL = os.environ.get("BRANCHES_URL", "https://action-branches-api.vercel.app/api/branches")
-BRANCHES_API_KEY = os.environ["BRANCHES_API_KEY"]
-ADMIN_BASE_URL = os.environ.get("ADMIN_BASE_URL", "https://project-4663d.vercel.app")
-ADMIN_PASSWORD = os.environ.get("ADMIN_PASSWORD")
+# Sedes master: financialsab /api/admin, read-only key (see ../API_SEDES_READONLY.md)
+SEDES_API_URL = os.environ.get("SEDES_API_URL", "https://financialsab.vercel.app/api/admin")
+SEDES_API_KEY = os.environ["SEDES_API_KEY"]
 DATA_DIR = os.environ.get("DATA_DIR", "data")
 HTTP_TIMEOUT = int(os.environ.get("HTTP_TIMEOUT", "300"))
 MAX_WORKERS = int(os.environ.get("MAX_WORKERS", "3"))
@@ -37,23 +36,35 @@ def _truthy(v):
     return str(v).strip().lower() in ("1", "true")
 
 
-def fetch_branches_by_country():
-    """Return dict {country_code: {partner_id: display_name}} excluding presale, deleted, ACTION_SPORT_CLUB.
-    Also writes data/branches.csv with full ACTION_EXPERIENCE rows for the frontend Sedes tab."""
-    r = requests.get(BRANCHES_URL, headers={"x-api-key": BRANCHES_API_KEY}, timeout=60)
+def fetch_sedes():
+    """GET /api/admin with the read-only key. Returns the raw list of sede rows."""
+    r = requests.get(SEDES_API_URL, headers={"X-API-Key": SEDES_API_KEY}, timeout=60)
     r.raise_for_status()
-    js = r.json()
-    items = js if isinstance(js, list) else js.get("data") or js.get("branches") or []
+    return r.json().get("sedes") or []
+
+
+def is_operativa(b):
+    """Business rules, API_SEDES_READONLY.md section 5.
+    vigente = not desaparecida and not (is_deleted and estado != activa)
+    fase operativa = not is_presale and estado == activa. ACTION_SPORT_CLUB excluded."""
+    estado = str(b.get("estado") or "").strip().lower()
+    if _truthy(b.get("desaparecida")): return False
+    if _truthy(b.get("is_deleted")) and estado != "activa": return False
+    if _truthy(b.get("is_presale")): return False
+    if estado != "activa": return False
+    if str(b.get("brand", "")).strip().upper() == "ACTION_SPORT_CLUB": return False
+    return True
+
+
+def branches_by_country_from(items):
+    """{country: {partner_id (EVO IdFilial): display_name}} for operativa sedes."""
     by_country = {}
-    p = d = bsp = 0
+    skipped = 0
     for b in items:
-        if _truthy(b.get("is_presale")): p += 1; continue
-        if _truthy(b.get("is_deleted")): d += 1; continue
-        if str(b.get("brand", "")).strip().upper() == "ACTION_SPORT_CLUB":
-            bsp += 1; continue
+        if not is_operativa(b): skipped += 1; continue
         pid = b.get("partner_id")
-        name = b.get("display_name")
-        cc = (b.get("country_code") or "").strip().upper()
+        name = b.get("display_name") or b.get("name")
+        cc = (b.get("country") or "").strip().upper()
         if pid is None or not name or not cc:
             continue
         try:
@@ -61,51 +72,25 @@ def fetch_branches_by_country():
         except (TypeError, ValueError):
             continue
     summary = ", ".join(f"{c}={len(m)}" for c, m in sorted(by_country.items()))
-    print(f"branches by country: {summary}; presale_skip={p} deleted_skip={d} action_sport_skip={bsp}")
-    _export_branches_csv(items)
+    print(f"sedes operativas by country: {summary}; skipped={skipped}")
     return by_country
 
 
-def _export_branches_csv(items):
-    """Write data/branches.csv (brand=ACTION_EXPERIENCE only) for the Sedes tab in index.html."""
-    cols = ["display_name","country_code","city_name","state_name","region_name","address",
-            "brand","timezone","is_presale","is_sold_out","is_deleted","partner_name","partner_id"]
-    rows = []
-    for b in items:
-        if str(b.get("brand", "")).strip().upper() != "ACTION_EXPERIENCE":
-            continue
-        rows.append({c: b.get(c, "") for c in cols})
-    os.makedirs(DATA_DIR, exist_ok=True)
-    out = os.path.join(DATA_DIR, "branches.csv")
-    pd.DataFrame(rows, columns=cols).to_csv(out, index=False)
-    print(f"WROTE {out} ({len(rows)} ACTION_EXPERIENCE rows)")
+def fetch_branches_by_country():
+    return branches_by_country_from(fetch_sedes())
 
 
-def fetch_admin_sedes():
-    """Write data/sedes.csv from /api/admin (all columns, schema-proof).
-    Columns = union of keys across rows; new upstream fields appear automatically."""
-    if not ADMIN_PASSWORD:
-        print("WARNING: ADMIN_PASSWORD not set, skipping sedes.csv")
+def write_sedes_csv(items):
+    """Write data/sedes.csv (all columns, schema-proof: union of keys) for the Sedes tab."""
+    if not items:
+        print("WARNING: /api/admin returned no sedes, keeping previous sedes.csv")
         return
-    try:
-        s = requests.Session()
-        r = s.post(f"{ADMIN_BASE_URL}/api/admin",
-                   json={"action": "login", "password": ADMIN_PASSWORD}, timeout=60)
-        r.raise_for_status()
-        r = s.get(f"{ADMIN_BASE_URL}/api/admin", timeout=60)
-        r.raise_for_status()
-        rows = r.json().get("sedes") or []
-        if not rows:
-            print("WARNING: /api/admin returned no sedes, keeping previous sedes.csv")
-            return
-        cols = list(dict.fromkeys(k for row in rows for k in row))
-        table = [{c: row.get(c) for c in cols} for row in rows]
-        os.makedirs(DATA_DIR, exist_ok=True)
-        out = os.path.join(DATA_DIR, "sedes.csv")
-        pd.DataFrame(table, columns=cols).to_csv(out, index=False)
-        print(f"WROTE {out} ({len(table)} rows, {len(cols)} cols)")
-    except Exception as ex:
-        print(f"FAIL admin sedes: {ex}")
+    cols = list(dict.fromkeys(k for row in items for k in row))
+    table = [{c: row.get(c) for c in cols} for row in items]
+    os.makedirs(DATA_DIR, exist_ok=True)
+    out = os.path.join(DATA_DIR, "sedes.csv")
+    pd.DataFrame(table, columns=cols).to_csv(out, index=False)
+    print(f"WROTE {out} ({len(table)} rows, {len(cols)} cols)")
 
 
 def monthly_ranges(start_date, end_date):
@@ -148,8 +133,9 @@ def main():
     ranges = monthly_ranges(start_date, end_date)
     print(f"Window: {start_date} -> {end_date} ({len(ranges)} chunks/country, engine={READ_ENGINE}, workers={MAX_WORKERS})")
 
-    branches_by_country = fetch_branches_by_country()
-    fetch_admin_sedes()
+    sedes = fetch_sedes()
+    branches_by_country = branches_by_country_from(sedes)
+    write_sedes_csv(sedes)
 
     tasks = [(c, s, e) for c in CREDENTIALS for s, e in ranges]
     by_file = {c["filename"]: [] for c in CREDENTIALS}

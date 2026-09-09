@@ -18,6 +18,7 @@ Repo -> Settings -> Secrets and variables -> Actions -> New repository secret. A
 - EVO_CO_USER, EVO_CO_PASS
 - EVO_MX_USER, EVO_MX_PASS
 - EVO_BR_USER, EVO_BR_PASS
+- SEDES_API_KEY (key de solo lectura de financialsab `/api/admin`; ver `../API_SEDES_READONLY.md`). Reemplaza a BRANCHES_API_KEY y ADMIN_PASSWORD.
 
 ## 3. Enable Pages
 Repo -> Settings -> Pages -> Build and deployment -> Source: `GitHub Actions`.
