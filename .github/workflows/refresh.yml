@@ -2,7 +2,7 @@ name: factu-refresh
 
 on:
   schedule:
-    - cron: "0 8 * * *"
+    - cron: "0 10 * * *"
   workflow_dispatch:
 
 permissions:
@@ -34,7 +34,7 @@ jobs:
           EVO_MX_PASS: ${{ secrets.EVO_MX_PASS }}
           EVO_BR_USER: ${{ secrets.EVO_BR_USER }}
           EVO_BR_PASS: ${{ secrets.EVO_BR_PASS }}
-          BRANCHES_API_KEY: ${{ secrets.BRANCHES_API_KEY }}
+          SEDES_API_KEY: ${{ secrets.SEDES_API_KEY }}
       - name: Commit and push (with rebase + retry)
         run: |
           set -e

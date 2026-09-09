@@ -19,7 +19,7 @@ jobs:
       - run: pip install -r requirements.txt
       - run: python clean_backup.py
         env:
-          BRANCHES_API_KEY: ${{ secrets.BRANCHES_API_KEY }}
+          SEDES_API_KEY: ${{ secrets.SEDES_API_KEY }}
       - name: Commit cleaned backup
         run: |
           git config user.name "github-actions[bot]"
