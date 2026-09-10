@@ -42,16 +42,23 @@ def fetch_sedes():
     return r.json().get("sedes") or []
 
 
+# Solo marca ACTION BLACK: la API la devuelve como ACTION_EXPERIENCE (asi la
+# pinta el panel /admin) y algunas filas como ACTION_BLACK. Fuera queda todo lo
+# demas: RESETT, ACTION_SPORT_CLUB y cualquier marca nueva.
+BRANDS_OK = {"ACTION_BLACK", "ACTION_EXPERIENCE"}
+
+
 def is_operativa(b):
     """Business rules, MASTER_SEDES_API.md section 5.
     vigente = not desaparecida and not (is_deleted and estado != activa)
-    fase operativa = not is_presale and estado == activa. ACTION_SPORT_CLUB excluded."""
+    fase operativa = not is_presale and estado == activa.
+    Universo = operativa + marca ACTION BLACK."""
     estado = str(b.get("estado") or "").strip().lower()
     if _truthy(b.get("desaparecida")): return False
     if _truthy(b.get("is_deleted")) and estado != "activa": return False
     if _truthy(b.get("is_presale")): return False
     if estado != "activa": return False
-    if str(b.get("brand", "")).strip().upper() == "ACTION_SPORT_CLUB": return False
+    if str(b.get("brand", "")).strip().upper() not in BRANDS_OK: return False
     return True
 
 
