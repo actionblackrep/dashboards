@@ -34,6 +34,7 @@ jobs:
           EVO_MX_PASS: ${{ secrets.EVO_MX_PASS }}
           EVO_BR_USER: ${{ secrets.EVO_BR_USER }}
           EVO_BR_PASS: ${{ secrets.EVO_BR_PASS }}
+          MASTER_SEDES_KEY: ${{ secrets.MASTER_SEDES_KEY }}
           SEDES_API_KEY: ${{ secrets.SEDES_API_KEY }}
       - name: Commit and push (with rebase + retry)
         run: |

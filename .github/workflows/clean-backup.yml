@@ -19,6 +19,7 @@ jobs:
       - run: pip install -r requirements.txt
       - run: python clean_backup.py
         env:
+          MASTER_SEDES_KEY: ${{ secrets.MASTER_SEDES_KEY }}
           SEDES_API_KEY: ${{ secrets.SEDES_API_KEY }}
       - name: Commit cleaned backup
         run: |
