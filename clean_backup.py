@@ -1,13 +1,15 @@
-"""Re-filter existing data/backup/*.csv against the current sedes master (/api/admin).
+"""Re-filter existing data/backup/*.csv against the current API Master Sedes.
 Drops rows whose IdFilial is presale or whose brand is ACTION_SPORT_CLUB.
 """
 import os
 import requests
 import pandas as pd
 
-# Sedes master: financialsab /api/admin, read-only key (see ../API_SEDES_READONLY.md)
-SEDES_API_URL = os.environ.get("SEDES_API_URL", "https://financialsab.vercel.app/api/admin")
-SEDES_API_KEY = os.environ["SEDES_API_KEY"]
+# API Master Sedes: unica fuente de verdad de sedes y de su estado activa/
+# inactiva (lo pone el admin en /admin). Branches puede borrar una sede por
+# otros efectos y eso NO la saca de aqui. Ver ../MASTER_SEDES_API.md.
+MASTER_SEDES_URL = os.environ.get("MASTER_SEDES_URL", "https://financialsab.vercel.app/api/admin")
+MASTER_SEDES_KEY = (os.environ.get("MASTER_SEDES_KEY") or os.environ.get("SEDES_API_KEY") or "").strip()
 BACKUP_DIR = os.environ.get("BACKUP_DIR", "data/backup")
 
 FILES = [
@@ -25,14 +27,23 @@ def _truthy(v):
 
 
 def fetch_sedes():
-    """GET /api/admin with the read-only key. Returns the raw list of sede rows."""
-    r = requests.get(SEDES_API_URL, headers={"X-API-Key": SEDES_API_KEY}, timeout=60)
+    """GET API Master Sedes con la key de solo lectura. Devuelve las filas crudas."""
+    if not MASTER_SEDES_KEY:
+        raise SystemExit(
+            "MASTER_SEDES_KEY vacia. Crea el secret MASTER_SEDES_KEY en el repo "
+            "(Settings > Secrets and variables > Actions) con la key de solo "
+            "lectura de la API Master Sedes. Ver MASTER_SEDES_API.md.")
+    r = requests.get(MASTER_SEDES_URL, headers={"X-API-Key": MASTER_SEDES_KEY}, timeout=60)
+    if r.status_code == 401:
+        raise SystemExit(
+            f"401 de la API Master Sedes: la key es invalida o esta vencida "
+            f"(largo={len(MASTER_SEDES_KEY)}). Revisa el secret MASTER_SEDES_KEY.")
     r.raise_for_status()
     return r.json().get("sedes") or []
 
 
 def is_operativa(b):
-    """Business rules, API_SEDES_READONLY.md section 5.
+    """Business rules, MASTER_SEDES_API.md section 5.
     vigente = not desaparecida and not (is_deleted and estado != activa)
     fase operativa = not is_presale and estado == activa. ACTION_SPORT_CLUB excluded."""
     estado = str(b.get("estado") or "").strip().lower()
