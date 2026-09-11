@@ -107510,5 +107510,181 @@
 "Suspensos": 0,
 "openingDate": "2027-12-31T00:00:00",
 "source": "evo"
+},
+{
+"Fecha": "2026-09-11T04:57:32.584+00:00",
+"country": "BR",
+"idBranch": 1,
+"Sede/club": "ACTION BLACK - SAVASSI",
+"Clientes activos": 139,
+"Deudores": 8,
+"Suspensos": 3,
+"openingDate": "2026-03-23T00:00:00",
+"source": "evo"
+},
+{
+"Fecha": "2026-09-11T04:57:32.584+00:00",
+"country": "BR",
+"idBranch": 2,
+"Sede/club": "ACTION BLACK (BR) - BOTAFOGO",
+"Clientes activos": 384,
+"Deudores": 26,
+"Suspensos": 10,
+"openingDate": "2025-12-10T00:00:00",
+"source": "evo"
+},
+{
+"Fecha": "2026-09-11T04:57:32.584+00:00",
+"country": "BR",
+"idBranch": 3,
+"Sede/club": "ACTION BLACK (BR) - JUIZ DE FORA",
+"Clientes activos": 0,
+"Deudores": 0,
+"Suspensos": 0,
+"openingDate": null,
+"source": "evo"
+},
+{
+"Fecha": "2026-09-11T04:57:32.584+00:00",
+"country": "MX",
+"idBranch": 1,
+"Sede/club": "SANTA FE",
+"Clientes activos": 349,
+"Deudores": 32,
+"Suspensos": 2,
+"openingDate": "2024-10-07T00:00:00",
+"source": "evo"
+},
+{
+"Fecha": "2026-09-11T04:57:32.584+00:00",
+"country": "MX",
+"idBranch": 2,
+"Sede/club": "PUNTO SAO PAULO",
+"Clientes activos": 748,
+"Deudores": 65,
+"Suspensos": 17,
+"openingDate": "2025-02-17T00:00:00",
+"source": "evo"
+},
+{
+"Fecha": "2026-09-11T04:57:32.584+00:00",
+"country": "MX",
+"idBranch": 3,
+"Sede/club": "PASEO INTERLOMAS",
+"Clientes activos": 432,
+"Deudores": 59,
+"Suspensos": 9,
+"openingDate": "2024-12-28T00:00:00",
+"source": "evo"
+},
+{
+"Fecha": "2026-09-11T04:57:32.584+00:00",
+"country": "MX",
+"idBranch": 4,
+"Sede/club": "LA COMER INTERLOMAS",
+"Clientes activos": 98,
+"Deudores": 12,
+"Suspensos": 4,
+"openingDate": "2030-02-05T00:00:00",
+"source": "evo"
+},
+{
+"Fecha": "2026-09-11T04:57:32.584+00:00",
+"country": "MX",
+"idBranch": 5,
+"Sede/club": "FORUM CUERNAVACA",
+"Clientes activos": 1088,
+"Deudores": 134,
+"Suspensos": 10,
+"openingDate": "2025-05-19T00:00:00",
+"source": "evo"
+},
+{
+"Fecha": "2026-09-11T04:57:32.584+00:00",
+"country": "MX",
+"idBranch": 6,
+"Sede/club": "PASEO QUERETARO",
+"Clientes activos": 2,
+"Deudores": 0,
+"Suspensos": 0,
+"openingDate": "2027-01-01T00:00:00",
+"source": "evo"
+},
+{
+"Fecha": "2026-09-11T04:57:32.584+00:00",
+"country": "MX",
+"idBranch": 7,
+"Sede/club": "PASEO METEPEC",
+"Clientes activos": 0,
+"Deudores": 0,
+"Suspensos": 0,
+"openingDate": "2027-01-01T00:00:00",
+"source": "evo"
+},
+{
+"Fecha": "2026-09-11T04:57:32.584+00:00",
+"country": "MX",
+"idBranch": 8,
+"Sede/club": "ACTION BLACK (MX) - TOWN SQUARE METEPEC",
+"Clientes activos": 216,
+"Deudores": 52,
+"Suspensos": 4,
+"openingDate": "2026-08-06T00:00:00",
+"source": "evo"
+},
+{
+"Fecha": "2026-09-11T04:57:32.584+00:00",
+"country": "MX",
+"idBranch": 9,
+"Sede/club": "ACTION BLACK (MX) - LANDMARK",
+"Clientes activos": 942,
+"Deudores": 114,
+"Suspensos": 10,
+"openingDate": "2025-10-15T00:00:00",
+"source": "evo"
+},
+{
+"Fecha": "2026-09-11T04:57:32.584+00:00",
+"country": "MX",
+"idBranch": 10,
+"Sede/club": "ACTION BLACK (MX) - REFORMA",
+"Clientes activos": 304,
+"Deudores": 77,
+"Suspensos": 8,
+"openingDate": "2026-08-03T00:00:00",
+"source": "evo"
+},
+{
+"Fecha": "2026-09-11T04:57:32.584+00:00",
+"country": "MX",
+"idBranch": 11,
+"Sede/club": "ACTION BLACK (MX) - PARQUE DURAZNO",
+"Clientes activos": 275,
+"Deudores": 22,
+"Suspensos": 3,
+"openingDate": "2026-01-06T00:00:00",
+"source": "evo"
+},
+{
+"Fecha": "2026-09-11T04:57:32.584+00:00",
+"country": "MX",
+"idBranch": 12,
+"Sede/club": "ACTION BLACK (MX) - BOSQUE REAL",
+"Clientes activos": 429,
+"Deudores": 72,
+"Suspensos": 7,
+"openingDate": "2026-07-24T00:00:00",
+"source": "evo"
+},
+{
+"Fecha": "2026-09-11T04:57:32.584+00:00",
+"country": "MX",
+"idBranch": 13,
+"Sede/club": "ACTION BLACK (MX) - LA ISLA MERIDA",
+"Clientes activos": 0,
+"Deudores": 0,
+"Suspensos": 0,
+"openingDate": "2027-12-31T00:00:00",
+"source": "evo"
 }
 ]
