@@ -1,5 +1,4 @@
 apertura,branch_id,brand,city,country,db_cost_center,db_match,display_name,estado,is_deleted,is_presale,key,m2,name,nueva,partner_id,partner_name,pendiente,punto_equilibrio,region_name,source,updated_at
-,139,ACTION_EXPERIENCE,RIO DE JANEIRO,BR,"{'id': 233, 'is_active': True, 'name': 'Action Juiz De Fora'}",nombre,Juiz De Fora,inactiva,0,1,BR:139,,JuizDeFora,True,3,EVO,True,,,,
 ,101,ACTION_EXPERIENCE,"BOGOTÁ, D.C.",CO,"{'id': 2, 'is_active': True, 'name': 'Action Campin 7 De Agosto'}",id,7 De Agosto,inactiva,0,1,CO:101,500.0,7DeAgosto,False,73,EVO,True,450.0,BOGOTÁ,admin,2026-08-27T15:42:43Z
 ,137,ACTION_EXPERIENCE,MEDELLÍN,CO,,,Aranjuez,inactiva,0,1,CO:137,,Aranjuez,False,93,EVO,True,450.0,,admin,2026-09-01T23:12:31Z
 ,133,ACTION_EXPERIENCE,BELLO,CO,,,Cabañas,inactiva,0,1,CO:133,,Cabañas,False,88,EVO,True,450.0,,admin,2026-09-01T23:12:31Z
@@ -29,6 +28,7 @@ apertura,branch_id,brand,city,country,db_cost_center,db_match,display_name,estad
 ,104,ACTION_EXPERIENCE,CIUDAD DE MÉXICO,MX,"{'id': 181, 'is_active': True, 'name': 'Action La Comer Interlomas'}",nombre,La Comer Interlomas,inactiva,0,1,MX:104,485.0,LaComerInterlomas,False,4,EVO,True,350.0,MEXICO,master_sedes,2026-08-27T03:26:55Z
 ,103,ACTION_EXPERIENCE,SANTIAGO DE QUERÉTARO,MX,"{'id': 186, 'is_active': True, 'name': 'Action Paseo Queretaro'}",nombre,Paseo Querétaro,activa,0,0,MX:103,998.0,PaseoQueretaro,False,6,EVO,True,360.0,MEXICO,master_sedes,2026-08-27T03:26:55Z
 2025-12-10,87,ACTION_EXPERIENCE,RIO DE JANEIRO,BR,"{'id': 232, 'is_active': True, 'name': 'Action Botafogo'}",nombre,Botafogo,activa,0,0,BR:87,840.0,Botafogo,False,2,EVO,False,400.0,,master_sedes,2026-08-27T03:26:55Z
+,139,ACTION_EXPERIENCE,RIO DE JANEIRO,BR,,,Juiz De Fora,inactiva,1,1,BR:139,,JuizDeFora,False,3,EVO,False,,,,
 2026-03-23,88,ACTION_EXPERIENCE,BELO HORIZONTE,BR,"{'id': 231, 'is_active': True, 'name': 'Action Savassi'}",nombre,Savassi,activa,0,0,BR:88,1016.0,Savassi,False,1,EVO,False,350.0,,master_sedes,2026-08-27T03:26:55Z
 2026-08-01,102,ACTION_SPORT_CLUB,"BOGOTÁ, D.C.",CO,"{'id': 73, 'is_active': True, 'name': 'Action Sport Club Easy Norte'}",id,Action Sport Club Easy Norte,activa,0,0,CO:102,2103.0,ActionSportClubEasyNorte,False,74,EVO,False,0.0,ACTION SPORT CLUB,master_sedes,2026-08-27T03:26:55Z
 2023-02-16,6,ACTION_EXPERIENCE,ENVIGADO,CO,"{'id': 3, 'is_active': True, 'name': 'Action Alto de Palmas'}",id,Alto de palmas,activa,0,0,CO:6,674.8,AltoDePalmas,False,7,EVO,False,894.0,ANTIOQUIA SUR,master_sedes,2026-08-27T03:26:55Z
