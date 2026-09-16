@@ -8,7 +8,7 @@ apertura,branch_id,brand,city,country,db_cost_center,db_match,display_name,estad
 ,127,ACTION_EXPERIENCE,PEREIRA,CO,,,Cerritos Pereira,inactiva,0,1,CO:127,,CerritosPereira,False,82,EVO,True,450.0,,admin,2026-09-01T23:12:31Z
 ,132,ACTION_EXPERIENCE,COPACABANA,CO,,,Copacabana,inactiva,0,1,CO:132,,Copacabana,False,87,EVO,True,450.0,,admin,2026-09-01T23:12:31Z
 ,89,ACTION_EXPERIENCE,CALI,CO,"{'id': 30, 'is_active': True, 'name': 'Action Country Mall'}",id,Country Mall,inactiva,0,1,CO:89,1000.0,CountryMall,False,62,EVO,True,380.0,B/QUILLA - CALI - PEREIRA,admin,2026-09-01T23:12:31Z
-,136,ACTION_EXPERIENCE,CARTAGENA,CO,,,Cristal Mall,inactiva,0,1,CO:136,,CristalMall,False,91,EVO,True,450.0,,admin,2026-09-01T23:12:31Z
+,136,ACTION_EXPERIENCE,CARTAGENA,CO,"{'id': 238, 'is_active': True, 'name': 'Action Cristal Mall'}",id,Cristal Mall,inactiva,0,1,CO:136,,CristalMall,False,91,EVO,True,450.0,,admin,2026-09-01T23:12:31Z
 ,62,ACTION_EXPERIENCE,MEDELLÍN,CO,"{'id': 31, 'is_active': True, 'name': 'Action Drive In'}",id,Drive in,inactiva,0,1,CO:62,732.0,Drivein,False,49,EVO,True,450.0,ANTIOQUIA SUR,admin,2026-09-01T23:12:31Z
 ,134,ACTION_EXPERIENCE,MONTERÍA,CO,,,Evergreen Mall Monteria,inactiva,0,1,CO:134,,EvergreenMallMonteria,False,89,EVO,True,447.0,,admin,2026-09-01T23:12:31Z
 ,36,ACTION_SPORT_CLUB,MEDELLÍN,CO,"{'id': 75, 'is_active': True, 'name': 'Action Sport Club La 65'}",id,Jumbo 65,inactiva,0,1,CO:36,,Jumbo65,False,39,EVO,True,,ACTION SPORT CLUB,admin,2026-08-27T03:30:34Z
