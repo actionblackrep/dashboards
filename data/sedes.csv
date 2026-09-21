@@ -1,4 +1,5 @@
 apertura,branch_id,brand,city,country,db_cost_center,db_match,display_name,estado,is_deleted,is_presale,key,m2,name,nueva,partner_id,partner_name,pendiente,punto_equilibrio,region_name,source,updated_at
+,140,ACTION_EXPERIENCE,ARMENIA,CO,"{'id': 35, 'is_active': True, 'name': 'Action Exito Armenia'}",nombre,Éxito Armenia,inactiva,0,1,CO:140,,ExitoArmenia,True,42,EVO,True,,,,
 ,139,ACTION_EXPERIENCE,RIO DE JANEIRO,BR,"{'id': 233, 'is_active': True, 'name': 'Action Juiz De Fora'}",nombre,Juiz De Fora,activa,1,1,BR:139,,JuizDeFora,False,3,EVO,True,,,admin,2026-09-17T18:12:21Z
 ,101,ACTION_EXPERIENCE,"BOGOTÁ, D.C.",CO,"{'id': 2, 'is_active': True, 'name': 'Action Campin 7 De Agosto'}",id,7 De Agosto,inactiva,0,1,CO:101,500.0,7DeAgosto,False,73,EVO,True,450.0,BOGOTÁ,admin,2026-08-27T15:42:43Z
 ,137,ACTION_EXPERIENCE,MEDELLÍN,CO,,,Aranjuez,inactiva,0,1,CO:137,,Aranjuez,False,93,EVO,True,450.0,,admin,2026-09-01T23:12:31Z
@@ -14,7 +15,7 @@ apertura,branch_id,brand,city,country,db_cost_center,db_match,display_name,estad
 ,134,ACTION_EXPERIENCE,MONTERÍA,CO,,,Evergreen Mall Monteria,inactiva,0,1,CO:134,,EvergreenMallMonteria,False,89,EVO,True,447.0,,admin,2026-09-01T23:12:31Z
 ,36,ACTION_SPORT_CLUB,MEDELLÍN,CO,"{'id': 75, 'is_active': True, 'name': 'Action Sport Club La 65'}",id,Jumbo 65,inactiva,0,1,CO:36,,Jumbo65,False,39,EVO,True,,ACTION SPORT CLUB,admin,2026-08-27T03:30:34Z
 ,37,ACTION_SPORT_CLUB,MEDELLÍN,CO,,,Jumbo Vegas,inactiva,0,1,CO:37,600.0,JumboVegas,False,99,EVO,True,,ACTION SPORT CLUB,admin,2026-08-27T15:42:43Z
-,39,ACTION_EXPERIENCE,MEDELLÍN,CO,"{'id': 46, 'is_active': True, 'name': 'Action La 45 Manrique'}",id,La 45,inactiva,0,1,CO:39,890.0,La45,False,42,EVO,True,450.0,ANTIOQUIA CENTRO,master_sedes,2026-08-27T03:26:55Z
+,39,ACTION_EXPERIENCE,MEDELLÍN,CO,"{'id': 46, 'is_active': True, 'name': 'Action La 45 Manrique'}",id,La 45,inactiva,0,1,CO:39,890.0,La45,False,83,EVO,True,450.0,ANTIOQUIA CENTRO,master_sedes,2026-08-27T03:26:55Z
 ,99,ACTION_EXPERIENCE,MEDELLÍN,CO,"{'id': 51, 'is_active': True, 'name': 'Action Loma De Los Bernal'}",id,Loma De Los Bernal,inactiva,0,1,CO:99,1395.0,LomaDeLosBernal,False,71,EVO,True,380.0,ANTIOQUIA CENTRO,admin,2026-09-01T23:12:31Z
 ,124,RESETT,MEDELLÍN,CO,"{'id': 95, 'is_active': True, 'name': 'Resett Las Vegas'}",id,Resett Vegas,inactiva,0,0,CO:124,,ResettVegas,False,124,AX,True,0.0,RESETT,admin,2026-09-04T15:49:16Z
 ,129,ACTION_EXPERIENCE,CALI,CO,,,Santa Teresita,inactiva,0,1,CO:129,,SantaTeresita,False,84,EVO,True,450.0,,admin,2026-09-01T23:12:31Z
