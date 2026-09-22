@@ -17,14 +17,14 @@ apertura,branch_id,brand,city,country,db_cost_center,db_match,display_name,estad
 ,37,ACTION_SPORT_CLUB,MEDELLÍN,CO,,,Jumbo Vegas,inactiva,0,1,CO:37,600.0,JumboVegas,False,99,EVO,True,,ACTION SPORT CLUB,admin,2026-08-27T15:42:43Z
 ,39,ACTION_EXPERIENCE,MEDELLÍN,CO,"{'id': 46, 'is_active': True, 'name': 'Action La 45 Manrique'}",id,La 45,inactiva,0,1,CO:39,890.0,La45,False,83,EVO,True,450.0,ANTIOQUIA CENTRO,master_sedes,2026-08-27T03:26:55Z
 ,99,ACTION_EXPERIENCE,MEDELLÍN,CO,"{'id': 51, 'is_active': True, 'name': 'Action Loma De Los Bernal'}",id,Loma De Los Bernal,inactiva,0,1,CO:99,1395.0,LomaDeLosBernal,False,71,EVO,True,380.0,ANTIOQUIA CENTRO,admin,2026-09-01T23:12:31Z
+,129,ACTION_EXPERIENCE,CALI,CO,,,Oeste,inactiva,0,1,CO:129,,SantaTeresita,False,84,EVO,True,450.0,,admin,2026-09-01T23:12:31Z
 ,124,RESETT,MEDELLÍN,CO,"{'id': 95, 'is_active': True, 'name': 'Resett Las Vegas'}",id,Resett Vegas,inactiva,0,0,CO:124,,ResettVegas,False,124,AX,True,0.0,RESETT,admin,2026-09-04T15:49:16Z
-,129,ACTION_EXPERIENCE,CALI,CO,,,Santa Teresita,inactiva,0,1,CO:129,,SantaTeresita,False,84,EVO,True,450.0,,admin,2026-09-01T23:12:31Z
 ,100,ACTION_EXPERIENCE,CHÍA,CO,"{'id': 70, 'is_active': True, 'name': 'Action Sibelius Chia'}",id,Sibelius Chía,inactiva,0,1,CO:100,665.0,SibeliusChia,False,72,EVO,True,450.0,BOGOTÁ,master_sedes,2026-08-27T03:26:55Z
-,96,ACTION_EXPERIENCE,MONTERÍA,CO,"{'id': 81, 'is_active': True, 'name': 'Action Solar Place Terminal'}",id,Terminal,inactiva,0,1,CO:96,,Terminal,False,65,EVO,True,400.0,B/QUILLA - CALI - PEREIRA,admin,2026-09-01T23:12:31Z
+,96,ACTION_EXPERIENCE,MONTERÍA,CO,"{'id': 81, 'is_active': True, 'name': 'Action Solar Place Terminal'}",id,Solar Place Mall,inactiva,0,1,CO:96,,Terminal,False,65,EVO,True,400.0,B/QUILLA - CALI - PEREIRA,admin,2026-09-01T23:12:31Z
 ,91,ACTION_EXPERIENCE,LA ESTRELLA,CO,"{'id': 83, 'is_active': True, 'name': 'Action Toledo La Estrella'}",id,Toledo,inactiva,0,1,CO:91,,Toledo,False,63,EVO,True,350.0,ANTIOQUIA SUR,admin,2026-09-01T23:12:31Z
 ,138,ACTION_EXPERIENCE,SABANETA,CO,,,Zaban,inactiva,0,1,CO:138,600.0,Zaban,False,94,EVO,True,450.0,,admin,2026-09-17T22:33:25Z
 ,135,ACTION_EXPERIENCE,"BOGOTÁ, D.C.",CO,,,Zetta 55,inactiva,0,1,CO:135,,Zetta55,False,90,EVO,True,450.0,,admin,2026-09-01T23:12:31Z
-,131,ACTION_EXPERIENCE,"BOGOTÁ, D.C.",CO,,,Zuco Plaza,inactiva,0,1,CO:131,,ZucoPlaza,False,86,EVO,True,450.0,,admin,2026-09-01T23:12:31Z
+,131,ACTION_EXPERIENCE,"BOGOTÁ, D.C.",CO,,,Zuca Plaza,inactiva,0,1,CO:131,,ZucoPlaza,False,86,EVO,True,450.0,,admin,2026-09-01T23:12:31Z
 ,72,ACTION_EXPERIENCE,METEPEC,MX,,,Galerias Metepec,inactiva,0,1,MX:72,,GaleriasMetepec,False,7,EVO,True,,MEXICO,,
 ,125,ACTION_EXPERIENCE,MERIDA,MX,"{'id': 180, 'is_active': True, 'name': 'Action Isla merida'}",nombre,Isla Merida,inactiva,0,1,MX:125,,IslaMerida,False,13,EVO,True,447.0,MEXICO,admin,2026-09-01T23:12:31Z
 ,104,ACTION_EXPERIENCE,CIUDAD DE MÉXICO,MX,"{'id': 181, 'is_active': True, 'name': 'Action La Comer Interlomas'}",nombre,La Comer Interlomas,inactiva,0,1,MX:104,485.0,LaComerInterlomas,False,4,EVO,True,350.0,MEXICO,master_sedes,2026-08-27T03:26:55Z
