@@ -1,4 +1,6 @@
 apertura,branch_id,brand,city,country,db_cost_center,db_match,display_name,estado,is_deleted,is_presale,key,m2,name,nueva,partner_id,partner_name,pendiente,punto_equilibrio,region_name,source,updated_at
+,141,ACTION_EXPERIENCE,MEDELLÍN,CO,,,Av. Bolivariana,inactiva,0,1,CO:141,,AvBolivariana,True,92,EVO,True,,ANTIOQUIA NORTE,,
+,142,ACTION_EXPERIENCE,ITAGUI,CO,,,Exito Itagui,inactiva,0,1,CO:142,,ExitoItagui,True,95,EVO,True,,ANTIOQUIA SUR,,
 ,140,ACTION_EXPERIENCE,ARMENIA,CO,"{'id': 35, 'is_active': True, 'name': 'Action Exito Armenia'}",nombre,Éxito Armenia,inactiva,0,1,CO:140,,ExitoArmenia,True,42,EVO,True,,,,
 ,139,ACTION_EXPERIENCE,RIO DE JANEIRO,BR,"{'id': 233, 'is_active': True, 'name': 'Action Juiz De Fora'}",nombre,Juiz De Fora,activa,1,1,BR:139,,JuizDeFora,False,3,EVO,True,,,admin,2026-09-17T18:12:21Z
 ,101,ACTION_EXPERIENCE,"BOGOTÁ, D.C.",CO,"{'id': 2, 'is_active': True, 'name': 'Action Campin 7 De Agosto'}",id,7 De Agosto,inactiva,0,1,CO:101,500.0,7DeAgosto,False,73,EVO,True,450.0,BOGOTÁ,admin,2026-08-27T15:42:43Z
