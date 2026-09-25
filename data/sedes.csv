@@ -29,7 +29,7 @@ apertura,branch_id,brand,city,country,db_cost_center,db_match,display_name,estad
 ,72,ACTION_EXPERIENCE,METEPEC,MX,,,Galerias Metepec,inactiva,0,1,MX:72,,GaleriasMetepec,False,7,EVO,True,,MEXICO,,
 ,125,ACTION_EXPERIENCE,MERIDA,MX,"{'id': 180, 'is_active': True, 'name': 'Action Isla merida'}",nombre,Isla Merida,inactiva,0,1,MX:125,,IslaMerida,False,13,EVO,True,447.0,MEXICO,admin,2026-09-01T23:12:31Z
 ,104,ACTION_EXPERIENCE,CIUDAD DE MÉXICO,MX,"{'id': 181, 'is_active': True, 'name': 'Action La Comer Interlomas'}",nombre,La Comer Interlomas,inactiva,0,1,MX:104,485.0,LaComerInterlomas,False,4,EVO,True,350.0,MEXICO,master_sedes,2026-08-27T03:26:55Z
-,103,ACTION_EXPERIENCE,SANTIAGO DE QUERÉTARO,MX,"{'id': 186, 'is_active': True, 'name': 'Action Paseo Queretaro'}",nombre,Paseo Querétaro,activa,0,0,MX:103,998.0,PaseoQueretaro,False,6,EVO,True,360.0,MEXICO,master_sedes,2026-08-27T03:26:55Z
+,103,ACTION_EXPERIENCE,SANTIAGO DE QUERÉTARO,MX,"{'id': 186, 'is_active': True, 'name': 'Action Paseo Queretaro'}",nombre,Paseo Querétaro,activa,0,0,MX:103,998.0,PaseoQueretaro,False,6,EVO,True,360.0,MEXICO,admin,2026-09-25T13:22:17Z
 2025-12-10,87,ACTION_EXPERIENCE,RIO DE JANEIRO,BR,"{'id': 232, 'is_active': True, 'name': 'Action Botafogo'}",nombre,Botafogo,activa,0,0,BR:87,840.0,Botafogo,False,2,EVO,False,400.0,,master_sedes,2026-08-27T03:26:55Z
 ,139,ACTION_EXPERIENCE,RIO DE JANEIRO,BR,,,Juiz De Fora,inactiva,1,1,BR:139,,JuizDeFora,False,3,EVO,False,380.0,,admin,2026-09-23T15:49:19Z
 2026-03-23,88,ACTION_EXPERIENCE,BELO HORIZONTE,BR,"{'id': 231, 'is_active': True, 'name': 'Action Savassi'}",nombre,Savassi,activa,0,0,BR:88,1016.0,Savassi,False,1,EVO,False,350.0,,master_sedes,2026-08-27T03:26:55Z
