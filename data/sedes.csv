@@ -6,7 +6,7 @@ apertura,branch_id,brand,city,country,db_cost_center,db_match,display_name,estad
 ,130,ACTION_EXPERIENCE,CARTAGENA,CO,"{'id': 229, 'is_active': False, 'name': 'Action Cartagena Ramblas'}",nombre,Cartagena Ramblas,inactiva,0,1,CO:130,,CartagenaRamblas,False,85,EVO,True,450.0,,admin,2026-09-01T23:12:31Z
 ,25,ACTION_EXPERIENCE,"BOGOTÁ, D.C.",CO,"{'id': 13, 'is_active': True, 'name': 'Action Carulla 116'}",id,Carulla 116,inactiva,0,1,CO:25,979.0,CarullaAutopista116,False,70,EVO,True,450.0,BOGOTÁ,master_sedes,2026-08-27T03:26:55Z
 ,126,ACTION_EXPERIENCE,"BOGOTÁ, D.C.",CO,,,Cedritos,inactiva,0,1,CO:126,,Cedritos,False,81,EVO,True,450.0,,admin,2026-09-01T23:12:31Z
-,127,ACTION_EXPERIENCE,PEREIRA,CO,,,Cerritos Pereira,inactiva,0,1,CO:127,,CerritosPereira,False,82,EVO,True,450.0,,admin,2026-09-01T23:12:31Z
+,127,ACTION_EXPERIENCE,PEREIRA,CO,"{'id': 240, 'is_active': True, 'name': 'Action Cerritos Pereira'}",id,Cerritos Pereira,inactiva,0,1,CO:127,,CerritosPereira,False,82,EVO,True,450.0,,admin,2026-09-01T23:12:31Z
 ,132,ACTION_EXPERIENCE,COPACABANA,CO,,,Copacabana,inactiva,0,1,CO:132,,Copacabana,False,87,EVO,True,450.0,,admin,2026-09-01T23:12:31Z
 ,89,ACTION_EXPERIENCE,CALI,CO,"{'id': 30, 'is_active': True, 'name': 'Action Country Mall'}",id,Country Mall,inactiva,0,1,CO:89,1000.0,CountryMall,False,62,EVO,True,380.0,B/QUILLA - CALI - PEREIRA,admin,2026-09-01T23:12:31Z
 ,136,ACTION_EXPERIENCE,CARTAGENA,CO,"{'id': 238, 'is_active': True, 'name': 'Action Cristal Mall'}",id,Cristal Mall,inactiva,0,1,CO:136,,CristalMall,False,91,EVO,True,450.0,,admin,2026-09-01T23:12:31Z
@@ -19,7 +19,7 @@ apertura,branch_id,brand,city,country,db_cost_center,db_match,display_name,estad
 ,99,ACTION_EXPERIENCE,MEDELLÍN,CO,"{'id': 51, 'is_active': True, 'name': 'Action Loma De Los Bernal'}",id,Loma De Los Bernal,inactiva,0,1,CO:99,1395.0,LomaDeLosBernal,False,71,EVO,True,380.0,ANTIOQUIA CENTRO,admin,2026-09-01T23:12:31Z
 ,129,ACTION_EXPERIENCE,CALI,CO,,,Oeste,inactiva,0,1,CO:129,,SantaTeresita,False,84,EVO,True,450.0,,admin,2026-09-01T23:12:31Z
 ,124,RESETT,MEDELLÍN,CO,"{'id': 95, 'is_active': True, 'name': 'Resett Las Vegas'}",id,Resett Vegas,inactiva,0,0,CO:124,,ResettVegas,False,124,AX,True,0.0,RESETT,admin,2026-09-04T15:49:16Z
-,100,ACTION_EXPERIENCE,CHÍA,CO,"{'id': 70, 'is_active': True, 'name': 'Action Sibelius Chia'}",id,Sibelius Chía,inactiva,0,1,CO:100,665.0,SibeliusChia,False,72,EVO,True,450.0,BOGOTÁ,master_sedes,2026-08-27T03:26:55Z
+,100,ACTION_EXPERIENCE,CHÍA,CO,"{'id': 70, 'is_active': True, 'name': 'Action Sibelius Chia'}",id,Sibelius Chía,activa,0,0,CO:100,665.0,SibeliusChia,False,72,EVO,True,450.0,BOGOTÁ,master_sedes,2026-08-27T03:26:55Z
 ,96,ACTION_EXPERIENCE,MONTERÍA,CO,"{'id': 81, 'is_active': True, 'name': 'Action Solar Place Terminal'}",id,Solar Place Mall,inactiva,0,1,CO:96,,Terminal,False,65,EVO,True,400.0,B/QUILLA - CALI - PEREIRA,admin,2026-09-01T23:12:31Z
 ,91,ACTION_EXPERIENCE,LA ESTRELLA,CO,"{'id': 83, 'is_active': True, 'name': 'Action Toledo La Estrella'}",id,Toledo,inactiva,0,1,CO:91,,Toledo,False,63,EVO,True,350.0,ANTIOQUIA SUR,admin,2026-09-01T23:12:31Z
 ,138,ACTION_EXPERIENCE,SABANETA,CO,,,Zaban,inactiva,0,1,CO:138,600.0,Zaban,False,94,EVO,True,450.0,,admin,2026-09-17T22:33:25Z
