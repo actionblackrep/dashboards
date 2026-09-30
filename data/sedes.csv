@@ -5,7 +5,7 @@ apertura,branch_id,brand,city,country,db_cost_center,db_match,display_name,estad
 ,133,ACTION_EXPERIENCE,BELLO,CO,,,Cabañas,inactiva,0,1,CO:133,,Cabañas,False,88,EVO,True,450.0,,admin,2026-09-01T23:12:31Z
 ,130,ACTION_EXPERIENCE,CARTAGENA,CO,"{'id': 229, 'is_active': False, 'name': 'Action Cartagena Ramblas'}",nombre,Cartagena Ramblas,inactiva,0,1,CO:130,,CartagenaRamblas,False,85,EVO,True,450.0,,admin,2026-09-01T23:12:31Z
 ,25,ACTION_EXPERIENCE,"BOGOTÁ, D.C.",CO,"{'id': 13, 'is_active': True, 'name': 'Action Carulla 116'}",id,Carulla 116,inactiva,0,1,CO:25,979.0,CarullaAutopista116,False,70,EVO,True,450.0,BOGOTÁ,master_sedes,2026-08-27T03:26:55Z
-,126,ACTION_EXPERIENCE,"BOGOTÁ, D.C.",CO,,,Cedritos,inactiva,0,1,CO:126,,Cedritos,False,81,EVO,True,450.0,,admin,2026-09-01T23:12:31Z
+,126,ACTION_EXPERIENCE,"BOGOTÁ, D.C.",CO,"{'id': 241, 'is_active': True, 'name': 'Action Cedritos'}",id,Cedritos,inactiva,0,1,CO:126,,Cedritos,False,81,EVO,True,450.0,,admin,2026-09-01T23:12:31Z
 ,127,ACTION_EXPERIENCE,PEREIRA,CO,"{'id': 240, 'is_active': True, 'name': 'Action Cerritos Pereira'}",id,Cerritos Pereira,inactiva,0,1,CO:127,,CerritosPereira,False,82,EVO,True,450.0,,admin,2026-09-01T23:12:31Z
 ,132,ACTION_EXPERIENCE,COPACABANA,CO,,,Copacabana,inactiva,0,1,CO:132,,Copacabana,False,87,EVO,True,450.0,,admin,2026-09-01T23:12:31Z
 ,89,ACTION_EXPERIENCE,CALI,CO,"{'id': 30, 'is_active': True, 'name': 'Action Country Mall'}",id,Country Mall,inactiva,0,1,CO:89,1000.0,CountryMall,False,62,EVO,True,380.0,B/QUILLA - CALI - PEREIRA,admin,2026-09-01T23:12:31Z
