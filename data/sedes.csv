@@ -13,7 +13,7 @@ apertura,branch_id,brand,city,country,db_cost_center,db_match,display_name,estad
 ,136,ACTION_EXPERIENCE,CARTAGENA,CO,"{'id': 238, 'is_active': True, 'name': 'Action Cristal Mall'}",id,Cristal Mall,inactiva,0,1,CO:136,,CristalMall,False,91,EVO,True,450.0,,admin,2026-09-01T23:12:31Z
 ,62,ACTION_EXPERIENCE,MEDELLÍN,CO,"{'id': 31, 'is_active': True, 'name': 'Action Drive In'}",id,Drive in,inactiva,0,1,CO:62,732.0,Drivein,False,49,EVO,True,450.0,ANTIOQUIA SUR,admin,2026-09-01T23:12:31Z
 ,34,ACTION_EXPERIENCE,"BOGOTÁ, D.C.",CO,,,Easy Norte,inactiva,0,1,CO:34,2103.0,EasyNorte,False,37,EVO,True,450.0,ACTION SPORT CLUB,admin,2026-10-01T15:11:29Z
-,134,ACTION_EXPERIENCE,MONTERÍA,CO,,,Evergreen Mall Monteria,inactiva,0,1,CO:134,,EvergreenMallMonteria,False,89,EVO,True,450.0,,admin,2026-09-23T16:24:46Z
+,134,ACTION_EXPERIENCE,MONTERÍA,CO,"{'id': 243, 'is_active': True, 'name': 'Action Evergreen Mall Monteria'}",id,Evergreen Mall Monteria,inactiva,0,1,CO:134,,EvergreenMallMonteria,False,89,EVO,True,450.0,,admin,2026-09-23T16:24:46Z
 ,142,ACTION_EXPERIENCE,ITAGUI,CO,,,Exito Itagui,inactiva,0,1,CO:142,,ExitoItagui,False,95,EVO,True,450.0,ANTIOQUIA SUR,admin,2026-09-23T15:48:03Z
 ,36,ACTION_SPORT_CLUB,MEDELLÍN,CO,"{'id': 75, 'is_active': True, 'name': 'Action Sport Club La 65'}",id,Jumbo 65,inactiva,0,1,CO:36,,Jumbo65,False,39,EVO,True,,ACTION SPORT CLUB,admin,2026-08-27T03:30:34Z
 ,37,ACTION_EXPERIENCE,MEDELLÍN,CO,,,Jumbo Vegas,inactiva,0,1,CO:37,600.0,JumboVegas,False,99,EVO,True,450.0,ACTION SPORT CLUB,admin,2026-10-01T15:21:21Z
