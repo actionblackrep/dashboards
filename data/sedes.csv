@@ -1,11 +1,11 @@
 apertura,branch_id,brand,city,country,db_cost_center,db_match,display_name,estado,is_deleted,is_presale,key,m2,name,nueva,partner_id,partner_name,pendiente,punto_equilibrio,region_name,source,updated_at
-,101,ACTION_EXPERIENCE,"BOGOTÁ, D.C.",CO,"{'id': 2, 'is_active': True, 'name': 'Action Campin 7 De Agosto'}",id,7 De Agosto,inactiva,0,1,CO:101,500.0,7DeAgosto,False,73,EVO,True,450.0,BOGOTÁ,admin,2026-08-27T15:42:43Z
+,101,ACTION_EXPERIENCE,"BOGOTÁ, D.C.",CO,"{'id': 2, 'is_active': True, 'name': 'Action Campin 7 De Agosto'}",id,7 De Agosto,inactiva,0,1,CO:101,500.0,7DeAgosto,False,73,EVO,True,450.0,BOGOTÁ NORTE,admin,2026-08-27T15:42:43Z
 ,124,RESETT,ENVIGADO,CO,"{'id': 95, 'is_active': True, 'name': 'Resett Las Vegas'}",id,Aftter Vegas,inactiva,0,0,CO:124,,ResettVegas,False,124,AX,True,0.0,RESETT,admin,2026-09-04T15:49:16Z
 ,137,ACTION_EXPERIENCE,MEDELLÍN,CO,,,Aranjuez,inactiva,0,1,CO:137,,Aranjuez,False,93,EVO,True,450.0,,admin,2026-09-01T23:12:31Z
 ,141,ACTION_EXPERIENCE,MEDELLÍN,CO,,,Av. Bolivariana,inactiva,0,1,CO:141,,AvBolivariana,False,92,EVO,True,450.0,ANTIOQUIA NORTE,admin,2026-09-23T15:48:03Z
 ,133,ACTION_EXPERIENCE,BELLO,CO,,,Cabañas,inactiva,0,1,CO:133,,Cabañas,False,88,EVO,True,450.0,,admin,2026-09-01T23:12:31Z
 ,130,ACTION_EXPERIENCE,CARTAGENA,CO,"{'id': 229, 'is_active': False, 'name': 'Action Cartagena Ramblas'}",nombre,Cartagena Ramblas,inactiva,0,1,CO:130,,CartagenaRamblas,False,85,EVO,True,450.0,,admin,2026-09-01T23:12:31Z
-,25,ACTION_EXPERIENCE,"BOGOTÁ, D.C.",CO,"{'id': 13, 'is_active': True, 'name': 'Action Carulla 116'}",id,Carulla 116,inactiva,0,1,CO:25,979.0,CarullaAutopista116,False,70,EVO,True,450.0,BOGOTÁ,master_sedes,2026-08-27T03:26:55Z
+,25,ACTION_EXPERIENCE,"BOGOTÁ, D.C.",CO,"{'id': 13, 'is_active': True, 'name': 'Action Carulla 116'}",id,Carulla 116,inactiva,0,1,CO:25,979.0,CarullaAutopista116,False,70,EVO,True,450.0,BOGOTÁ NORTE,master_sedes,2026-08-27T03:26:55Z
 ,126,ACTION_EXPERIENCE,"BOGOTÁ, D.C.",CO,"{'id': 241, 'is_active': True, 'name': 'Action Cedritos'}",id,Cedritos,inactiva,0,1,CO:126,,Cedritos,False,81,EVO,True,450.0,,admin,2026-09-01T23:12:31Z
 ,127,ACTION_EXPERIENCE,PEREIRA,CO,"{'id': 240, 'is_active': True, 'name': 'Action Cerritos Pereira'}",id,Cerritos Pereira,inactiva,0,1,CO:127,,CerritosPereira,False,82,EVO,True,450.0,,admin,2026-09-01T23:12:31Z
 ,132,ACTION_EXPERIENCE,COPACABANA,CO,,,Copacabana,inactiva,0,1,CO:132,,Copacabana,False,87,EVO,True,450.0,,admin,2026-09-01T23:12:31Z
@@ -24,8 +24,8 @@ apertura,branch_id,brand,city,country,db_cost_center,db_match,display_name,estad
 ,91,ACTION_EXPERIENCE,LA ESTRELLA,CO,"{'id': 83, 'is_active': True, 'name': 'Action Toledo La Estrella'}",id,Toledo,inactiva,0,1,CO:91,,Toledo,False,63,EVO,True,350.0,ANTIOQUIA SUR,admin,2026-09-01T23:12:31Z
 ,138,ACTION_EXPERIENCE,SABANETA,CO,,,Zaban,inactiva,0,1,CO:138,600.0,Zaban,False,94,EVO,True,450.0,,admin,2026-09-17T22:33:25Z
 ,135,ACTION_EXPERIENCE,"BOGOTÁ, D.C.",CO,,,Zetta 55,inactiva,0,1,CO:135,,Zetta55,False,90,EVO,True,450.0,,admin,2026-09-01T23:12:31Z
-,131,ACTION_EXPERIENCE,"BOGOTÁ, D.C.",CO,,,Zuca Plaza,inactiva,0,1,CO:131,,ZucoPlaza,False,86,EVO,True,450.0,,admin,2026-09-01T23:12:31Z
-,140,ACTION_EXPERIENCE,ARMENIA,CO,"{'id': 35, 'is_active': True, 'name': 'Action Exito Armenia'}",nombre,Éxito Armenia,inactiva,0,1,CO:140,,ExitoArmenia,False,42,EVO,True,450.0,,admin,2026-09-23T15:48:03Z
+,131,ACTION_EXPERIENCE,"BOGOTÁ, D.C.",CO,"{'id': 245, 'is_active': True, 'name': 'Action Zuco Plaza'}",nombre,Zuca Plaza,inactiva,0,1,CO:131,,ZucoPlaza,False,86,EVO,True,450.0,,admin,2026-09-01T23:12:31Z
+,140,ACTION_EXPERIENCE,ARMENIA,CO,"{'id': 35, 'is_active': False, 'name': 'Action Exito Armenia'}",nombre,Éxito Armenia,inactiva,0,1,CO:140,,ExitoArmenia,False,42,EVO,True,450.0,,admin,2026-09-23T15:48:03Z
 ,72,ACTION_EXPERIENCE,METEPEC,MX,,,Galerias Metepec,inactiva,0,1,MX:72,,GaleriasMetepec,False,7,EVO,True,,MEXICO,,
 ,125,ACTION_EXPERIENCE,MERIDA,MX,"{'id': 180, 'is_active': True, 'name': 'Action Isla merida'}",nombre,Isla Merida,inactiva,0,1,MX:125,,IslaMerida,False,13,EVO,True,447.0,MEXICO,admin,2026-09-01T23:12:31Z
 ,104,ACTION_EXPERIENCE,CIUDAD DE MÉXICO,MX,"{'id': 181, 'is_active': True, 'name': 'Action La Comer Interlomas'}",nombre,La Comer Interlomas,inactiva,0,1,MX:104,485.0,LaComerInterlomas,False,4,EVO,True,350.0,MEXICO,master_sedes,2026-08-27T03:26:55Z
@@ -37,7 +37,7 @@ apertura,branch_id,brand,city,country,db_cost_center,db_match,display_name,estad
 2026-08-01,113,RESETT,"BOGOTÁ, D.C.",CO,"{'id': 92, 'is_active': True, 'name': 'Resett Easy Norte'}",id,Aftter EasyNorte,activa,0,0,CO:113,200.0,ResettEasyNorte,False,113,AX,False,0.0,RESETT,admin,2026-09-04T15:49:25Z
 2025-07-12,112,RESETT,ENVIGADO,CO,"{'id': 93, 'is_active': True, 'name': 'Resett Escobero'}",id,Aftter Escobero,activa,0,0,CO:112,200.0,ResettEscobero,False,112,AX,False,0.0,RESETT,admin,2026-08-27T15:42:43Z
 2025-07-04,110,RESETT,MEDELLÍN,CO,"{'id': 94, 'is_active': True, 'name': 'Resett La 33'}",id,Aftter La 33,activa,0,0,CO:110,200.0,ResettLa33,False,110,AX,False,0.0,RESETT,admin,2026-08-27T15:42:43Z
-2025-07-04,111,RESETT,POBLADO,CO,"{'id': 96, 'is_active': True, 'name': 'Resett San Lucas'}",id,Aftter San Lucas,activa,0,0,CO:111,200.0,ResettSanLucas,False,111,AX,False,0.0,RESETT,admin,2026-08-27T15:42:43Z
+2025-07-04,111,RESETT,MEDELLÍN,CO,"{'id': 96, 'is_active': True, 'name': 'Resett San Lucas'}",id,Aftter San Lucas,activa,0,0,CO:111,200.0,ResettSanLucas,False,111,AX,False,0.0,RESETT,admin,2026-08-27T15:42:43Z
 2023-02-16,6,ACTION_EXPERIENCE,ENVIGADO,CO,"{'id': 3, 'is_active': True, 'name': 'Action Alto de Palmas'}",id,Alto de palmas,activa,0,0,CO:6,674.8,AltoDePalmas,False,7,EVO,False,894.0,ANTIOQUIA SUR,master_sedes,2026-08-27T03:26:55Z
 2024-05-10,19,ACTION_EXPERIENCE,BARRANQUILLA,CO,"{'id': 4, 'is_active': True, 'name': 'Action Altos Del Prado'}",id,Altos Del Prado,activa,0,0,CO:19,503.0,AltosDelPrado,False,19,EVO,False,930.0,B/QUILLA - CALI - PEREIRA,master_sedes,2026-08-27T03:26:55Z
 2024-06-14,20,ACTION_EXPERIENCE,"BOGOTÁ, D.C.",CO,"{'id': 5, 'is_active': True, 'name': 'Action Atlantis'}",id,Atlantis,activa,0,0,CO:20,576.0,Atlantis,False,20,EVO,False,1028.0,BOGOTÁ NORTE,master_sedes,2026-08-27T03:26:55Z
@@ -71,7 +71,7 @@ apertura,branch_id,brand,city,country,db_cost_center,db_match,display_name,estad
 2023-06-20,10,ACTION_EXPERIENCE,MEDELLÍN,CO,"{'id': 41, 'is_active': True, 'name': 'Action Feeling'}",id,Inferior,activa,0,0,CO:10,438.0,Feeling,False,12,EVO,False,829.0,ANTIOQUIA CENTRO,master_sedes,2026-08-27T03:26:55Z
 2022-12-02,1,ACTION_EXPERIENCE,ENVIGADO,CO,"{'id': 43, 'is_active': True, 'name': 'Action Intermedia'}",id,Intermedia,activa,0,0,CO:1,665.0,Intermedia,False,1,EVO,False,971.0,ANTIOQUIA SUR,master_sedes,2026-08-27T03:26:55Z
 2026-08-24,38,ACTION_EXPERIENCE,RIONEGRO,CO,"{'id': 44, 'is_active': True, 'name': 'Action Jardines Llanogrande'}",id,Jardines Llano Grande,activa,0,0,CO:38,695.0,JardinesLlanoGrande,False,41,EVO,False,400.0,ANTIOQUIA CENTRO,admin,2026-08-27T15:42:43Z
-,35,ACTION_EXPERIENCE,"BOGOTÁ, D.C.",CO,,,Jumbo 170,inactiva,1,1,CO:35,,Jumbo170,False,38,EVO,False,,BOGOTÁ,,
+,35,ACTION_EXPERIENCE,"BOGOTÁ, D.C.",CO,,,Jumbo 170,inactiva,1,1,CO:35,,Jumbo170,False,38,EVO,False,,BOGOTÁ NORTE,,
 ,33,ACTION_EXPERIENCE,CALI,CO,,,Jumbo Chipichape,inactiva,1,1,CO:33,,JumboChipichape,False,36,EVO,False,,B/QUILLA - CALI - PEREIRA,,
 2023-06-09,8,ACTION_EXPERIENCE,MEDELLÍN,CO,"{'id': 45, 'is_active': True, 'name': 'Action La 33'}",id,La 33,activa,0,0,CO:8,845.3,La33,False,9,EVO,False,1549.0,ANTIOQUIA NORTE,master_sedes,2026-08-27T03:26:55Z
 2025-07-07,65,ACTION_EXPERIENCE,MEDELLÍN,CO,"{'id': 48, 'is_active': True, 'name': 'Action Las Palmas Bio 26'}",id,Las Palmas Bio 26,activa,0,0,CO:65,1247.0,LasPalmasBio26,False,46,EVO,False,705.0,ANTIOQUIA CENTRO,master_sedes,2026-08-27T03:26:55Z
@@ -107,7 +107,7 @@ apertura,branch_id,brand,city,country,db_cost_center,db_match,display_name,estad
 2025-08-12,49,ACTION_EXPERIENCE,ENVIGADO,CO,"{'id': 86, 'is_active': True, 'name': 'Action Viva Alto Las Palmas'}",id,Viva Palmas,activa,0,0,CO:49,609.0,VivaPalmas,False,40,EVO,False,,ANTIOQUIA SUR,admin,2026-08-27T15:42:43Z
 2026-07-31,82,ACTION_EXPERIENCE,MEDELLÍN,CO,"{'id': 36, 'is_active': True, 'name': 'Action Exito AV Colombia'}",id,Éxito Av Colombia,activa,0,0,CO:82,871.0,ExitoAvColombia,False,58,EVO,False,450.0,ANTIOQUIA NORTE,master_sedes,2026-08-27T03:26:55Z
 2026-03-02,79,ACTION_EXPERIENCE,"BOGOTÁ, D.C.",CO,"{'id': 37, 'is_active': True, 'name': 'Action Exito Chapinero'}",id,Éxito Chapinero,activa,0,0,CO:79,696.47,ExitoChapinero,False,55,EVO,False,450.0,BOGOTÁ SUR,master_sedes,2026-08-27T03:26:55Z
-,24,ACTION_EXPERIENCE,"BOGOTÁ, D.C.",CO,,,Éxito Modelia,inactiva,1,1,CO:24,,ExitoModelia,False,25,EVO,False,,BOGOTÁ,,
+,24,ACTION_EXPERIENCE,"BOGOTÁ, D.C.",CO,,,Éxito Modelia,inactiva,1,1,CO:24,,ExitoModelia,False,25,EVO,False,,BOGOTÁ NORTE,,
 2025-12-19,59,ACTION_EXPERIENCE,MEDELLÍN,CO,"{'id': 39, 'is_active': True, 'name': 'Action Exito Poblado'}",id,Éxito Poblado,activa,0,0,CO:59,615.0,ExitoPoblado,False,27,EVO,False,939.0,ANTIOQUIA CENTRO,master_sedes,2026-08-27T03:26:55Z
 2026-02-13,81,ACTION_EXPERIENCE,MEDELLÍN,CO,"{'id': 40, 'is_active': True, 'name': 'Action Exito San Diego'}",id,Éxito San Diego,activa,0,0,CO:81,668.0,SanDiego,False,57,EVO,False,600.0,ANTIOQUIA CENTRO,master_sedes,2026-08-27T03:26:55Z
 2024-11-15,43,ACTION_EXPERIENCE,MADRID,ES,"{'id': 193, 'is_active': True, 'name': 'Action Alcala'}",nombre,Alcalá,activa,0,0,ES:43,675.0,Alcala,False,10228,TRAININGGYM,False,429.0,,master_sedes,2026-08-27T03:26:55Z
