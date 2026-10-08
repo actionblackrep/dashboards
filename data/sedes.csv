@@ -2,7 +2,7 @@ apertura,branch_id,brand,city,country,db_cost_center,db_match,display_name,estad
 ,101,ACTION_EXPERIENCE,"BOGOTÁ, D.C.",CO,"{'id': 2, 'is_active': True, 'name': 'Action Campin 7 De Agosto'}",id,7 De Agosto,inactiva,0,1,CO:101,500.0,7DeAgosto,False,73,EVO,True,450.0,BOGOTÁ NORTE,admin,2026-08-27T15:42:43Z
 ,124,RESETT,ENVIGADO,CO,"{'id': 95, 'is_active': True, 'name': 'Resett Las Vegas'}",id,Aftter Vegas,inactiva,0,0,CO:124,,ResettVegas,False,124,AX,True,0.0,RESETT,admin,2026-09-04T15:49:16Z
 ,137,ACTION_EXPERIENCE,MEDELLÍN,CO,,,Aranjuez,inactiva,0,1,CO:137,,Aranjuez,False,93,EVO,True,450.0,,admin,2026-09-01T23:12:31Z
-,141,ACTION_EXPERIENCE,MEDELLÍN,CO,,,Av. Bolivariana,inactiva,0,1,CO:141,,AvBolivariana,False,92,EVO,True,450.0,ANTIOQUIA NORTE,admin,2026-09-23T15:48:03Z
+,141,ACTION_EXPERIENCE,MEDELLÍN,CO,"{'id': 246, 'is_active': True, 'name': 'Action Av Bolivariana'}",nombre,Av. Bolivariana,inactiva,0,1,CO:141,,AvBolivariana,False,92,EVO,True,450.0,ANTIOQUIA NORTE,admin,2026-09-23T15:48:03Z
 ,133,ACTION_EXPERIENCE,BELLO,CO,,,Cabañas,inactiva,0,1,CO:133,,Cabañas,False,88,EVO,True,450.0,,admin,2026-09-01T23:12:31Z
 ,130,ACTION_EXPERIENCE,CARTAGENA,CO,"{'id': 229, 'is_active': False, 'name': 'Action Cartagena Ramblas'}",nombre,Cartagena Ramblas,inactiva,0,1,CO:130,,CartagenaRamblas,False,85,EVO,True,450.0,,admin,2026-09-01T23:12:31Z
 ,25,ACTION_EXPERIENCE,"BOGOTÁ, D.C.",CO,"{'id': 13, 'is_active': True, 'name': 'Action Carulla 116'}",id,Carulla 116,inactiva,0,1,CO:25,979.0,CarullaAutopista116,False,70,EVO,True,450.0,BOGOTÁ NORTE,master_sedes,2026-08-27T03:26:55Z
@@ -19,7 +19,7 @@ apertura,branch_id,brand,city,country,db_cost_center,db_match,display_name,estad
 ,37,ACTION_EXPERIENCE,MEDELLÍN,CO,,,Jumbo Vegas,inactiva,0,1,CO:37,600.0,JumboVegas,False,99,EVO,True,450.0,ACTION SPORT CLUB,admin,2026-10-01T15:21:21Z
 ,39,ACTION_EXPERIENCE,MEDELLÍN,CO,"{'id': 46, 'is_active': True, 'name': 'Action La 45 Manrique'}",id,La 45,inactiva,0,1,CO:39,890.0,La45,False,83,EVO,True,450.0,ANTIOQUIA CENTRO,master_sedes,2026-08-27T03:26:55Z
 ,99,ACTION_EXPERIENCE,MEDELLÍN,CO,"{'id': 51, 'is_active': True, 'name': 'Action Loma De Los Bernal'}",id,Loma De Los Bernal,inactiva,0,1,CO:99,1395.0,LomaDeLosBernal,False,71,EVO,True,380.0,ANTIOQUIA CENTRO,admin,2026-09-01T23:12:31Z
-,129,ACTION_EXPERIENCE,CALI,CO,,,Oeste,inactiva,0,1,CO:129,,SantaTeresita,False,84,EVO,True,450.0,,admin,2026-09-01T23:12:31Z
+,129,ACTION_EXPERIENCE,CALI,CO,"{'id': 247, 'is_active': True, 'name': 'Action Santa Teresita'}",nombre,Oeste,inactiva,0,1,CO:129,,SantaTeresita,False,84,EVO,True,450.0,,admin,2026-09-01T23:12:31Z
 ,96,ACTION_EXPERIENCE,MONTERÍA,CO,"{'id': 81, 'is_active': True, 'name': 'Action Solar Place Terminal'}",id,Solar Place Mall,inactiva,0,1,CO:96,,Terminal,False,65,EVO,True,400.0,B/QUILLA - CALI - PEREIRA,admin,2026-09-01T23:12:31Z
 ,91,ACTION_EXPERIENCE,LA ESTRELLA,CO,"{'id': 83, 'is_active': True, 'name': 'Action Toledo La Estrella'}",id,Toledo,inactiva,0,1,CO:91,,Toledo,False,63,EVO,True,350.0,ANTIOQUIA SUR,admin,2026-09-01T23:12:31Z
 ,138,ACTION_EXPERIENCE,SABANETA,CO,,,Zaban,inactiva,0,1,CO:138,600.0,Zaban,False,94,EVO,True,450.0,,admin,2026-09-17T22:33:25Z
