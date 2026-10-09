@@ -13,6 +13,7 @@ apertura,branch_id,brand,city,country,db_cost_center,db_match,display_name,estad
 ,136,ACTION_EXPERIENCE,CARTAGENA,CO,"{'id': 238, 'is_active': True, 'name': 'Action Cristal Mall'}",id,Cristal Mall,inactiva,0,1,CO:136,,CristalMall,False,91,EVO,True,450.0,,admin,2026-09-01T23:12:31Z
 ,62,ACTION_EXPERIENCE,MEDELLÍN,CO,"{'id': 31, 'is_active': True, 'name': 'Action Drive In'}",id,Drive in,inactiva,0,1,CO:62,732.0,Drivein,False,49,EVO,True,450.0,ANTIOQUIA SUR,admin,2026-09-01T23:12:31Z
 ,34,ACTION_EXPERIENCE,"BOGOTÁ, D.C.",CO,,,Easy Norte,inactiva,0,1,CO:34,2103.0,EasyNorte,False,37,EVO,True,450.0,ACTION SPORT CLUB,admin,2026-10-01T15:11:29Z
+,135,ACTION_EXPERIENCE,"BOGOTÁ, D.C.",CO,,,El nogal,inactiva,0,1,CO:135,,Zetta55,False,90,EVO,True,450.0,,admin,2026-09-01T23:12:31Z
 ,134,ACTION_EXPERIENCE,MONTERÍA,CO,"{'id': 243, 'is_active': True, 'name': 'Action Evergreen Mall Monteria'}",id,Evergreen Mall Monteria,inactiva,0,1,CO:134,,EvergreenMallMonteria,False,89,EVO,True,450.0,,admin,2026-09-23T16:24:46Z
 ,142,ACTION_EXPERIENCE,ITAGUI,CO,,,Exito Itagui,inactiva,0,1,CO:142,,ExitoItagui,False,95,EVO,True,450.0,ANTIOQUIA SUR,admin,2026-09-23T15:48:03Z
 ,36,ACTION_SPORT_CLUB,MEDELLÍN,CO,"{'id': 75, 'is_active': True, 'name': 'Action Sport Club La 65'}",id,Jumbo 65,inactiva,0,1,CO:36,,Jumbo65,False,39,EVO,True,,ACTION SPORT CLUB,admin,2026-08-27T03:30:34Z
@@ -23,7 +24,6 @@ apertura,branch_id,brand,city,country,db_cost_center,db_match,display_name,estad
 ,96,ACTION_EXPERIENCE,MONTERÍA,CO,"{'id': 81, 'is_active': True, 'name': 'Action Solar Place Terminal'}",id,Solar Place Mall,inactiva,0,1,CO:96,,Terminal,False,65,EVO,True,400.0,B/QUILLA - CALI - PEREIRA,admin,2026-09-01T23:12:31Z
 ,91,ACTION_EXPERIENCE,LA ESTRELLA,CO,"{'id': 83, 'is_active': True, 'name': 'Action Toledo La Estrella'}",id,Toledo,inactiva,0,1,CO:91,,Toledo,False,63,EVO,True,350.0,ANTIOQUIA SUR,admin,2026-09-01T23:12:31Z
 ,138,ACTION_EXPERIENCE,SABANETA,CO,,,Zaban,inactiva,0,1,CO:138,600.0,Zaban,False,94,EVO,True,450.0,,admin,2026-09-17T22:33:25Z
-,135,ACTION_EXPERIENCE,"BOGOTÁ, D.C.",CO,,,Zetta 55,inactiva,0,1,CO:135,,Zetta55,False,90,EVO,True,450.0,,admin,2026-09-01T23:12:31Z
 ,131,ACTION_EXPERIENCE,"BOGOTÁ, D.C.",CO,"{'id': 245, 'is_active': True, 'name': 'Action Zuco Plaza'}",nombre,Zuca Plaza,inactiva,0,1,CO:131,,ZucoPlaza,False,86,EVO,True,450.0,,admin,2026-09-01T23:12:31Z
 ,140,ACTION_EXPERIENCE,ARMENIA,CO,"{'id': 35, 'is_active': False, 'name': 'Action Exito Armenia'}",nombre,Éxito Armenia,inactiva,0,1,CO:140,,ExitoArmenia,False,42,EVO,True,450.0,,admin,2026-09-23T15:48:03Z
 ,72,ACTION_EXPERIENCE,METEPEC,MX,,,Galerias Metepec,inactiva,0,1,MX:72,,GaleriasMetepec,False,7,EVO,True,,MEXICO,,
