@@ -2,7 +2,7 @@ apertura,apertura_prevista,branch_id,brand,centro_costos_id,city,country,db_cost
 ,,144,ACTION_EXPERIENCE,,"BOGOTÁ, D.C.",CO,,,,Avenida Chile,inactiva,0,1,CO:144,,AvenidaChile,True,97,EVO,True,,BOGOTÁ NORTE,,
 ,,143,ACTION_EXPERIENCE,,"BOGOTÁ, D.C.",CO,,,"{'id': 62, 'is_active': False, 'name': 'Action Plaza De Las Americas'}",CC Plaza De Las Americas,inactiva,0,1,CO:143,,CCPlazaAmericas,True,98,EVO,True,,BOGOTÁ SUR,,
 ,,145,ACTION_EXPERIENCE,,"BOGOTÁ, D.C.",CO,,,,Plaza Imperial,inactiva,0,1,CO:145,,PlazaImperial,True,99,EVO,True,,BOGOTÁ NORTE,,
-,,139,ACTION_EXPERIENCE,,RIO DE JANEIRO,BR,,,"{'id': 233, 'is_active': True, 'name': 'Action Juiz De Fora'}",Juiz De Fora,inactiva,0,1,BR:139,,JuizDeFora,False,3,EVO,True,380.0,,admin,2026-09-23T15:49:19Z
+,,139,ACTION_EXPERIENCE,,JUIZ DE FORA,BR,,,"{'id': 233, 'is_active': True, 'name': 'Action Juiz De Fora'}",Juiz De Fora,inactiva,0,1,BR:139,,JuizDeFora,False,3,EVO,True,380.0,,admin,2026-09-23T15:49:19Z
 ,,101,ACTION_EXPERIENCE,,"BOGOTÁ, D.C.",CO,"{'id': 2, 'is_active': True, 'name': 'Action Campin 7 De Agosto'}",id,,7 De Agosto,inactiva,0,1,CO:101,500.0,7DeAgosto,False,73,EVO,True,450.0,BOGOTÁ NORTE,admin,2026-08-27T15:42:43Z
 ,,124,RESETT,,ENVIGADO,CO,"{'id': 95, 'is_active': True, 'name': 'Resett Las Vegas'}",id,,Aftter Vegas,inactiva,0,0,CO:124,,ResettVegas,False,124,AX,True,0.0,RESETT,admin,2026-09-04T15:49:16Z
 ,,137,ACTION_EXPERIENCE,,MEDELLÍN,CO,,,,Aranjuez,inactiva,0,1,CO:137,,Aranjuez,False,93,EVO,True,450.0,,admin,2026-09-01T23:12:31Z
