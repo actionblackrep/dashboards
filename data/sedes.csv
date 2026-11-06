@@ -1,34 +1,34 @@
 apertura,apertura_prevista,branch_id,brand,centro_costos_id,city,country,db_cost_center,db_match,db_sugerido,display_name,estado,is_deleted,is_presale,key,m2,name,nueva,partner_id,partner_name,pendiente,punto_equilibrio,region_name,source,updated_at
-,,144,ACTION_EXPERIENCE,,"BOGOTÁ, D.C.",CO,,,,Avenida Chile,inactiva,0,1,CO:144,,AvenidaChile,True,97,EVO,True,,BOGOTÁ NORTE,,
-,,143,ACTION_EXPERIENCE,,"BOGOTÁ, D.C.",CO,,,"{'id': 62, 'is_active': False, 'name': 'Action Plaza De Las Americas'}",CC Plaza De Las Americas,inactiva,0,1,CO:143,,CCPlazaAmericas,True,98,EVO,True,,BOGOTÁ SUR,,
 ,,145,ACTION_EXPERIENCE,,"BOGOTÁ, D.C.",CO,,,,Plaza Imperial,inactiva,0,1,CO:145,,PlazaImperial,True,99,EVO,True,,BOGOTÁ NORTE,,
-,,139,ACTION_EXPERIENCE,,JUIZ DE FORA,BR,,,"{'id': 233, 'is_active': True, 'name': 'Action Juiz De Fora'}",Juiz De Fora,inactiva,0,1,BR:139,,JuizDeFora,False,3,EVO,True,380.0,,admin,2026-09-23T15:49:19Z
+,,139,ACTION_EXPERIENCE,233.0,JUIZ DE FORA,BR,"{'id': 233, 'is_active': True, 'name': 'Action Juiz De Fora'}",manual,,Juiz De Fora,inactiva,0,1,BR:139,,JuizDeFora,False,3,EVO,True,380.0,,admin,2026-11-06T16:08:14Z
 ,,101,ACTION_EXPERIENCE,,"BOGOTÁ, D.C.",CO,"{'id': 2, 'is_active': True, 'name': 'Action Campin 7 De Agosto'}",id,,7 De Agosto,inactiva,0,1,CO:101,500.0,7DeAgosto,False,73,EVO,True,450.0,BOGOTÁ NORTE,admin,2026-08-27T15:42:43Z
 ,,124,RESETT,,ENVIGADO,CO,"{'id': 95, 'is_active': True, 'name': 'Resett Las Vegas'}",id,,Aftter Vegas,inactiva,0,0,CO:124,,ResettVegas,False,124,AX,True,0.0,RESETT,admin,2026-09-04T15:49:16Z
 ,,137,ACTION_EXPERIENCE,,MEDELLÍN,CO,,,,Aranjuez,inactiva,0,1,CO:137,,Aranjuez,False,93,EVO,True,450.0,,admin,2026-09-01T23:12:31Z
-,,141,ACTION_EXPERIENCE,,MEDELLÍN,CO,,,"{'id': 246, 'is_active': True, 'name': 'Action Av Bolivariana'}",Av. Bolivariana,inactiva,0,1,CO:141,,AvBolivariana,False,92,EVO,True,450.0,ANTIOQUIA NORTE,admin,2026-09-23T15:48:03Z
+,,141,ACTION_EXPERIENCE,246.0,MEDELLÍN,CO,"{'id': 246, 'is_active': True, 'name': 'Action Av Bolivariana'}",manual,,Av. Bolivariana,inactiva,0,1,CO:141,,AvBolivariana,False,92,EVO,True,450.0,ANTIOQUIA NORTE,admin,2026-11-06T16:08:14Z
+,,144,ACTION_EXPERIENCE,,"BOGOTÁ, D.C.",CO,,,,Avenida Chile,inactiva,0,1,CO:144,,AvenidaChile,False,97,EVO,True,400.0,BOGOTÁ NORTE,admin,2026-11-06T16:08:44Z
 ,,133,ACTION_EXPERIENCE,,BELLO,CO,,,,Cabañas,inactiva,0,1,CO:133,,Cabañas,False,88,EVO,True,450.0,,admin,2026-09-01T23:12:31Z
-,,130,ACTION_EXPERIENCE,,CARTAGENA,CO,,,"{'id': 229, 'is_active': False, 'name': 'Action Cartagena Ramblas'}",Cartagena Ramblas,inactiva,0,1,CO:130,,CartagenaRamblas,False,85,EVO,True,450.0,,admin,2026-09-01T23:12:31Z
+,,130,ACTION_EXPERIENCE,229.0,CARTAGENA,CO,"{'id': 229, 'is_active': False, 'name': 'Action Cartagena Ramblas'}",manual,,Cartagena Ramblas,inactiva,0,1,CO:130,,CartagenaRamblas,False,85,EVO,True,450.0,,admin,2026-11-06T16:08:14Z
 ,,126,ACTION_EXPERIENCE,,"BOGOTÁ, D.C.",CO,"{'id': 241, 'is_active': True, 'name': 'Action Cedritos'}",id,,CC Cedritos 151,inactiva,0,1,CO:126,,Cedritos,False,81,EVO,True,450.0,,admin,2026-09-01T23:12:31Z
+,,143,ACTION_EXPERIENCE,62.0,"BOGOTÁ, D.C.",CO,"{'id': 62, 'is_active': False, 'name': 'Action Plaza De Las Americas'}",manual,,CC Plaza De Las Americas,inactiva,0,1,CO:143,,CCPlazaAmericas,False,98,EVO,True,,BOGOTÁ SUR,admin,2026-11-06T16:08:14Z
 ,,127,ACTION_EXPERIENCE,,PEREIRA,CO,"{'id': 240, 'is_active': True, 'name': 'Action Cerritos Pereira'}",id,,Cerritos Pereira,inactiva,0,1,CO:127,,CerritosPereira,False,82,EVO,True,450.0,,admin,2026-09-01T23:12:31Z
 ,,132,ACTION_EXPERIENCE,,COPACABANA,CO,,,,Copacabana,inactiva,0,1,CO:132,,Copacabana,False,87,EVO,True,450.0,,admin,2026-09-01T23:12:31Z
 ,,136,ACTION_EXPERIENCE,,CARTAGENA,CO,"{'id': 238, 'is_active': True, 'name': 'Action Cristal Mall'}",id,,Cristal Mall,inactiva,0,1,CO:136,,CristalMall,False,91,EVO,True,450.0,,admin,2026-09-01T23:12:31Z
 ,,34,ACTION_EXPERIENCE,,"BOGOTÁ, D.C.",CO,,,,Easy Norte,inactiva,0,1,CO:34,2103.0,EasyNorte,False,100,EVO,True,450.0,ACTION SPORT CLUB,admin,2026-10-01T15:11:29Z
 ,,135,ACTION_EXPERIENCE,,"BOGOTÁ, D.C.",CO,,,,El nogal,inactiva,0,1,CO:135,,Zetta55,False,90,EVO,True,450.0,,admin,2026-09-01T23:12:31Z
 ,,134,ACTION_EXPERIENCE,,MONTERÍA,CO,"{'id': 243, 'is_active': True, 'name': 'Action Evergreen Mall Monteria'}",id,,Evergreen Mall Monteria,inactiva,0,1,CO:134,,EvergreenMallMonteria,False,89,EVO,True,450.0,,admin,2026-09-23T16:24:46Z
-,,142,ACTION_EXPERIENCE,,ITAGUI,CO,,,"{'id': 248, 'is_active': True, 'name': 'Action Exito Itagui'}",Exito Itagui,inactiva,0,1,CO:142,,ExitoItagui,False,95,EVO,True,450.0,ANTIOQUIA SUR,admin,2026-09-23T15:48:03Z
+,,142,ACTION_EXPERIENCE,248.0,ITAGUI,CO,"{'id': 248, 'is_active': True, 'name': 'Action Exito Itagui'}",manual,,Exito Itagui,inactiva,0,1,CO:142,,ExitoItagui,False,95,EVO,True,450.0,ANTIOQUIA SUR,admin,2026-11-06T16:08:14Z
 ,,36,ACTION_SPORT_CLUB,,MEDELLÍN,CO,"{'id': 75, 'is_active': True, 'name': 'Action Sport Club La 65'}",id,,Jumbo 65,inactiva,0,1,CO:36,,Jumbo65,False,39,EVO,True,,ACTION SPORT CLUB,admin,2026-08-27T03:30:34Z
-,,37,ACTION_EXPERIENCE,,MEDELLÍN,CO,,,"{'id': 249, 'is_active': True, 'name': 'Action Jumbo Vegas'}",Jumbo Vegas,inactiva,0,1,CO:37,600.0,JumboVegas,False,96,EVO,True,450.0,ANTIOQUIA SUR,admin,2026-10-01T15:21:21Z
+,,37,ACTION_EXPERIENCE,249.0,MEDELLÍN,CO,"{'id': 249, 'is_active': True, 'name': 'Action Jumbo Vegas'}",manual,,Jumbo Vegas,inactiva,0,1,CO:37,600.0,JumboVegas,False,96,EVO,True,450.0,ANTIOQUIA SUR,admin,2026-11-06T16:08:14Z
 ,,39,ACTION_EXPERIENCE,,MEDELLÍN,CO,"{'id': 46, 'is_active': True, 'name': 'Action La 45 Manrique'}",id,,La 45,inactiva,0,1,CO:39,890.0,La45,False,83,EVO,True,450.0,ANTIOQUIA CENTRO,master_sedes,2026-08-27T03:26:55Z
-,,129,ACTION_EXPERIENCE,,CALI,CO,,,"{'id': 247, 'is_active': True, 'name': 'Action Santa Teresita'}",Oeste,inactiva,0,1,CO:129,,SantaTeresita,False,84,EVO,True,450.0,,admin,2026-09-01T23:12:31Z
+,,129,ACTION_EXPERIENCE,230.0,CALI,CO,"{'id': 230, 'is_active': True, 'name': 'Action Oeste Cali'}",manual,,Oeste,inactiva,0,1,CO:129,,SantaTeresita,False,84,EVO,True,450.0,,admin,2026-11-06T16:08:14Z
 ,,96,ACTION_EXPERIENCE,,MONTERÍA,CO,"{'id': 81, 'is_active': True, 'name': 'Action Solar Place Terminal'}",id,,Solar Place Mall,inactiva,0,1,CO:96,,Terminal,False,65,EVO,True,400.0,B/QUILLA - CALI - PEREIRA,admin,2026-09-01T23:12:31Z
 ,,91,ACTION_EXPERIENCE,,LA ESTRELLA,CO,"{'id': 83, 'is_active': True, 'name': 'Action Toledo La Estrella'}",id,,Toledo,inactiva,0,1,CO:91,,Toledo,False,63,EVO,True,350.0,ANTIOQUIA SUR,admin,2026-09-01T23:12:31Z
 ,,138,ACTION_EXPERIENCE,,SABANETA,CO,,,,Zaban,inactiva,0,1,CO:138,600.0,Zaban,False,94,EVO,True,450.0,,admin,2026-09-17T22:33:25Z
-,,131,ACTION_EXPERIENCE,,"BOGOTÁ, D.C.",CO,,,"{'id': 245, 'is_active': True, 'name': 'Action Zuco Plaza'}",Zuca Plaza,inactiva,0,1,CO:131,,ZucoPlaza,False,86,EVO,True,450.0,,admin,2026-09-01T23:12:31Z
-,,140,ACTION_EXPERIENCE,,ARMENIA,CO,,,"{'id': 35, 'is_active': False, 'name': 'Action Exito Armenia'}",Éxito Armenia,inactiva,0,1,CO:140,,ExitoArmenia,False,42,EVO,True,450.0,,admin,2026-09-23T15:48:03Z
+,,131,ACTION_EXPERIENCE,245.0,"BOGOTÁ, D.C.",CO,"{'id': 245, 'is_active': True, 'name': 'Action Zuco Plaza'}",manual,,Zuca Plaza,inactiva,0,1,CO:131,,ZucoPlaza,False,86,EVO,True,450.0,,admin,2026-11-06T16:08:14Z
+,,140,ACTION_EXPERIENCE,242.0,ARMENIA,CO,"{'id': 242, 'is_active': True, 'name': 'Action Armenia'}",manual,,Éxito Armenia,inactiva,0,1,CO:140,,ExitoArmenia,False,42,EVO,True,450.0,,admin,2026-11-06T16:08:14Z
 ,,72,ACTION_EXPERIENCE,,METEPEC,MX,,,,Galerias Metepec,inactiva,0,1,MX:72,,GaleriasMetepec,False,7,EVO,True,,MEXICO,,
-,2026-11-01,125,ACTION_EXPERIENCE,,MERIDA,MX,,,"{'id': 180, 'is_active': True, 'name': 'Action Isla merida'}",Isla Merida,inactiva,0,1,MX:125,,IslaMerida,False,13,EVO,True,447.0,MEXICO,admin,2026-10-20T02:26:59Z
-,,103,ACTION_EXPERIENCE,,SANTIAGO DE QUERÉTARO,MX,,,"{'id': 186, 'is_active': True, 'name': 'Action Paseo Queretaro'}",Paseo Querétaro,inactiva,0,0,MX:103,998.0,PaseoQueretaro,False,6,EVO,True,360.0,MEXICO,admin,2026-10-16T13:15:36Z
+,2026-11-01,125,ACTION_EXPERIENCE,180.0,MERIDA,MX,"{'id': 180, 'is_active': True, 'name': 'Action Isla merida'}",manual,,Isla Merida,inactiva,0,1,MX:125,,IslaMerida,False,13,EVO,True,447.0,MEXICO,admin,2026-11-06T16:08:14Z
+,,103,ACTION_EXPERIENCE,186.0,SANTIAGO DE QUERÉTARO,MX,"{'id': 186, 'is_active': True, 'name': 'Action Paseo Queretaro'}",manual,,Paseo Querétaro,inactiva,0,0,MX:103,998.0,PaseoQueretaro,False,6,EVO,True,360.0,MEXICO,admin,2026-11-06T16:08:14Z
 2025-12-10,,87,ACTION_EXPERIENCE,232.0,RIO DE JANEIRO,BR,"{'id': 232, 'is_active': True, 'name': 'Action Botafogo'}",manual,,Botafogo,activa,0,0,BR:87,840.0,Botafogo,False,2,EVO,False,400.0,,admin,2026-10-21T18:23:04Z
 2026-03-23,,88,ACTION_EXPERIENCE,231.0,BELO HORIZONTE,BR,"{'id': 231, 'is_active': True, 'name': 'Action Savassi'}",manual,,Savassi,activa,0,0,BR:88,1016.0,Savassi,False,1,EVO,False,350.0,,admin,2026-10-21T18:23:04Z
 2026-08-01,,102,ACTION_SPORT_CLUB,,"BOGOTÁ, D.C.",CO,"{'id': 73, 'is_active': True, 'name': 'Action Sport Club Easy Norte'}",id,,Action Sport Club Easy Norte,activa,0,0,CO:102,2103.0,ActionSportClubEasyNorte,False,74,EVO,False,0.0,ACTION SPORT CLUB,master_sedes,2026-08-27T03:26:55Z
