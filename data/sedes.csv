@@ -17,7 +17,7 @@ apertura,apertura_prevista,branch_id,brand,centro_costos_id,city,country,db_cost
 ,,135,ACTION_EXPERIENCE,,"BOGOTÁ, D.C.",CO,,,,El nogal,inactiva,0,1,CO:135,,Zetta55,False,90,EVO,True,450.0,,admin,2026-09-01T23:12:31Z
 ,,134,ACTION_EXPERIENCE,,MONTERÍA,CO,"{'id': 243, 'is_active': True, 'name': 'Action Evergreen Mall Monteria'}",id,,Evergreen Mall Monteria,inactiva,0,1,CO:134,,EvergreenMallMonteria,False,89,EVO,True,450.0,,admin,2026-09-23T16:24:46Z
 ,,142,ACTION_EXPERIENCE,248.0,ITAGUI,CO,"{'id': 248, 'is_active': True, 'name': 'Action Exito Itagui'}",manual,,Exito Itagui,inactiva,0,1,CO:142,,ExitoItagui,False,95,EVO,True,450.0,ANTIOQUIA SUR,admin,2026-11-06T16:08:14Z
-,,36,ACTION_SPORT_CLUB,,MEDELLÍN,CO,"{'id': 75, 'is_active': True, 'name': 'Action Sport Club La 65'}",id,,Jumbo 65,inactiva,0,1,CO:36,,Jumbo65,False,39,EVO,True,,ACTION SPORT CLUB,admin,2026-08-27T03:30:34Z
+,,36,ACTION_SPORT_CLUB,,MEDELLÍN,CO,"{'id': 75, 'is_active': False, 'name': 'Action Sport Club La 65'}",id,,Jumbo 65,inactiva,0,1,CO:36,,Jumbo65,False,39,EVO,True,,ACTION SPORT CLUB,admin,2026-08-27T03:30:34Z
 ,,37,ACTION_EXPERIENCE,249.0,MEDELLÍN,CO,"{'id': 249, 'is_active': True, 'name': 'Action Jumbo Vegas'}",manual,,Jumbo Vegas,inactiva,0,1,CO:37,600.0,JumboVegas,False,96,EVO,True,450.0,ANTIOQUIA SUR,admin,2026-11-06T16:08:14Z
 ,,39,ACTION_EXPERIENCE,,MEDELLÍN,CO,"{'id': 46, 'is_active': True, 'name': 'Action La 45 Manrique'}",id,,La 45,inactiva,0,1,CO:39,890.0,La45,False,83,EVO,True,450.0,ANTIOQUIA CENTRO,master_sedes,2026-08-27T03:26:55Z
 ,,129,ACTION_EXPERIENCE,230.0,CALI,CO,"{'id': 230, 'is_active': True, 'name': 'Action Oeste Cali'}",manual,,Oeste,inactiva,0,1,CO:129,,SantaTeresita,False,84,EVO,True,450.0,,admin,2026-11-06T16:08:14Z
