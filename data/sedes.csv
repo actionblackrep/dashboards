@@ -1,5 +1,12 @@
 apertura,apertura_prevista,branch_id,brand,centro_costos_id,city,country,db_cost_center,db_match,db_sugerido,display_name,estado,is_deleted,is_presale,key,m2,name,nueva,partner_id,partner_name,pendiente,punto_equilibrio,region_name,source,updated_at
+,,152,ACTION_EXPERIENCE,,"BOGOTÁ, D.C.",CO,,,,Andino,inactiva,0,1,CO:152,,Andino,True,107,EVO,True,,,,
+,,148,ACTION_EXPERIENCE,,MEDELLÍN,CO,,,,Boyacá Las Brisas,inactiva,0,1,CO:148,,BoyacaLasBrisas,True,103,EVO,True,,,,
+,,153,ACTION_EXPERIENCE,,BUCARAMANGA,CO,,,,Cabecera Bucaramanga,inactiva,0,1,CO:153,,CabeceraBucaramanga,True,108,EVO,True,,,,
+,,147,ACTION_EXPERIENCE,,ENVIGADO,CO,,,,El Colombiano,inactiva,0,1,CO:147,,ElColombiano,True,102,EVO,True,,,,
+,,149,ACTION_EXPERIENCE,,MEDELLÍN,CO,,,,Escobero Mall,inactiva,0,1,CO:149,,EscoberoMall,True,104,EVO,True,,,,
+,,151,ACTION_EXPERIENCE,,"BOGOTÁ, D.C.",CO,,,,La Calleja,inactiva,0,1,CO:151,,LaCalleja,True,106,EVO,True,,,,
 ,,145,ACTION_EXPERIENCE,,"BOGOTÁ, D.C.",CO,"{'id': 304, 'is_active': True, 'name': 'Action Plaza Imperial'}",id,,Plaza Imperial,inactiva,0,1,CO:145,,PlazaImperial,True,99,EVO,True,,BOGOTÁ NORTE,,
+,,150,ACTION_EXPERIENCE,,"BOGOTÁ, D.C.",CO,,,,Puente Largo,inactiva,0,1,CO:150,,PuenteLargo,True,105,EVO,True,,,,
 ,,122,ACTION_EXPERIENCE,,QUITO,EC,,,"{'id': 235, 'is_active': True, 'name': 'Action Black Koen'}",Action Black Kōen,inactiva,0,1,EC:122,,Koen,True,122,AX,True,,SIERRA,,
 ,,76,ACTION_EXPERIENCE,,LISBOA,PT,,,"{'id': 174, 'is_active': True, 'name': 'Action Parque das Nacoes'}",Parque Das Nacoes,inactiva,0,1,PT:76,,ParqueDasNacoes,True,10000000000,TRAININGGYM,True,,,,
 ,,75,ACTION_EXPERIENCE,,LISBOA,PT,,,"{'id': 172, 'is_active': True, 'name': 'Action Saldanha'}",Saldanha,inactiva,0,1,PT:75,,Saldanha,True,10000000000,TRAININGGYM,True,,,,
